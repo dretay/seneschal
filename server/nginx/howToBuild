@@ -1,0 +1,1 @@
+JIT_LIB=/opt/local/lib LUAJIT_INC=/opt/local/include/luajit-2.0 ./configure --prefix=/opt/nginx --add-module=/Users/drew/dev/nginx/ngx_devel_kit-0.2.19/ --add-module=/Users/drew/dev/nginx/lua-nginx-module-0.9.4/ --add-module=/Users/drew/dev/nginx/echo-nginx-module-0.51/ --add-module=/Users/drew/dev/nginx/set-misc-nginx-module-0.24/ --with-http_ssl_module

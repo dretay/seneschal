@@ -1,0 +1,9 @@
+<div>
+  <img ng-class="getCameraClass()" ng-src="{{proto}}{{host}}{{stream}}?token={{getEncodedToken()}}&rate={{getFramerate()}}"/>
+  <div class="cameraControls" ng-hide="thumbnail">
+    <div class="left" ng-mousedown="cameraCmd(4)" ng-mouseup="cameraCmd(5)"></div>
+    <div class="right" ng-mousedown="cameraCmd(6)" ng-mouseup="cameraCmd(7)"></div>
+    <div class="top" ng-mousedown="cameraCmd(2)" ng-mouseup="cameraCmd(3)"></div>
+    <div class="bottom" ng-mousedown="cameraCmd(0)" ng-mouseup="cameraCmd(1)"></div>
+  </div>
+</div>

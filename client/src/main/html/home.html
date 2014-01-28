@@ -1,0 +1,25 @@
+<div class="background">
+      <div class="screen">
+        <div class="menu">
+          <ul>
+            <li ng-click="closeMenu()"><a ng-href="#/home/{{routeParams.token|doubleEncodeURIComponent}}/dashboard">Dashboard</a></li>
+            <li ng-click="closeMenu()"><a ng-href="#/home/{{routeParams.token|doubleEncodeURIComponent}}/lights">Lights</a></li>
+            <li ng-click="closeMenu()"><a ng-href="#/home/{{routeParams.token|doubleEncodeURIComponent}}/cameras">Cameras</a></li>
+            <li ng-click="closeMenu()"><a ng-href="#/home/{{routeParams.token|doubleEncodeURIComponent}}/alarm">Alarm</a></li>
+            <li ng-click="closeMenu()"><a ng-href="#/home/{{routeParams.token|doubleEncodeURIComponent}}/thermostat">Thermostat</a></li>
+
+          </ul>
+        </div>
+        <div class="content">
+          <header ng-click="openMenu()">
+            <h1><div class="menuButton">&#9776;</div><div class="pageTitle">{{cfg.pageTitle}}</div></h1>
+          </header>
+          <div class="inner-content-wrapper">
+            <div class="inner-content">
+              <div ng-include="cfg.page"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- </div> -->

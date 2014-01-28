@@ -1,0 +1,11 @@
+<div ng-controller="cameras">
+  <div class="cameraOverview">
+    <div ng:repeat="camera in cameras">
+      <camera ng-click="setActiveCamera($index)" host="camera.host" token="camera.token" thumbnail="true"></camera>
+    </div>
+  </div>
+
+  <camera host="cameras[activeCamera].host" token="cameras[activeCamera].token" thumbnail="false" ></camera>
+
+
+</div>

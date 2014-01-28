@@ -1,0 +1,34 @@
+<div class="thermostat" ng-controller="thermostat">
+
+  <!-- <div class="thermostatWrapper">
+    <div class="base-circle">
+    </div>
+    <div class="color-circle" ng-class="cssFromThermostatMode()">
+    </div>
+    <div class="knob-circle"></div>
+    <div class="text-readout">
+      <i class="fa fa-angle-up fa-3 thermostatControl" ng-click="changeTemperature(1)"></i>
+      <div class="degree">
+        {{targetTemperature|celsiusToDegrees}}&deg;
+      </div>
+      <i class="fa fa-angle-down fa-3 thermostatControl" ng-click="changeTemperature(-1)"></i>
+
+    </div>
+  </div> -->
+   <div id="watch">
+    <div class="frame-face">
+      <div class="color-circle" ng-class="cssFromThermostatMode()">
+        <div class="text-readout">
+          <i class="fa fa-angle-up fa-3 thermostatControl" ng-click="changeTemperature(1)"></i>
+          <div class="degree">
+          {{targetTemperature|celsiusToDegrees}}&deg;
+          </div>
+          <i class="fa fa-angle-down fa-3 thermostatControl" ng-click="changeTemperature(-1)"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
