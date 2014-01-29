@@ -12,7 +12,7 @@ define [
       {host: "www.drewandtrish.com:9000/cameras/livingroom", token: $scope.$parent.cfg.token}
       {host: "www.drewandtrish.com:9000/cameras/basement", token: $scope.$parent.cfg.token}
       {host: "www.drewandtrish.com:9000/cameras/frontdoor", token: $scope.$parent.cfg.token}
-      {host: "www.drewandtrish.com:9000/cameras/porch", token: $scope.$parent.cfg.token}
+      {host: "www.drewandtrish.com:9000/cameras/porch", token: $scope.$parent.cfg.token, inverted: true}
 
     ]
 
