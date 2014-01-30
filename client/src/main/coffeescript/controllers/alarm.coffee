@@ -14,7 +14,6 @@ define [
     $scope.alarmCmd = ""
     webStomp.getClient($scope.$parent.cfg.token).then (client)=>
       client.subscribe "/exchange/eyezon.alarm/fanout", (data)->
-
         tokens = JSON.parse(data.body).split(",")
         $scope.alarmLineOne = unless _.isUndefined tokens[5] then tokens[5] else $scope.alarmLineOne
         $scope.alarmLineTwo = unless _.isUndefined tokens[6] then tokens[6] else $scope.alarmLineTwo

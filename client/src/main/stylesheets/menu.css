@@ -20,7 +20,7 @@
     // min-width: 435px;
     // min-height: 1000px;
     height: 100%; width: 100%;
-    background: #408dce url('http://creativeda.sh/sandbox/social_menu/img/background.jpg') no-repeat center center;
+    background: #408dce url('/stylesheets/img/background.jpg') no-repeat center center;
     -webkit-background-size: cover;
        -moz-background-size: cover;
          -o-background-size: cover;
@@ -29,7 +29,7 @@
 
   div.circle {
     height: 77px; width: 77px;
-    background: url('http://creativeda.sh/sandbox/social_menu/img/circle.png');
+    background: url('/stylesheets/img/circle.png');
     position: absolute;
     top: 50%; left: 50%;
     z-index: 200;
@@ -68,7 +68,7 @@
   div.menu {
     position: absolute;
     height: 100%; width: 100%;
-    background: url('http://creativeda.sh/sandbox/social_menu/img/blur.jpg') no-repeat center center;
+    background: url('/stylesheets/img/blur.jpg') no-repeat center center;
     -webkit-background-size: cover;
        -moz-background-size: cover;
          -o-background-size: cover;
@@ -80,7 +80,7 @@
       margin: 95px 0px 0px 75px;
     }
     div.menu li {
-      font-family: 'HelveticaNeue-UltraLight', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', sans-serif;
+      font-family: "Myriad Pro Condensed Regular", sans-serif;
       font-weight: 200;
       margin-bottom: 28px;
 
@@ -156,7 +156,7 @@ header .menuButton{
 
 header h1 {
   position: relative;
-  font-family:"Helvetica Neue","Helvetica",sans-serif;
+  font-family:"Myriad Pro Bold",sans-serif;
   font-weight:normal;
   font-size: 25px;
   margin:0 20px 0 0;
