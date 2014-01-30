@@ -15,6 +15,7 @@ define [
     $scope.autoAway = ""
     $scope.targetTemperatureType = ""
     webStomp.getClient($scope.$parent.cfg.token).then (client)=>
+
       client.subscribe "/exchange/nest.thermostat/fanout", (data)->
         info = JSON.parse data.body
         $scope.targetTemperature = info.target_temperature
@@ -22,6 +23,8 @@ define [
         $scope.autoAway = info.auto_away
         $scope.targetTemperatureType = info.target_temperature_type
         $scope.$apply()
+
+
 
     $scope.cssFromThermostatMode = ->
       if $scope.targetTemperatureType == "heat"

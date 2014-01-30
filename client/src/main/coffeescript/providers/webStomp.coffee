@@ -4,6 +4,7 @@ define [
   'stomp'
   'sockjs'
   'jquery'
+  'underscore'
 ],
 (providers, Stomp, SockJS, $)->
   'use strict'
@@ -14,28 +15,40 @@ define [
       unless _.isString @username then @username = 'guest'
       unless _.isString @password then @password = 'guest'
 
-      ws = new SockJS("https://#{@hostname}:#{@port}/rabbitmq/stomp");
-      client = Stomp.over(ws);
+      ws = new SockJS("https://#{@hostname}:#{@port}/rabbitmq/stomp")
+      client = Stomp.over(ws)
+      # client.debug = -> null
 
       client.heartbeat.outgoing = 0
       client.heartbeat.incoming = 0
 
-      deferred = $.Deferred()
-      on_connect = ->
-        deferred.resolve client
-      on_error = ->
-        deferred.reject client
 
+      connected = false
 
       getClient: (token)=>
-        $.ajax
-          type: 'GET'
-          url: "https://#{@hostname}:#{@port}/getRabbitCredentials"
-          dataType: 'json'
-          data:
-            token: token
-          success: (data)->
-            client.connect(data.username, data.password, on_connect, on_error, '/');
+        on_connect = ->
+          connected = true
+          deferred.resolve client
+        on_error = ->
+          deferred.reject client
+
+        deferred = $.Deferred()
+
+        unless connected
+          $.ajax
+            type: 'GET'
+            url: "https://#{@hostname}:#{@port}/getRabbitCredentials"
+            dataType: 'json'
+            data:
+              token: token
+            success: (data)->
+              client.connect(data.username, data.password, on_connect, on_error, '/')
+        else
+          #clean up any stale connections from other pages
+          for subscription, listener of client.subscriptions
+            client.unsubscribe subscription
+          deferred.resolve client
+
         return deferred.promise()
 
 

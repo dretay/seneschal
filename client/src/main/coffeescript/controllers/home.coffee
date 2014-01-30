@@ -29,6 +29,7 @@ define [
     else
       $scope.setPage("lights")
 
+
     $scope.openMenu = ->
       unless $('div.content').hasClass('inactive')
         #Remove circle
