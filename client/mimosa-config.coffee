@@ -8,6 +8,12 @@ exports.config =
     'require-lint'
     'mimosa-jshint'
     'mimosa-csslint'
+    'coffeescript'
+    'copy'
+    'stylus'
+    'web-package'
+    'require'
+    'require-commonjs'
     # 'mimosa-karma-enterprise'
   ]
   server:
@@ -25,7 +31,7 @@ exports.config =
   copy:
     extensions: ["csv", "properties", "js","css","png","jpg","jpeg","gif","html","eot","svg","ttf","woff","otf","yaml","kml","ico","htc","htm","json","txt","xml","xsd","map"]
   minify:
-    exclude:[/\.min\./, "coffeescript/main.js"]
+    exclude:[/\.min\./, "coffeescript/main.js", "coffeescript/app.js"]
   watch:
     sourceDir: 'src/main'
     javascriptDir: 'coffeescript'
