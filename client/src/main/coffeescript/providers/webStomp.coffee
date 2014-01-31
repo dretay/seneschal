@@ -46,7 +46,10 @@ define [
         else
           #clean up any stale connections from other pages
           for subscription, listener of client.subscriptions
-            client.unsubscribe subscription
+            unless "/temp-queue/foo/bar".match /^\/temp-queue\//
+              client.unsubscribe subscription
+            else
+              delete client.subscriptions[subscription]
           deferred.resolve client
 
         return deferred.promise()

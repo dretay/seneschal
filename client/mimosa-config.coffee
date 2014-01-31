@@ -11,9 +11,6 @@ exports.config =
     'coffeescript'
     'copy'
     'stylus'
-    'web-package'
-    'require'
-    'require-commonjs'
     # 'mimosa-karma-enterprise'
   ]
   server:
@@ -45,7 +42,11 @@ exports.config =
   jshint:
     exclude: [/.*legacy\/js\/.*/]
   require:
-    exclude: [/.*legacy\/js\/.*/]
+    optimize:
+      overrides:
+        optimize: "none"
+
+
   bower:
     exclude: [/.*legacy\/js\/.*/]
     bowerDir:
