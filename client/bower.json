@@ -11,8 +11,7 @@
     "angular-route": "1.2.6",
     "underscore-amd": "1.4.4",
     "sockjs": "0.3.4",
-    "stomp-websocket": "git://github.com/jmesnil/stomp-websocket.git#2.3.0",
-    "font-awesome": "*"
+    "stomp-websocket": "git://github.com/jmesnil/stomp-websocket.git#2.3.0"
   },
   "devDependencies":{
     "angular-mocks": "1.2.6"

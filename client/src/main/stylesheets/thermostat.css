@@ -60,8 +60,8 @@
 }
 .color-circle {
   position: absolute;
-  top: 51px;
-  margin-left: 50px;
+  top: 82px;
+  margin-left: 82px;
   z-index: 2;
   width: 320px;
   height: 320px;
@@ -120,14 +120,27 @@
   font-weight: 700;
 
   position:relative;
-  top:-53px;
+  top:-222px;
   /*left:116px;*/
   /*margin-left: 115px;*/
   z-index:4;
   text-align: center;
 }
-.thermostatControl {
+.thermostatControlTop {
   cursor: pointer;
+  position: relative;
+  top: 155px;
+  font-weight: 100;
+  z-index: 1;
+  /*display: block;*/
+}
+.thermostatControlBottom {
+  cursor: pointer;
+  position: relative;
+  top: -115px;
+  font-weight: 100;
+  z-index: 1;
+  /*display: block;*/
 }
 .text-readout .degree {
   font-weight: 400;
@@ -135,5 +148,5 @@
   left: 18px;
   position: relative;
   cursor: default;
-  font-family: "Myriad Pro Condensed Regular";
+  font-family: "Myriad Pro Bold Condensed";
 }
