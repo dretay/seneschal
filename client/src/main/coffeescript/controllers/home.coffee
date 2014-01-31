@@ -21,6 +21,7 @@ define [
     $scope.cfg.token = $routeParams.token
     $scope.cfg.pageTitle = ""
 
+
     $scope.setPage = (page)->
       $scope.cfg.page = "/html/#{page}.html"
 

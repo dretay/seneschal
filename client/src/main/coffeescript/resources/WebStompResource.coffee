@@ -18,6 +18,7 @@ define [
 
 
       query: (query={}, isArray=true, action="get")->
+        deferred = $.Deferred()
         data = if isArray then [] else {}
         webStomp.getClient(@token).then (client)=>
 
@@ -36,18 +37,21 @@ define [
             #apply any mapping that's necessary
             rawData = @[action].inboundTransform(rawData) if _.isFunction @[action].inboundTransform
 
-
             #map the raw data into a Response
             if _.isArray rawData
               final = _.map rawData, (element)=> new WebStompEntity(element,webStomp,@)
             else
               final = new WebStompEntity(rawData,webStomp,@)
 
-            #replace the stub with the real response
-            angular.copy(final, data)
+            if action == "get"
+              #replace the stub with the real response
+              angular.copy(final, data)
+            else
+              deferred.resolve(final)
+
             $rootScope.$apply()
 
-        return data
+        if action == "get" then return data else return deferred.promise()
 
       create: (data)->
         new WebStompEntity(data,webStomp,@)

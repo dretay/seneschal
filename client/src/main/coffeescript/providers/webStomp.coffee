@@ -25,9 +25,11 @@ define [
 
       connected = false
 
+      subscriptions: []
       getClient: (token)=>
         on_connect = ->
           connected = true
+          @subscriptions = client.subscriptions
           deferred.resolve client
         on_error = ->
           deferred.reject client
@@ -44,12 +46,6 @@ define [
             success: (data)->
               client.connect(data.username, data.password, on_connect, on_error, '/')
         else
-          #clean up any stale connections from other pages
-          for subscription, listener of client.subscriptions
-            unless "/temp-queue/foo/bar".match /^\/temp-queue\//
-              client.unsubscribe subscription
-            else
-              delete client.subscriptions[subscription]
           deferred.resolve client
 
         return deferred.promise()

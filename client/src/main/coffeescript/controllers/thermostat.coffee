@@ -14,9 +14,11 @@ define [
     $scope.currentTemperature = ""
     $scope.autoAway = ""
     $scope.targetTemperatureType = ""
+    stompClient = null
+    subscriptions = []
     webStomp.getClient($scope.$parent.cfg.token).then (client)=>
-
-      client.subscribe "/exchange/nest.thermostat/fanout", (data)->
+      stompClient = client
+      subscriptions.push client.subscribe "/exchange/nest.thermostat/fanout", (data)->
         info = JSON.parse data.body
         $scope.targetTemperature = info.target_temperature
         $scope.currentTemperature = info.current_temperature
@@ -24,7 +26,8 @@ define [
         $scope.targetTemperatureType = info.target_temperature_type
         $scope.$apply()
 
-
+    $scope.$on '$destroy', ->
+      stompClient.unsubscribe subscription.id for subscription in subscriptions
 
     $scope.cssFromThermostatMode = ->
       if $scope.targetTemperatureType == "heat"

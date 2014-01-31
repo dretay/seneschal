@@ -1,4 +1,14 @@
 <div class="switchContainer">
-  <input ng-blur="update(light.name)" type="checkbox" id="{{light.name}}" ng-model="light.status"/>
-  <label class="slider-v2" for="{{light.name}}"><div class="sliderLabel">{{light.name}}</div></label>
+  <input ng-click="update(light.name)" type="checkbox" id="{{light.name}}" ng-model="light.status"/>
+  <label class="slider-v2" for="{{light.name}}">
+    <div class="sliderLabel">{{light.name}}</div>
+      <div class="ui-spinner" ng-show="pending" ng-class="getSpinnerClass()">
+      <span class="side side-left">
+        <span class="fill"></span>
+      </span>
+      <span class="side side-right">
+        <span class="fill"></span>
+      </span>
+    </div>
+  </label>
 </div>
