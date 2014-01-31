@@ -17,7 +17,7 @@ Here are some screenshots:
 - [Menu system]
 - [Thermostat]
  
-[Alarm panel]:https://github.com/dretay/seneschal/master/imgs/alarm.png
+[Alarm panel]:https://raw.github.com/dretay/seneschal/master/imgs/alarm.png
 [cameras]:https://raw.github.com/dretay/seneschal/master/imgs/cameras.png
 [lights]:https://raw.github.com/dretay/seneschal/master/imgs/lights.png
 [menu system]:https://raw.github.com/dretay/seneschal/master/imgs/menu.png
