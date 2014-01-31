@@ -58,40 +58,40 @@
   font-size: 4em;
 }
 .alarm .alarm-icon-1:after{
-  font-family: "Myriad Pro Condensed"; content: "\A OFF"; font-size: 8pt;position: relative; top: 6px;
+  font-family: "Myriad Pro Condensed"; content: "\A OFF"; font-size: 8pt;position: relative; top: 3px;
 }
 .alarm .alarm-icon-2:after{
-  font-family: "Myriad Pro Condensed";content: "\A AWAY"; font-size: 8pt;position: relative; top: 6px;
+  font-family: "Myriad Pro Condensed";content: "\A AWAY"; font-size: 8pt;position: relative; top: 3px;
 }
 .alarm .alarm-icon-3:after{
-  font-family: "Myriad Pro Condensed";content: "\A STAY"; font-size: 8pt;position: relative; top: 6px;
+  font-family: "Myriad Pro Condensed";content: "\A STAY"; font-size: 8pt;position: relative; top: 3px;
 }
 .alarm .alarm-icon-4:after {
-  font-family: "Myriad Pro Condensed";content: "\A ----"; font-size: 8pt;position: relative; top: 6px;
+  font-family: "Myriad Pro Condensed";content: "\A ----"; font-size: 8pt;position: relative; top: 3px;
 }
 .alarm .alarm-icon-5:after{
-  font-family: "Myriad Pro Condensed";content: "\A TEST"; font-size: 8pt;position: relative; top: 6px;
+  font-family: "Myriad Pro Condensed";content: "\A TEST"; font-size: 8pt;position: relative; top: 3px;
 }
 .alarm .alarm-icon-6:after{
-  font-family: "Myriad Pro Condensed";content: "\A BYPASS"; font-size: 8pt;position: relative; top: 6px;
+  font-family: "Myriad Pro Condensed";content: "\A BYPASS"; font-size: 8pt;position: relative; top: 3px;
 }
 .alarm .alarm-icon-7:after{
-  font-family: "Myriad Pro Condensed";content: "\A INSTANT"; font-size: 8pt;position: relative; top: 6px;
+  font-family: "Myriad Pro Condensed";content: "\A INSTANT"; font-size: 8pt;position: relative; top: 3px;
 }
 .alarm .alarm-icon-8:after {
-  font-family: "Myriad Pro Condensed";content: "\A CODE"; font-size: 8pt;position: relative; top: 6px;
+  font-family: "Myriad Pro Condensed";content: "\A CODE"; font-size: 8pt;position: relative; top: 3px;
 }
 .alarm .alarm-icon-9:after{
-  font-family: "Myriad Pro Condensed";content: "\A CHIME"; font-size: 8pt;position: relative; top: 6px;
+  font-family: "Myriad Pro Condensed";content: "\A CHIME"; font-size: 8pt;position: relative; top: 3px;
 }
 .alarm .alarm-icon-0:after {
-  font-family: "Myriad Pro Condensed";content: "\A ..."; font-size: 8pt;line-height:8pt;position: relative; top: 6px;
+  font-family: "Myriad Pro Condensed";content: "\A ..."; font-size: 8pt;line-height:8pt;position: relative; top: 3px;
 }
 .alarm .alarm-icon-pound:after {
-  font-family: "Myriad Pro Condensed";content: "\A ..."; font-size: 8pt;line-height:8pt;position: relative; top: 6px;
+  font-family: "Myriad Pro Condensed";content: "\A ..."; font-size: 8pt;line-height:8pt;position: relative; top: 3px;
 }
 .alarm .alarm-icon-star:after {
-  font-family: "Myriad Pro Condensed";content: "\a READY"; font-size: 8pt;position: relative; top: -20px;
+  font-family: "Myriad Pro Condensed";content: "\a READY"; font-size: 8pt;position: relative; top: -26px;
 }
 
 
