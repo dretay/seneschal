@@ -1,0 +1,55 @@
+//thank you
+//http://stackoverflow.com/questions/1495407/css-a-way-to-maintain-aspect-ratio-when-resizing-a-div
+.outerOverlay
+  position absolute
+  width 100%
+  height 100%
+  top 0
+  z-index 1
+  pointer-events none
+.innerOverlay
+  position relative
+  margin-top 84px
+  width 100%
+  padding-bottom 75%
+  pointer-events auto
+.overlayContent
+  position: absolute
+  top 0
+  bottom 0
+  left 0
+  right 0
+
+.lightBulb
+  position absolute
+  top 0
+  left 0
+  cursor pointer
+
+.lightBulb-on:before
+  content:''
+  display block
+  height 1em
+  width 1em
+  border-radius 100%
+  background #ddd
+  margin auto
+  box-shadow 0 0 50px gold,0 0 150px gold, inset 0 20px 20px 40px whitesmoke, inset 30px 0 35px 50px ivory
+  transition 1s
+  position absolute
+  top 17%
+  left 20%
+
+.lightBulb-on:hover:before
+  box-shadow 0 0 50px tomato,0 0 30px orange, inset 0 10px 10px 20px #ddd, inset 30px 0 35px 50px #ccc
+  background #ddd
+  transition 1s
+.floorSelector
+  height 40px
+  text-align center
+  z-index 2
+  span
+    padding 0 20px 0 20px
+    cursor pointer
+  .selected
+    font-family "Myriad Pro Bold"

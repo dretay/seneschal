@@ -1,14 +1,8 @@
-<div class="switchContainer">
-  <input ng-click="update(light.name)" type="checkbox" id="{{light.name}}" ng-model="light.status"/>
-  <label class="slider-v2" for="{{light.name}}">
-    <div class="sliderLabel">{{light.name}}</div>
-      <div class="ui-spinner" ng-show="pending" ng-class="getSpinnerClass()">
-      <span class="side side-left">
-        <span class="fill"></span>
-      </span>
-      <span class="side side-right">
-        <span class="fill"></span>
-      </span>
-    </div>
-  </label>
+<div
+  ng-class="getClass()"
+  ng-style="{{getStyle()}}"
+  class="lightBulb"
+  ng-attr-title="{{light.name}}"
+  ng-click="update(light.name)">
+  <i class="fa fa-lightbulb-o fa-3x"></i>
 </div>

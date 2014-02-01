@@ -1,5 +1,24 @@
-<div ng-controller="lights">
-  <div ng:repeat="light in lights">
-    <light light="light"></light>
+<div ng-controller="lights" class="lights">
+  <div class="floorSelector">
+    <span ng-class="isActiveFloor(floors.basement)"
+          ng-click="activeFloor = floors.basement">Basement</span>
+
+    <span ng-class="isActiveFloor(floors.mainFloor)"
+          ng-click="activeFloor = floors.mainFloor">Main Floor</span>
+
+    <span ng-class="isActiveFloor(floors.secondFloor)"
+          ng-click="activeFloor = floors.secondFloor">Second Floor</span>
+  </div>
+  <div class="lightsOverview">
+    <img ng-src="{{activeFloor.url}}" width="100%" height="100%"></img>
+    <div class="outerOverlay">
+      <div class="innerOverlay">
+        <div class="overlayContent">
+          <div ng:repeat="light in lights|lightsOnFloor:activeFloor.name">
+            <light light="light"></light>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

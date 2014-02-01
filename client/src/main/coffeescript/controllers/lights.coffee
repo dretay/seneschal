@@ -5,6 +5,7 @@ define [
   'c/lights'
   's/lights'
   'd/light'
+  'f/lightsOnFloor'
 ],
 (controllers, _, $) ->
   'use strict'
@@ -14,4 +15,21 @@ define [
     $scope.lights = lights.query()
     $scope.$parent.cfg.pageTitle = "Lights"
 
+    $scope.isActiveFloor = (floor)->
+      if floor == $scope.activeFloor then "selected" else ""
+
+    $scope.floors =
+      basement:
+        name: "basement"
+        url: '/stylesheets/img/basement.svg'
+
+      mainFloor:
+        name: "mainFloor"
+        url: '/stylesheets/img/mainlevel.svg'
+
+      secondFloor:
+        name: "secondFloor"
+        url: '/stylesheets/img/secondfloor.svg'
+
+    $scope.activeFloor = $scope.floors.mainFloor
   ]

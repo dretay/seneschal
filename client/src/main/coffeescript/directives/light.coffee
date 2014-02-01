@@ -15,17 +15,18 @@ define [
       light: "="
     controller: ($scope, $injector, $timeout)->
       $scope.pending = false
-      $scope.getSpinnerClass = ->
+      $scope.getClass= ->
         if $scope.light.status
-          "ui-spinner-right"
-        else
-          ""
+          "lightBulb-on"
+      $scope.getStyle = ->
+        "left": "#{$scope.light.location.left}%"
+        "top": "#{$scope.light.location.top}%"
+
       $scope.update = (name)->
-        $timeout ->
+          $scope.light.status = !$scope.light.status
           $scope.pending = true
           $scope.light.update().then ->
             $scope.pending = false
-        ,50
       null
       # $injector.invoke(commonBarItem, @, {$scope: $scope})
 
