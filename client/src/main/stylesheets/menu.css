@@ -20,7 +20,7 @@
     // min-width: 435px;
     // min-height: 1000px;
     height: 100%; width: 100%;
-    background: #408dce url('/stylesheets/img/background.jpg') no-repeat center center;
+    /*background: #408dce url('/stylesheets/img/background.jpg') no-repeat center center;*/
     -webkit-background-size: cover;
        -moz-background-size: cover;
          -o-background-size: cover;
@@ -29,7 +29,7 @@
 
   div.circle {
     height: 77px; width: 77px;
-    background: url('/stylesheets/img/circle.png');
+    /*background: url('/stylesheets/img/circle.png');*/
     position: absolute;
     top: 50%; left: 50%;
     z-index: 200;
@@ -68,7 +68,7 @@
   div.menu {
     position: absolute;
     height: 100%; width: 100%;
-    background: url('/stylesheets/img/blur.jpg') no-repeat center center;
+    /*background: url('/stylesheets/img/blur.jpg') no-repeat center center;*/
     -webkit-background-size: cover;
        -moz-background-size: cover;
          -o-background-size: cover;
@@ -80,12 +80,15 @@
       margin: 95px 0px 0px 75px;
     }
     div.menu li {
-      font-family: "Myriad Pro Regular", sans-serif;
-      font-weight: 200;
+      font-family: "Myriad Pro Bold", sans-serif;
+      font-weight: 900;
+      font-size: 35pt;
+      line-height: 80px;
+
       margin-bottom: 28px;
 
-      font-size: 35px;
-      line-height: 40px;
+
+
 
       -webkit-transition: all 400ms ease-in-out, opacity 1000ms ease;
          -moz-transition: all 400ms ease-in-out, opacity 1000ms ease;
@@ -100,8 +103,11 @@
       opacity: 1;
     }
     div.menu li a {
-      color: rgba(255,255,255,0.9);
+      color: #d35400;
       text-decoration: none;
+    }
+    div.menu li a:hover{
+      color: #e67e22;
     }
 
   div.content {

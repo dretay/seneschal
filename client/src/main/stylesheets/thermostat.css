@@ -60,8 +60,8 @@
 }
 .color-circle {
   position: absolute;
-  top: 82px;
-  margin-left: 82px;
+  top: 50px;
+  margin-left: 52px;
   z-index: 2;
   width: 320px;
   height: 320px;
@@ -120,7 +120,7 @@
   font-weight: 700;
 
   position:relative;
-  top:-222px;
+  top:-58px;
   /*left:116px;*/
   /*margin-left: 115px;*/
   z-index:4;
@@ -129,7 +129,7 @@
 .thermostatControlTop {
   cursor: pointer;
   position: relative;
-  top: 155px;
+  top: 0;
   font-weight: 100;
   z-index: 1;
   /*display: block;*/
@@ -137,7 +137,7 @@
 .thermostatControlBottom {
   cursor: pointer;
   position: relative;
-  top: -115px;
+  top: 0;
   font-weight: 100;
   z-index: 1;
   /*display: block;*/
