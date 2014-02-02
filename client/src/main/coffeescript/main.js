@@ -18,6 +18,8 @@ requirejs.config({
     domReady: 'vendor/managed/requirejs-domready/domReady',
     underscore: 'vendor/managed/underscore-amd/underscore',
     jquery: 'vendor/managed/jquery/jquery',
+    jqueryMigrate: 'vendor/unmanaged/jquery-migrate-1.2.1.min',
+    jquerySvg: 'vendor/unmanaged/jquery.svg',
 
     stomp: 'vendor/managed/stomp-websocket/stomp',
     sockjs: 'vendor/managed/sockjs/sockjs',
@@ -25,6 +27,9 @@ requirejs.config({
 
   },
   shim: {
+    'jquerySvg':{
+      deps: ['jquery', 'jqueryMigrate']
+    },
     'angularResource': {
       deps: ['angular']
     },

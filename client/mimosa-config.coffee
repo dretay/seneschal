@@ -58,3 +58,4 @@ exports.config =
         "requirejs-domready":["domReady.js"]
         "requirejs-i18n":["i18n.js"]
         "font-awesome":["css/font-awesome.min.css"]
+        "jquery.svg": ["jquery.svg.js"]

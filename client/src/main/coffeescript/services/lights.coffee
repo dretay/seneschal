@@ -21,56 +21,56 @@ define [
               status: false
               floor: "basement"
               location:
-                left: 46
-                top: 17
+                left: 27
+                top: 9
             }
             {
               name: "Front Porch"
               status: false
               floor: "mainFloor"
               location:
-                left: 31
-                top: 80
+                left: 19
+                top: 48
             }
             {
               name: "Family Room"
               status: false
               floor: "mainFloor"
               location:
-                left: 65
-                top: 23
+                left: 47
+                top: 9
             }
             {
               name: "Back Yard"
               status: false
               floor: "mainFloor"
               location:
-                left: 50
-                top: 1
+                left: 28
+                top: 0
             }
             {
               name: "Living Room"
               status: false
               floor: "mainFloor"
               location:
-                left: 15
-                top: 80
+                left: 8
+                top: 48
             }
             {
               name: "Drews Office"
               status: false
               floor: "secondFloor"
               location:
-                left: 11
-                top: 43
+                left: 8
+                top: 26
             }
             {
               name: "Master Bedroom"
               status: false
               floor: "secondFloor"
               location:
-                left: 80
-                top: 13
+                left: 48
+                top: 8
             }
           ]
 
