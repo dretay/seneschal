@@ -11,9 +11,9 @@ Seneschal is a home automation server built entirely on IP-based technologies. C
 
 #Screenshots
 Here are some screenshots:
+- [Lights]
 - [Alarm panel]
 - [Cameras]
-- [Lights]
 - [Menu system]
 - [Thermostat]
 
@@ -32,7 +32,7 @@ When a user connects to a resource one of the things that it presents is a "toke
 
 
  
-[Alarm panel]:https://github.com/dretay/seneschal/master/imgs/alarm.png
+[Alarm panel]:https://raw.github.com/dretay/seneschal/master/imgs/alarm.png
 [cameras]:https://raw.github.com/dretay/seneschal/master/imgs/cameras.png
 [lights]:https://raw.github.com/dretay/seneschal/master/imgs/lights.png
 [menu system]:https://raw.github.com/dretay/seneschal/master/imgs/menu.png
