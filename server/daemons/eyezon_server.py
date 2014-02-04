@@ -10,12 +10,12 @@ from pprint import pprint
 def send_cmd(body,message):
     tn.write(body.encode('utf-8')+"\r\n")
 
-with Connection('amqp://backendclient:WwTMfbtzxGNGhte0kxao@galactica:5672//') as conn:
+with Connection('amqp://backendclient:passowrd@galactica:5672//') as conn:
 
     tn = telnetlib.Telnet("192.168.1.10", "4025")
     tn.set_debuglevel(10)
     tn.read_until("Login:")
-    tn.write("peanut" + "\r\n")
+    tn.write("password" + "\r\n")
     tn.read_until("OK")
 
     queue = Queue(
