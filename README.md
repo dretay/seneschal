@@ -33,7 +33,7 @@ When a user connects to a resource one of the things that it presents is a "toke
 #Scalability
 I think this solution should be [horizontally scalable] to accomidate high ammounts of load. You can easily add additinal NGINX proxies or RabbitMQ brokers as necessary. You should also be able to implement policies within RabbitMQ as necessary to funnel traffic. Since everything is stateless and messaging based there is no single point of failure within the architecture, which should allow for several 9's of uptime. 
  
-[Alarm panel]:https://github.com/dretay/seneschal/master/imgs/alarm.png
+[Alarm panel]:https://raw.github.com/dretay/seneschal/master/imgs/alarm.png
 [cameras]:https://raw.github.com/dretay/seneschal/master/imgs/cameras.png
 [lights]:https://raw.github.com/dretay/seneschal/master/imgs/lights.png
 [menu system]:https://raw.github.com/dretay/seneschal/master/imgs/menu.png
