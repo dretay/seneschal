@@ -9,7 +9,7 @@ args["token"] = nil
 local aes = require "resty.aes"
 local str = require "resty.string"
 local split = require "utils"
-local aes_256_cbc_sha512x5 = aes:new("AKeyForAES-256-CBC", "145a2f0e39c6d84c58ccba257dd43908", aes.cipher(256,"cbc"), aes.hash.sha512, 1000)
+local aes_256_cbc_sha512x5 = aes:new("AKeyForAES-256-CBC", "SALT", aes.cipher(256,"cbc"), aes.hash.sha512, 1000)
 
 local decrypted = JSON:decode(aes_256_cbc_sha512x5:decrypt(token))
 
