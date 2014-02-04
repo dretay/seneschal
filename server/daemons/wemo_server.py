@@ -19,10 +19,10 @@ def on_switch(switch):
 	print "Switch found!", switch.name
 def on_motion(motion):
 	print "Motion found!", motion.name
-
-env = Environment(on_switch, on_motion, with_subscribers=False, with_cache=False)
+global env
+env = Environment(on_switch, on_motion, with_cache=False)
 env.start()
-env.discover(seconds=15)
+env.discover(seconds=10)
 
 def toggle_on(message, args):
   print "Turning "+message['switchName']+" on..."
@@ -41,12 +41,15 @@ def status(message, args):
 
 
 def list_switches(message, args):
+  env.discover(seconds=5)
+  print "discovery finished.... dumping"
   switches = []
   for switch in env.list_switches():
     switches.append({
       "name": switch,
       "status": env.get_switch(switch).get_state()
       })
+  print "listing finished dumping to json"
   print json.dumps(switches)
   rpcReply(switches, args)
 
