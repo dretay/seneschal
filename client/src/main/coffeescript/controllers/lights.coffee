@@ -14,6 +14,10 @@ define [
     lights.token = $scope.$parent.cfg.token
     $scope.lights = lights.query()
     $scope.$parent.cfg.pageTitle = "Lights"
+    $scope.loading = true
+    $scope.$watch 'lights', (newVal, oldVal)->
+      $scope.loading = if newVal.length > 0 then false else true
+    , true
 
     $scope.isActiveFloor = (floor)->
       if floor == $scope.activeFloor then "selected" else ""
