@@ -4,7 +4,7 @@ from ouimeaux.environment import Environment
 import json
 
 logging.basicConfig()
-credentials = pika.PlainCredentials('backendclient','WwTMfbtzxGNGhte0kxao')
+credentials = pika.PlainCredentials('backendclient','password')
 connection = pika.BlockingConnection(pika.ConnectionParameters(
         host='galactica.local', credentials = credentials))
 channel = connection.channel()
