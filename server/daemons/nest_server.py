@@ -11,8 +11,8 @@ def send_cmd(body,message):
     print "setting temperature to ", newTemp
     nest.set_temperature(newTemp)
 
-with Connection('amqp://backendclient:WwTMfbtzxGNGhte0kxao@galactica:5672//') as conn:
-    nest = Nest('ptung21@yahoo.com', 'p3anutbutter', units="F")
+with Connection('amqp://rabbitUsername:rabbitPassword@galactica:5672//') as conn:
+    nest = Nest('nestAccount', 'nestPassword', units="F")
     nest.login()
 
     nest.get_status()
