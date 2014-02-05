@@ -23,12 +23,13 @@ define [
       client.heartbeat.incoming = 0
 
 
-      connected = false
+      connectionStatus = 0
 
       subscriptions: []
       getClient: (token)=>
+        console.log "getting connection..."
         on_connect = ->
-          connected = true
+          connectionStatus = 2
           @subscriptions = client.subscriptions
           deferred.resolve client
         on_error = ->
@@ -36,7 +37,9 @@ define [
 
         deferred = $.Deferred()
 
-        unless connected
+        unless connectionStatus == 2
+          console.log "starting connection..."
+          connectionStatus = 1
           $.ajax
             type: 'GET'
             url: "https://#{@hostname}:#{@port}/getRabbitCredentials"
@@ -45,11 +48,19 @@ define [
               token: token
             success: (data)->
               client.connect(data.username, data.password, on_connect, on_error, '/')
-        else
+        else if connectionStatus == 2
           deferred.resolve client
+        else
+          console.log "connection not ready... waiting"
+          isResolved = ->
+            if connectionStatus == 2
+              console.log "connection ready... resolving"
+              deferred.resolve client
+            else
+              console.log "connection still not ready... waiting some more"
+              setTimeout isResolved, 200
+          setTimeout isResolved, 200
 
         return deferred.promise()
-
-
 
 

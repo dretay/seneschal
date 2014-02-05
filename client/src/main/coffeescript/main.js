@@ -16,9 +16,11 @@ requirejs.config({
     angularResource: 'vendor/managed/angular-resource/angular-resource',
     angularAnimate: 'vendor/managed/angular-animate/angular-animate',
     angularTouch: 'vendor/managed/angular-touch/angular-touch',
+    angularSanitize: 'vendor/managed/angular-sanitize/angular-sanitize',
 
     //bootstrap
     angularStrap: 'vendor/managed/angular-strap/angular-strap.min',
+    angularStrapTpl: 'vendor/managed/angular-strap/angular-strap.tpl.min',
     twitterBootstrap: 'vendor/managed/bootstrap/bootstrap',
 
     domReady: 'vendor/managed/requirejs-domready/domReady',
@@ -45,8 +47,14 @@ requirejs.config({
     'angularTouch': {
       deps: ['angular']
     },
+    'angularSanitize': {
+      deps: ['angular']
+    },
     'angularStrap': {
       deps: ['angular', 'twitterBootstrap']
+    },
+    'angularStrapTpl': {
+      deps: ['angularStrap']
     },
     'twitterBootstrap':{
       deps: ['jquery']

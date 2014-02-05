@@ -19,7 +19,7 @@ define [
     , true
 
     $scope.isActiveFloor = (floor)->
-      if floor == $scope.activeFloor then "selected" else ""
+      if floor == $scope.activeFloor then "active" else ""
 
     $scope.floors =
       basement:
