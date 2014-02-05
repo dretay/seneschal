@@ -9,7 +9,7 @@ Seneschal is a polyglot colletion of python daemons, lua scripts, and javascript
 One interesting design feature of Seneschal is that you do not need to log into the system per se. When you visit the front end you do so with a URL that looks something like this https://www.myhomeautomationserver.com/html/index-optimize.html#/home/Z2%252Fih%252Fsqp1eQeV6CpF%252Z2%252B/lights. That crazy looking string of characters in the middle of the URL is actually an AES256 encrypted list of all the usernames and passwords for the devices on your network. Seneschal will transparently decrypt that url when you access a resoruce (such as a web cam), extract the appropriate credentials, and apply them to the connection. That means that you can have "persistent" bookmarks to pages without worrying about remembering all your usernames and passwords. 
 
 ##Screenshots
-I case you are curious what this all looks like, I'll try to keep these screens as up-to-date as possible. The basic idea is that you can access all the devices in your home such as your  [Lights], [Alarm panel], [Cameras], and [Thermostat].
+In case you are curious what this all looks like, I'll try to keep these screens as up-to-date as possible. The basic idea is that you can access all the devices in your home such as your  [Lights], [Alarm panel], [Cameras], and [Thermostat].
 
 ##Compatibility
 - [Belkin WEMO Switches]
