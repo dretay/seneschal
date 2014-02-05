@@ -10,10 +10,9 @@ define [
 (controllers, _, $) ->
   'use strict'
 
-  controllers.controller 'lights', ['$scope', '$timeout', 'lights', ($scope, $timeout, lights) ->
-    lights.token = $scope.$parent.cfg.token
+  controllers.controller 'lights', ['$scope', '$timeout', '$routeParams', 'lights', ($scope, $timeout, $routeParams, lights) ->
+    lights.token = $routeParams.token
     $scope.lights = lights.query()
-    $scope.$parent.cfg.pageTitle = "Lights"
     $scope.loading = true
     $scope.$watch 'lights', (newVal, oldVal)->
       $scope.loading = if newVal.length > 0 then false else true

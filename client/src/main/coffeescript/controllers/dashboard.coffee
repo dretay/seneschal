@@ -7,7 +7,6 @@ define [
   'use strict'
 
   controllers.controller 'dashboard', ['$scope', '$timeout', ($scope, $timeout) ->
-    $scope.$parent.cfg.pageTitle = "Dashboard"
     cities = [
       name: "Herndon, VA"
       key: "Herndon"

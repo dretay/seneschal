@@ -1,20 +1,26 @@
 {
-  "name": "AngularJS Example Project",
+  "name": "Seneschal Home Automation Server",
   "version": "0.0.1",
   "dependencies": {
     "requirejs": "*",
     "requirejs-domready": "2.0.1",
 
     "jquery": "*",
-    "angular": "1.2.6",
 
-    "angular-resource": "1.2.6",
-    "angular-route": "1.2.6",
+    "angular": "1.2.10",
+    "angular-resource": "1.2.10",
+    "angular-route": "1.2.10",
+    "angular-animate": "1.2.10",
+    "angular-touch": "1.2.10",
+    "angular-strap": "2.0.0-rc.2",
+    "angular-motion": "0.3.0",
+
+    "bootstrap": "3.1.0",
     "underscore-amd": "1.4.4",
     "sockjs": "0.3.4",
     "stomp-websocket": "git://github.com/jmesnil/stomp-websocket.git#2.3.0"
   },
   "devDependencies":{
-    "angular-mocks": "1.2.6"
+    "angular-mocks": "1.2.10"
   }
 }

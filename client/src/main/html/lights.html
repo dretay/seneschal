@@ -1,25 +1,33 @@
-<div ng-controller="lights" class="lights">
-  <div class="floorSelector">
-    <span ng-class="isActiveFloor(floors.basement)"
-          ng-click="activeFloor = floors.basement">Basement</span>
+<div ng-controller="lights" class=".container-fluid">
+  <div class="lightFloorRow row">
+    <div class="col-xs-4 col-md-4 text-center"
+          ng-class="isActiveFloor(floors.basement)"
+          ng-click="activeFloor = floors.basement">
+      <h2>Basement</h2>
+    </div>
 
-    <span ng-class="isActiveFloor(floors.mainFloor)"
-          ng-click="activeFloor = floors.mainFloor">Main Floor</span>
+    <div class="col-xs-4 col-md-4 text-center"
+          ng-class="isActiveFloor(floors.mainFloor)"
+          ng-click="activeFloor = floors.mainFloor">
+      <h2>Main Floor</h2>
+    </div>
 
-    <span ng-class="isActiveFloor(floors.secondFloor)"
-          ng-click="activeFloor = floors.secondFloor">Second Floor</span>
+    <div class="col-xs-4 col-md-4 text-center"
+          ng-class="isActiveFloor(floors.secondFloor)"
+          ng-click="activeFloor = floors.secondFloor">
+      <h2>Second Floor</h2>
+    </div>
   </div>
-  <div class="lightsOverview">
-    <img ng-src="{{activeFloor.url}}" width="100%" height="100%"></img>
-    <div class="outerOverlay">
-      <div class="innerOverlay">
-        <div class="overlayContent">
-          <div ng:repeat="light in lights|lightsOnFloor:activeFloor.name">
-            <light light="light"></light>
-          </div>
+  <div class="row">
+    <div class="col-md-12 floorplan">
+      <img ng-src="{{activeFloor.url}}"></img>
+      <div class="lightOverlay">
+        <div ng:repeat="light in lights|lightsOnFloor:activeFloor.name">
+          <light light="light"></light>
         </div>
       </div>
     </div>
   </div>
-  <div ng-show="loading" ng-include=" '/html/directives/loadingMask.html' "></div>
+
+  <!-- <div ng-show="loading" ng-include=" '/html/directives/loadingMask.html' "></div> -->
 </div>

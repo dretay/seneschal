@@ -8,15 +8,15 @@ define [
 (controllers, _) ->
   'use strict'
 
-  controllers.controller 'thermostat', ['$scope', '$timeout', 'webStomp', '$filter', ($scope, $timeout, webStomp, $filter) ->
-    $scope.$parent.cfg.pageTitle = "Thermostat"
+  controllers.controller 'thermostat', ['$scope', '$rootScope', '$timeout', '$routeParams', 'webStomp', '$filter', ($scope, $rootScope, $timeout, $routeParams, webStomp, $filter) ->
+    # $scope.$parent.cfg.pageTitle = "Thermostat"
     $scope.targetTemperature = "---"
     $scope.currentTemperature = ""
     $scope.autoAway = ""
     $scope.targetTemperatureType = ""
     stompClient = null
     subscriptions = []
-    webStomp.getClient($scope.$parent.cfg.token).then (client)=>
+    webStomp.getClient($routeParams.token).then (client)=>
       stompClient = client
       subscriptions.push client.subscribe "/exchange/nest.thermostat/fanout", (data)->
         info = JSON.parse data.body
@@ -24,7 +24,7 @@ define [
         $scope.currentTemperature = info.current_temperature
         $scope.autoAway = info.auto_away
         $scope.targetTemperatureType = info.target_temperature_type
-        $scope.$apply()
+        $rootScope.$apply()
 
     $scope.$on '$destroy', ->
       stompClient.unsubscribe subscription.id for subscription in subscriptions

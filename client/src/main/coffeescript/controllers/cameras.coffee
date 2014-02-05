@@ -5,14 +5,15 @@ define [
 (controllers, _, $) ->
   'use strict'
 
-  controllers.controller 'cameras', ['$scope', '$timeout', 'lights', ($scope, $timeout, lights) ->
-    $scope.$parent.cfg.pageTitle = "Cameras"
+  controllers.controller 'cameras', ['$scope', '$timeout', '$routeParams', 'lights', ($scope, $timeout, $routeParams ,lights) ->
+    # $scope.$parent.cfg.pageTitle = "Cameras"
+    $scope.token = $routeParams.token
 
     $scope.cameras = [
-      {host: "www.drewandtrish.com:9000/cameras/livingroom", token: $scope.$parent.cfg.token}
-      {host: "www.drewandtrish.com:9000/cameras/basement", token: $scope.$parent.cfg.token}
-      {host: "www.drewandtrish.com:9000/cameras/frontdoor", token: $scope.$parent.cfg.token}
-      {host: "www.drewandtrish.com:9000/cameras/porch", token: $scope.$parent.cfg.token, inverted: true}
+      {host: "www.drewandtrish.com:9000/cameras/livingroom", token: $routeParams.token}
+      {host: "www.drewandtrish.com:9000/cameras/basement", token: $routeParams.token}
+      {host: "www.drewandtrish.com:9000/cameras/frontdoor", token: $routeParams.token}
+      {host: "www.drewandtrish.com:9000/cameras/porch", token: $routeParams.token, inverted: true}
 
     ]
 

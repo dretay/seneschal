@@ -25,8 +25,8 @@ exports.config =
   # karma:
   #   configFile: 'src/test/karma-unit.conf.js'
   #   externalConfig: true
-  copy:
-    extensions: ["csv", "properties", "js","css","png","jpg","jpeg","gif","html","eot","svg","ttf","woff","otf","yaml","kml","ico","htc","htm","json","txt","xml","xsd","map"]
+  # copy:
+    # extensions: ["csv", "properties", "js","css","png","jpg","jpeg","gif","html","eot","svg","ttf","woff","otf","yaml","kml","ico","htc","htm","json","txt","xml","xsd","map"]
   minify:
     exclude:[/\.min\./, "coffeescript/main.js", "coffeescript/app.js"]
   watch:
@@ -54,8 +54,9 @@ exports.config =
     copy:
       outRoot: "managed"
       mainOverrides:
+        "font-awesome":["fonts/fontawesome-webfont.woff","fonts/fontawesome-webfont.svg","fonts/FontAwesome.otf","fonts/fontawesome-webfont.eot","fonts/fontawesome-webfont.ttf","css/font-awesome.css"]
+        "angular-motion":["dist/angular-motion.css"]
         "stomp-websocket":["lib/stomp.js"]
         "requirejs-domready":["domReady.js"]
         "requirejs-i18n":["i18n.js"]
-        "font-awesome":["css/font-awesome.min.css"]
         "jquery.svg": ["jquery.svg.js"]

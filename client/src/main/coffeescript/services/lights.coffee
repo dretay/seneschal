@@ -21,7 +21,7 @@ define [
               status: false
               floor: "basement"
               location:
-                left: 27
+                left: 48
                 top: 9
             }
             {
@@ -29,23 +29,23 @@ define [
               status: false
               floor: "mainFloor"
               location:
-                left: 19
-                top: 48
+                left: 33
+                top: 81
             }
             {
               name: "Family Room"
               status: false
               floor: "mainFloor"
               location:
-                left: 47
-                top: 9
+                left: 69
+                top: 22
             }
             {
               name: "Back Yard"
               status: false
               floor: "mainFloor"
               location:
-                left: 28
+                left: 50
                 top: 0
             }
             {
@@ -53,24 +53,24 @@ define [
               status: false
               floor: "mainFloor"
               location:
-                left: 8
-                top: 48
+                left: 18
+                top: 81
             }
             {
               name: "Drews Office"
               status: false
               floor: "secondFloor"
               location:
-                left: 8
-                top: 26
+                left: 17
+                top: 43
             }
             {
               name: "Master Bedroom"
               status: false
               floor: "secondFloor"
               location:
-                left: 48
-                top: 8
+                left: 83
+                top: 12
             }
           ]
 
