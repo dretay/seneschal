@@ -11,13 +11,14 @@ define [
     replace: false
     templateUrl: '/html/directives/camera.html'
     scope:
-      host: "="
+      videoUrl: "="
+      controlUrl: "="
       token: "="
       thumbnail: "="
       inverted: "="
     controller: ($scope, $injector, $timeout)->
       $scope.proto = "https://"
-      $scope.stream = '/videostream.cgi'
+      $scope.stream = '/mjpeg_stream'
       $scope.control = '/decoder_control.cgi'
 
       $scope.getFramerate = ->
@@ -58,7 +59,7 @@ define [
 
       $scope.cameraCmd = (command)->
         $.ajax({
-          url: "#{$scope.proto}#{$scope.host}#{$scope.control}"
+          url: "#{$scope.proto}#{$scope.controlUrl}#{$scope.control}"
           data:
             command: command
             token: $scope.token

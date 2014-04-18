@@ -10,11 +10,27 @@ define [
     $scope.token = $routeParams.token
 
     $scope.cameras = [
-      {host: "www.drewandtrish.com:9000/cameras/livingroom", token: $routeParams.token}
-      {host: "www.drewandtrish.com:9000/cameras/basement", token: $routeParams.token}
-      {host: "www.drewandtrish.com:9000/cameras/frontdoor", token: $routeParams.token}
-      {host: "www.drewandtrish.com:9000/cameras/porch", token: $routeParams.token, inverted: true}
-
+      {
+        videoUrl: "www.drewandtrish.com:9000/cameras/127.0.0.1/9100"
+        controlUrl: "www.drewandtrish.com:9000/cameras/192.168.1.16/8082"
+        token: $routeParams.token
+      }
+      {
+        videoUrl: "www.drewandtrish.com:9000/cameras/127.0.0.1/9101"
+        controlUrl: "www.drewandtrish.com:9000/cameras/192.168.1.15/8081"
+        token: $routeParams.token
+      }
+      {
+        videoUrl: "www.drewandtrish.com:9000/cameras/127.0.0.1/9102"
+        controlUrl: "www.drewandtrish.com:9000/cameras/192.168.1.17/8080"
+        token: $routeParams.token
+      }
+      {
+        videoUrl: "www.drewandtrish.com:9000/cameras/127.0.0.1/9103"
+        controlUrl: "www.drewandtrish.com:9000/cameras/192.168.1.18/8083"
+        token: $routeParams.token
+        inverted: true
+      }
     ]
 
     $scope.setActiveCamera = (index)->

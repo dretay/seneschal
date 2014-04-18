@@ -1,5 +1,5 @@
 <div class="camera">
-  <img ng-class="getCameraClass()" ng-src="{{proto}}{{host}}{{stream}}?token={{getEncodedToken()}}&rate={{getFramerate()}}"/>
+  <img ng-class="getCameraClass()" ng-src="{{proto}}{{videoUrl}}{{stream}}?token={{getEncodedToken()}}&rate={{getFramerate()}}"/>
   <div class="cameraControls" ng-hide="thumbnail">
     <div class="left" ng-mousedown="startCameraMove('left')" ng-mouseup="endCameraMove('left')"></div>
     <div class="right" ng-mousedown="startCameraMove('right')" ng-mouseup="endCameraMove('right')"></div>

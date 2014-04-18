@@ -12,7 +12,7 @@
     "angular-route": "1.2.10",
     "angular-animate": "1.2.10",
     "angular-touch": "1.2.10",
-    "angular-sanitize": "1.2.10",
+    "angular-sanitize": "~1.2.10",
     "angular-strap": "2.0.0-rc.2",
     "angular-motion": "0.3.0",
 

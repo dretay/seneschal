@@ -1,12 +1,24 @@
 <div class=".container-fluid">
   <div class="row">
     <div class="col-xs-3 col-md-3 " ng:repeat="camera in cameras">
-      <camera ng-click="setActiveCamera($index)" host="camera.host" token="camera.token" thumbnail="true"></camera>
+      <camera
+        ng-click="setActiveCamera($index)"
+        video-url="camera.videoUrl"
+        control-url="camera.controlUrl"
+        token="camera.token"
+        thumbnail="true">
+      </camera>
     </div>
   </div>
   <div class="row">
     <div class="col-md-12">
-      <camera host="cameras[activeCamera].host" token="cameras[activeCamera].token" thumbnail="false" inverted="cameras[activeCamera].inverted"></camera>
+      <camera
+        video-url="cameras[activeCamera].videoUrl"
+        control-url="cameras[activeCamera].controlUrl"
+        token="cameras[activeCamera].token"
+        thumbnail="false"
+        inverted="cameras[activeCamera].inverted">
+      </camera>
     </div>
   </div>
 

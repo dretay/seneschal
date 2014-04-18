@@ -17,12 +17,12 @@ define [
           #todo: this needs to be in something like redis or the service... i shouldn't be storing it...
           lights = [
             {
-              name: "Basement"
+              name: "Guest Bedroom"
               status: false
               floor: "basement"
               location:
-                left: 48
-                top: 9
+                left: 18
+                top: 24
             }
             {
               name: "Front Porch"
