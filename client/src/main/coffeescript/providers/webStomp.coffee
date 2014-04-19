@@ -26,8 +26,8 @@ define [
       connectionStatus = 0
 
       subscriptions: []
-      getClient: (token)=>
-        console.log "getting connection..."
+      getClient: (token, retry)=>
+        console.log "getting connection... "+(if(_.isBoolean(retry) && retry) then 'again...' else '')
         on_connect = ->
           connectionStatus = 2
           @subscriptions = client.subscriptions
@@ -48,6 +48,7 @@ define [
               token: token
             success: (data)->
               client.connect(data.username, data.password, on_connect, on_error, '/')
+          setTimeout (=> unless connectionStatus == 2 then getClient token, true) ,300
         else if connectionStatus == 2
           deferred.resolve client
         else
