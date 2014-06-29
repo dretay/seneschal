@@ -3,20 +3,23 @@
   top 0
   left 0
   cursor pointer
+  color #2c3e50
+  z-index 1
 
 .lightBulb-on:before
   content:''
   display block
-  height 1.4em
-  width 1.4em
+  height 1.5em
+  width 1.5em
   border-radius 100%
   background #ddd
   margin auto
-  box-shadow 0 0 50px gold,0 0 150px gold, inset 0 20px 20px 40px whitesmoke, inset 30px 0 35px 50px ivory
+  box-shadow 0 0 50px #ffd700,0 0 150px #ffd700,inset 0 20px 20px 40px rgba(255, 226, 68, 0.58),inset 30px 0 35px 50px ivory
   transition 1s
   position absolute
-  top 9%
-  left 9%
+  top 7.5%
+  left 7%
+  z-index -1
 
 .lightBulb-on:hover:before
   box-shadow 0 0 50px tomato,0 0 30px orange, inset 0 10px 10px 20px #ddd, inset 30px 0 35px 50px #ccc

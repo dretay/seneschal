@@ -1,4 +1,7 @@
 window.loggingLevel = 'all';
+window.debug = {
+  log: console.log
+};
 
 requirejs.config({
   paths: {
@@ -12,6 +15,7 @@ requirejs.config({
 
     //angular
     angular: 'vendor/managed/angular/angular',
+    angularUi: 'vendor/managed/angular-bootstrap/ui-bootstrap-tpls',
     angularRoute: 'vendor/managed/angular-route/angular-route',
     angularResource: 'vendor/managed/angular-resource/angular-resource',
     angularAnimate: 'vendor/managed/angular-animate/angular-animate',
@@ -29,14 +33,19 @@ requirejs.config({
     jqueryMigrate: 'vendor/unmanaged/jquery-migrate-1.2.1.min',
     jquerySvg: 'vendor/unmanaged/jquery.svg',
 
+    //utils
     stomp: 'vendor/managed/stomp-websocket/stomp',
     sockjs: 'vendor/managed/sockjs/sockjs',
+    moment: 'vendor/managed/moment/moment'
 
 
   },
   shim: {
     'jquerySvg':{
       deps: ['jquery', 'jqueryMigrate']
+    },
+    'angularUi': {
+      deps: ['angular']
     },
     'angularResource': {
       deps: ['angular']
@@ -75,6 +84,9 @@ requirejs.config({
     },
     'sockjs':{
       exports: 'SockJS'
+    },
+    'moment':{
+      exports: 'moment'
     }
   },
   priority: ["angular"]

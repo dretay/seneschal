@@ -16,11 +16,10 @@ define [
       unless _.isString @password then @password = 'guest'
 
 
-      deferred = $.Deferred()
-      pollingStarted = false
-      pollingCycles = 0
-      subscriptions: []
-      getSocket: =>
+      client= null
+      connectionStatus= 0
+      getSocket= =>
+        console.log "getting connection... "
         ws = new SockJS("https://#{@hostname}:#{@port}/rabbitmq/stomp")
         client = Stomp.over(ws)
         # client.debug = -> null
@@ -28,58 +27,56 @@ define [
         client.heartbeat.outgoing = 0
         client.heartbeat.incoming = 0
         return client
+      getRabbitCredentials= (token)=>
+        $.ajax
+            type: 'GET'
+            url: "https://#{@hostname}:#{@port}/getRabbitCredentials"
+            dataType: 'json'
+            data:
+              token: token
 
-      getClient: (token)=>
-        `var instanceScope = this`
-        client = instanceScope.getSocket()
+      client: null
+      subscriptions: []
+      getClient: (token, deferred)->
+        if client == null then @client = client = getSocket() else @client = client
+        unless deferred? then deferred = $.Deferred()
         username = null
         password = null
-        connectionStatus = 0
-        console.log "getting connection... "
-        on_connect = ->
-          console.log "connected to broker, resolving... "
-          connectionStatus = 3
-          @subscriptions = client.subscriptions
-          deferred.resolve client
-        on_error = ->
-          console.log "RABBITMQ STOMP ERROR HANDLER CALLED!!!!!!!!!!!!!! #{JSON.stringify arguments}"
-          deferred.reject client
 
-        console.log "starting connection..."
-        connectionStatus = 1
-        $.ajax
-          type: 'GET'
-          url: "https://#{@hostname}:#{@port}/getRabbitCredentials"
-          dataType: 'json'
-          data:
-            token: token
-          success: (data)->
-            connectionStatus = 2
-            username = data.username
-            password = data.password
-            client.connect(username, password, on_connect, on_error, '/')
-          error: (jqXHR, textStatus, errorThrown )->
-            console.err textStatus
+        #if we're requesting a connection for the first time and one's already been established
+        # if connectionStatus == 3
+        #  deferred.resolve client
+        #  return
 
-        unless pollingStarted
-          isResolved = ->
-            if connectionStatus == 3
-              console.log "connection ready... should have been resolved"
-              # deferred.resolve client
-            else if connectionStatus == 2 && pollingCycles > 10
-              pollingCycles = 0
-              _.bind(->
-                console.log "credentials retrieved but socket not initialized, trying again"
-                this.getClient token
-              , instanceScope)
-            else
-              pollingCycles +=1
-              console.log "connection not ready(#{connectionStatus})... waiting some more"
-              setTimeout isResolved, 500
-          pollingStarted = true
-          setTimeout isResolved, 500
-        else
-          console.log "not setting up new poller - one is already registered"
+        if connectionStatus == 0
+          console.log "starting connection..."
+          on_connect = =>
+            console.log "connection ready... resolving within connect callback"
+            connectionStatus = 3
+            @subscriptions = client.subscriptions
+            if deferred.state() != "resolved" then deferred.resolve client
+          on_error = =>
+            console.log "RABBITMQ STOMP ERROR HANDLER CALLED!!!!!!!!!!!!!! #{JSON.stringify arguments}"
+            deferred.reject client
+          connectionStatus = 1
+          getRabbitCredentials(token).then (data)->
+              connectionStatus = 2
+              username = data.username
+              password = data.password
+              client.connect(username, password, on_connect, on_error, '/')
+
+        isResolved = =>
+          if connectionStatus == 3 and deferred.state() != "resolved"
+              console.log "connection ready... resolving within watcher"
+              deferred.resolve client
+          else if deferred.state() == "pending"
+            console.log "connection not ready yet... trying again"
+            @getClient token, deferred
+
+
+
+        setTimeout isResolved, 500
+
 
         return deferred.promise()
 

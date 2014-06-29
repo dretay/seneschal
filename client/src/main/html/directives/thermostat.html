@@ -1,0 +1,9 @@
+<div
+  ng-class="getClass()"
+  ng-style="{{getStyle()}}"
+  class="lightBulb"
+  ng-attr-title="{{thermostat.name}}"
+  ng-click="openThermostat('lg')">
+  <i class="fa fa-sort fa-2x"></i>
+  <span style="position: relative; top: -5px">{{thermostat.data.ambient_temperature_f}}&deg;</span>
+</div>

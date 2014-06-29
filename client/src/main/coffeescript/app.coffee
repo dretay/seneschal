@@ -7,6 +7,7 @@ define [
   'angularSanitize'
   'angularStrap'
   'angularStrapTpl'
+  'angularUi'
   'c/controllers'
   'd/directives'
   'f/filters'
@@ -18,7 +19,7 @@ define [
   angular.module 'app', [
       'ngAnimate'
       'ngSanitize'
-      'mgcrea.ngStrap'
+      'ui.bootstrap'
       'ngResource'
       'ngRoute'
       'ngTouch'

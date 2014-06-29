@@ -1,4 +1,12 @@
-<div class="camera">
+<div
+  ng-class="getClass()"
+  ng-style="{{getStyle()}}"
+  class="lightBulb"
+  ng-attr-title="{{camera.name}}"
+  ng-click="openCamera('lg')">
+  <i class="fa fa-video-camera fa-2x"></i>
+</div>
+<!-- <div class="camera">
   <img ng-class="getCameraClass()" ng-src="{{proto}}{{videoUrl}}{{stream}}?token={{getEncodedToken()}}&rate={{getFramerate()}}"/>
   <div class="cameraControls" ng-hide="thumbnail">
     <div class="left" ng-mousedown="startCameraMove('left')" ng-mouseup="endCameraMove('left')"></div>
@@ -6,4 +14,4 @@
     <div class="top" ng-mousedown="startCameraMove('up')" ng-mouseup="endCameraMove('up')"></div>
     <div class="bottom" ng-mousedown="startCameraMove('down')" ng-mouseup="endCameraMove('down')"></div>
   </div>
-</div>
+</div> -->

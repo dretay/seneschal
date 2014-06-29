@@ -53,11 +53,11 @@
 
   .color-circle
     position: absolute;
-    top: 50px;
-    margin-left: 52px;
+    top: 55px;
+    margin-left: 56px;
     z-index: 2;
-    width: 320px;
-    height: 320px;
+    width: 310px;
+    height: 310px;
     -moz-border-radius: 153px;
     -webkit-border-radius: 153px;
     border-radius: 153px;
@@ -72,16 +72,150 @@
   .text-readout
     color: #f5f5f5;
     text-shadow: 0 2px 4px rgba(3,4,4,.55);
-    font-size: 12em;
+    font-size: 11em;
     font-family: "Myriad Pro Regular",sans-serif;
     font-weight: 700;
 
     position:relative;
-    top:-58px;
+    top:-48px;
     /*left:116px;*/
     /*margin-left: 115px;*/
     z-index:4;
     text-align: center;
+
+  .thermostat-target-needle
+    display:block;
+    width:.4em;
+    height:2.5em;
+    background:red;
+    position:absolute;
+    top:50%; left:50%;
+    margin:-1.1em 0 0 -.2em;
+    // transform:rotate(12deg)   translateY(-12.7em)
+
+  .thermostat-current-needle
+    display:block;
+    width:.4em;
+    height:2.5em;
+    background:black;
+    position:absolute;
+    top:50%; left:50%;
+    margin:-1.1em 0 0 -.2em;
+    // transform:rotate(22deg)   translateY(-12.7em)
+
+  .thermostat-current-number
+    display: block;
+    width: 1.2em;
+    font-size: 20pt;
+    height: 1em;
+    position: absolute;
+    top: 50%;
+    font-weight: bold;
+    left: 50%;
+    z-index: 2;
+    // transform:rotate(22deg)   translateY(-12.7em)
+
+  ul
+    list-style:none;
+    margin:0;
+    padding:0
+  .minute-marks li
+    display:block;
+    width:.2em;
+    height:.6em;
+    background:#929394;
+    position:absolute;
+    top:50%; left:50%;
+    margin:-.4em 0 0 -.1em;
+
+    &:first-child {transform:rotate(6deg)     translateY(-12.7em)}
+    &:nth-child(2) {transform:rotate(12deg)   translateY(-12.7em)}
+    &:nth-child(3) {transform:rotate(18deg)   translateY(-12.7em)}
+    &:nth-child(4) {transform:rotate(24deg)   translateY(-12.7em)}
+    &:nth-child(5) {transform:rotate(30deg)   translateY(-12.7em)}
+    &:nth-child(6) {transform:rotate(36deg)   translateY(-12.7em)}
+    &:nth-child(7) {transform:rotate(42deg)   translateY(-12.7em)}
+    &:nth-child(8) {transform:rotate(48deg)   translateY(-12.7em)}
+    &:nth-child(9) {transform:rotate(54deg)   translateY(-12.7em)}
+    &:nth-child(10) {transform:rotate(60deg)   translateY(-12.7em)}
+    &:nth-child(11) {transform:rotate(66deg)   translateY(-12.7em)}
+    &:nth-child(12) {transform:rotate(72deg)  translateY(-12.7em)}
+    &:nth-child(13) {transform:rotate(78deg)  translateY(-12.7em)}
+    &:nth-child(14) {transform:rotate(84deg)  translateY(-12.7em)}
+    &:nth-child(15) {transform:rotate(90deg)  translateY(-12.7em)}
+    &:nth-child(16) {transform:rotate(96deg)  translateY(-12.7em)}
+    &:nth-child(17) {transform:rotate(102deg) translateY(-12.7em)}
+    &:nth-child(18) {transform:rotate(108deg) translateY(-12.7em)}
+    &:nth-child(19) {transform:rotate(114deg) translateY(-12.7em)}
+    &:nth-child(20) {transform:rotate(120deg) translateY(-12.7em)}
+    &:nth-child(21) {transform:rotate(126deg) translateY(-12.7em)}
+    &:nth-child(22) {transform:rotate(132deg) translateY(-12.7em)}
+    &:nth-child(23) {transform:rotate(138deg) translateY(-12.7em)}
+    &:nth-child(24) {transform:rotate(144deg) translateY(-12.7em)}
+    &:nth-child(25) {transform:rotate(216deg) translateY(-12.7em)}
+    &:nth-child(26) {transform:rotate(222deg) translateY(-12.7em)}
+    &:nth-child(27) {transform:rotate(228deg) translateY(-12.7em)}
+    &:nth-child(28) {transform:rotate(234deg) translateY(-12.7em)}
+    &:nth-child(29) {transform:rotate(240deg) translateY(-12.7em)}
+    &:nth-child(30) {transform:rotate(246deg) translateY(-12.7em)}
+    &:nth-child(31) {transform:rotate(252deg) translateY(-12.7em)}
+    &:nth-child(32) {transform:rotate(258deg) translateY(-12.7em)}
+    &:nth-child(33) {transform:rotate(264deg) translateY(-12.7em)}
+    &:nth-child(34) {transform:rotate(270deg) translateY(-12.7em)}
+    &:nth-child(35) {transform:rotate(276deg) translateY(-12.7em)}
+    &:nth-child(36) {transform:rotate(282deg) translateY(-12.7em)}
+    &:nth-child(37) {transform:rotate(288deg) translateY(-12.7em)}
+    &:nth-child(38) {transform:rotate(294deg) translateY(-12.7em)}
+    &:nth-child(39) {transform:rotate(300deg) translateY(-12.7em)}
+    &:nth-child(40) {transform:rotate(306deg) translateY(-12.7em)}
+    &:nth-child(41) {transform:rotate(312deg) translateY(-12.7em)}
+    &:nth-child(42) {transform:rotate(318deg) translateY(-12.7em)}
+    &:nth-child(43) {transform:rotate(324deg) translateY(-12.7em)}
+    &:nth-child(44) {transform:rotate(330deg) translateY(-12.7em)}
+    &:nth-child(45) {transform:rotate(336deg) translateY(-12.7em)}
+    &:nth-child(46) {transform:rotate(342deg) translateY(-12.7em)}
+    &:nth-child(47) {transform:rotate(348deg) translateY(-12.7em)}
+    &:nth-child(48) {transform:rotate(354deg) translateY(-12.7em)}
+    &:nth-child(49) {transform:rotate(0deg) translateY(-12.7em)}
+  .digits
+    width:30em;
+    height:30em;
+    border-radius:15em;
+    position:absolute;
+    top:48px; left:50%;
+    margin-left:-15em;
+
+    li
+      font-size:1.6em;
+      display:block;
+      width:1.6em;
+      height:1.6em;
+      position:absolute;
+      top:50%; left:50%;
+      line-height:1.6em;
+      text-align:center;
+      margin:-.8em 0 0 -.8em;
+      font-weight:bold;
+
+      &:nth-child(1) { transform:translate(3.9em, -6.9em) }
+      &:nth-child(2) { transform:translate(6.9em, -4em) }
+      &:nth-child(3) { transform:translate(8em, 0) }
+      &:nth-child(4) { transform:translate(6.8em, 4em) }
+      &:nth-child(5) { transform:translate(3.9em, 6.9em) }
+      &:nth-child(6) { transform:translate(0, 8em) }
+      &:nth-child(7) { transform:translate(-3.9em, 6.9em) }
+      &:nth-child(8) { transform:translate(-6.8em, 4em) }
+      &:nth-child(9) { transform:translate(-8em, 0) }
+      &:nth-child(10) { transform:translate(-6.9em, -4em) }
+      &:nth-child(11) { transform:translate(-3.9em, -6.9em) }
+      &:nth-child(12) { transform:translate(0, -8em) }
+
+
+  .hvacInfo
+    font-size 20pt
+    position relative
+    top -92px
+    text-transform uppercase
 
   .thermostatControlTop
     cursor: pointer;
@@ -104,7 +238,7 @@
     font-weight: 400;
     // padding: 50px 0 10px 0;
     top: -140px;
-    left: 25px;
+    left: 15px;
     position: relative;
     cursor: default;
     font-family: "Myriad Pro Bold Condensed";
