@@ -10,8 +10,8 @@ define [
     new Resource
       get:
         inbound: "wemo.lights"
-        outbound: "wemo.lights"
-        subscription: "/exchange/wemo.lights/fanout"
+        outbound: "/exchange/lights.cmd"
+        subscription: "/exchange/lights.status/fanout"
         outboundTransform: (rawData)->
           operation: 'list_switches'
         inboundTransform: (rawData, oldData)->
@@ -113,7 +113,7 @@ define [
 
       update:
         inbound: "wemo.lights"
-        outbound: "wemo.lights"
+        outbound: "/exchange/lights.cmd"
         outboundTransform: (rawData, args)->
           unless rawData.status
             operation: 'toggle_on'

@@ -10,8 +10,8 @@ define [
   services.factory 'alarmZones', ['webStompResource', (Resource)->
     new Resource
       get:
-        subscription: "/exchange/eyezon.alarm/fanout"
-        outbound: "eyezon.alarm"
+        subscription: "/exchange/alarm.status/fanout"
+        outbound: "/exchange/alarm.cmd"
         inbound: "eyezon.alarm"
         outboundTransform: -> "^02,$"
         inboundTransform: (rawData, oldData)->

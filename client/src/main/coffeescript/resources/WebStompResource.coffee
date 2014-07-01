@@ -22,25 +22,26 @@ define [
 
         webStomp.getClient(@token).then (client)=>
           handleResponse = (response)=>
-            @lastUpdate = new Date().getTime()
-            rawData = JSON.parse response.body
+            if response?
+              @lastUpdate = new Date().getTime()
+              rawData = JSON.parse response.body
 
-            #apply any mapping that's necessary
-            rawData = @[action].inboundTransform(rawData, data, client) if _.isFunction @[action].inboundTransform
+              #apply any mapping that's necessary
+              rawData = @[action].inboundTransform(rawData, data, client) if _.isFunction @[action].inboundTransform
 
-            #map the raw data into a Response
-            if _.isArray rawData
-              final = _.map rawData, (element)=> new WebStompEntity(element,webStomp,@)
-            else
-              final = new WebStompEntity(rawData,webStomp,@)
+              #map the raw data into a Response
+              if _.isArray rawData
+                final = _.map rawData, (element)=> new WebStompEntity(element,webStomp,@)
+              else
+                final = new WebStompEntity(rawData,webStomp,@)
 
-            if action == "get" and rawData != null
-              #replace the stub with the real response
-              angular.copy(final, data)
-            else
-              deferred.resolve(final)
+              if action == "get" and rawData != null
+                #replace the stub with the real response
+                angular.copy(final, data)
+              else
+                deferred.resolve(final)
 
-            $rootScope.$apply()
+              $rootScope.$apply()
 
           query = @[action].outboundTransform(query) if _.isFunction @[action].outboundTransform
           if _.isString query or _.isNumber query

@@ -21,7 +21,7 @@ define [
             left: 62
             top: 47
           rotation: 90
-          videoUrl: "www.drewandtrish.com:9000/cameras/192.168.1.28/8081/"
+          videoUrl: "www.drewandtrish.com/cameras/192.168.1.28/8081/"
           token: $routeParams.token
           proto: "https://"
           # inverted: true
@@ -37,8 +37,8 @@ define [
           left: 44
           top: 75
         rotation: 135
-        videoUrl: "www.drewandtrish.com:9000/cameras/192.168.1.18/8083"
-        controlUrl: "www.drewandtrish.com:9000/cameras/192.168.1.18/8083"
+        videoUrl: "www.drewandtrish.com/cameras/192.168.1.18/8083"
+        controlUrl: "www.drewandtrish.com/cameras/192.168.1.18/8083"
         token: $routeParams.token
         proto: "https://"
         inverted: true
@@ -54,8 +54,8 @@ define [
           left: 36
           top: 67
         rotation: -90
-        videoUrl: "www.drewandtrish.com:9000/cameras/192.168.1.17/8080"
-        controlUrl: "www.drewandtrish.com:9000/cameras/192.168.1.17/8080"
+        videoUrl: "www.drewandtrish.com/cameras/192.168.1.17/8080"
+        controlUrl: "www.drewandtrish.com/cameras/192.168.1.17/8080"
         token: $routeParams.token
         proto: "https://"
         stream: '/videostream.cgi'
@@ -70,8 +70,8 @@ define [
           left: 47.5
           top: 13
         rotation: 90
-        videoUrl: "www.drewandtrish.com:9000/cameras/192.168.1.16/8082"
-        controlUrl: "www.drewandtrish.com:9000/cameras/192.168.1.16/8082"
+        videoUrl: "www.drewandtrish.com/cameras/192.168.1.16/8082"
+        controlUrl: "www.drewandtrish.com/cameras/192.168.1.16/8082"
         token: $routeParams.token
         proto: "https://"
         stream: '/videostream.cgi'
@@ -86,8 +86,8 @@ define [
           left: 37
           top: 13
         rotation: 45
-        videoUrl: "www.drewandtrish.com:9000/cameras/192.168.1.15/8081"
-        controlUrl: "www.drewandtrish.com:9000/cameras/192.168.1.15/8081"
+        videoUrl: "www.drewandtrish.com/cameras/192.168.1.15/8081"
+        controlUrl: "www.drewandtrish.com/cameras/192.168.1.15/8081"
         token: $routeParams.token
         proto: "https://"
         stream: '/videostream.cgi'

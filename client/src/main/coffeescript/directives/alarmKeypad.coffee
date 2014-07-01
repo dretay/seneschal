@@ -63,7 +63,7 @@ define [
 
 
         modalInstance.result.then (command)->
-            webStomp.client.send "/amq/queue/eyezon.alarm",null, command
+            webStomp.client.send "/exchange/alarm.cmd",null, command
         ,->
           $log.info('Modal dismissed at: ' + new Date());
 

@@ -23,8 +23,8 @@ requirejs.config({
     angularSanitize: 'vendor/managed/angular-sanitize/angular-sanitize',
 
     //bootstrap
-    angularStrap: 'vendor/managed/angular-strap/angular-strap.min',
-    angularStrapTpl: 'vendor/managed/angular-strap/angular-strap.tpl.min',
+    //angularStrap: 'vendor/managed/angular-strap/angular-strap.min',
+    //angularStrapTpl: 'vendor/managed/angular-strap/angular-strap.tpl.min',
     twitterBootstrap: 'vendor/managed/bootstrap/bootstrap',
 
     domReady: 'vendor/managed/requirejs-domready/domReady',
@@ -59,12 +59,12 @@ requirejs.config({
     'angularSanitize': {
       deps: ['angular']
     },
-    'angularStrap': {
+    /*'angularStrap': {
       deps: ['angular', 'twitterBootstrap']
     },
     'angularStrapTpl': {
       deps: ['angularStrap']
-    },
+    },*/
     'twitterBootstrap':{
       deps: ['jquery']
     },

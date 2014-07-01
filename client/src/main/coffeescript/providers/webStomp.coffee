@@ -11,7 +11,7 @@ define [
   providers.provider 'webStomp', ->
     $get: ->
       unless _.isString @hostname then @hostname = 'localhost'
-      unless _.isNumber @port then @port = 9000
+      unless _.isNumber @port then @port = 443
       unless _.isString @username then @username = 'guest'
       unless _.isString @password then @password = 'guest'
 

@@ -1,0 +1,56 @@
+  server {
+		listen       9000;
+		server_name  www.drewandtrish.com;
+		#add_header Strict-Transport-Security max-age=2592000;
+		ssl on;
+		ssl_certificate /etc/pki/ssl-unified.crt;
+		ssl_certificate_key /etc/pki/www.drewandtrish.com.key;
+
+		ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+		ssl_ciphers ECDHE-RSA-AES256-SHA384:AES256-SHA256:RC4:HIGH:!MD5:!aNULL:!eNULL:!NULL:!DH:!EDH:!AESGCM;
+		ssl_prefer_server_ciphers on;
+		ssl_session_cache shared:SSL:10m;
+		ssl_session_timeout 10m;
+
+
+		location / {
+			root /Users/drew/dev/seneschal/client/build/resources/main;
+		}
+#location /generateCredentials {
+#default_type 'text/plain';
+#content_by_lua_file  /opt/nginx/lua/getCredentials.lua;
+#}
+		location /getRabbitCredentials {
+			add_header Access-Control-Allow-Origin "*";
+			default_type 'text/plain';
+			content_by_lua_file  /opt/nginx/lua/getRabbitCredentials.lua;
+		}
+		location /rabbitmq{
+			access_log off;
+			proxy_pass http://localhost:15674;
+			proxy_set_header X-Real-IP $remote_addr;
+			proxy_set_header Host $host;
+			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+			# WebSocket support (nginx 1.4)
+			proxy_http_version 1.1;
+			proxy_set_header Upgrade $http_upgrade;
+			proxy_set_header Connection "upgrade";
+
+			rewrite ^/rabbitmq/(.+) /$1 break;
+			proxy_redirect off;
+		}
+		location /cameras {
+			add_header Access-Control-Allow-Origin *;
+      proxy_redirect off;
+      rewrite_by_lua_file  /opt/nginx/lua/foscam.lua;
+      rewrite ^/cameras/(.+)/(.+)/(.*) /$3 break;
+      proxy_set_header        Accept-Encoding   "";
+      proxy_set_header        Host            $host;
+      proxy_set_header        X-Real-IP       $remote_addr;
+      proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_pass http://$1:$2;
+		}
+
+	}
+}
