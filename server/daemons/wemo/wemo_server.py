@@ -38,7 +38,7 @@ class KombuDaemon(threading.Thread):
       sys.stdout.flush()
       switch = env.get_switch(message['switchName'])
       rpcReply(switch.on(), args)
-      env.discover(seconds=5)
+      list_switches()
 
 
     def toggle_off(message, args):
@@ -46,21 +46,22 @@ class KombuDaemon(threading.Thread):
       sys.stdout.flush()
       switch = env.get_switch(message['switchName'])
       rpcReply(switch.off(), args)
-      env.discover(seconds=5)
+      list_switches()
 
 
-    def list_switches(message, args):
+    def list_switches(message=None, args=None):
       switches = []
-      for switch in env.list_switches():
-        switches.append({
-          "name": switch,
-          "status": env.get_switch(switch).get_state()
-          })
-      print "listing finished dumping to json"
-      print json.dumps(switches)
-      sys.stdout.flush()
-      #respond immediately to the guy that asked
-      rpcReply(switches, args)
+      if message != None and args != None:
+        for switch in env.list_switches():
+          switches.append({
+            "name": switch,
+            "status": env.get_switch(switch).get_state()
+            })
+        print "listing finished dumping to json"
+        print json.dumps(switches)
+        sys.stdout.flush()
+        #respond immediately to the guy that asked
+        rpcReply(switches, args)
 
       env.discover(seconds=5)
       for switch in env.list_switches():

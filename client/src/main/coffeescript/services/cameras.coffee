@@ -37,12 +37,12 @@ define [
           left: 44
           top: 75
         rotation: 135
-        videoUrl: "www.drewandtrish.com/cameras/192.168.1.18/8083"
+        videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.2/8080"
         controlUrl: "www.drewandtrish.com/cameras/192.168.1.18/8083"
         token: $routeParams.token
         proto: "https://"
         inverted: true
-        stream: '/videostream.cgi'
+        stream: '/porch'
         control: '/decoder_control.cgi'
         viewUrl: @foscamViewUrl
       }
@@ -54,11 +54,11 @@ define [
           left: 36
           top: 67
         rotation: -90
-        videoUrl: "www.drewandtrish.com/cameras/192.168.1.17/8080"
+        videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.2/8080"
         controlUrl: "www.drewandtrish.com/cameras/192.168.1.17/8080"
         token: $routeParams.token
         proto: "https://"
-        stream: '/videostream.cgi'
+        stream: '/frontdoor'
         control: '/decoder_control.cgi'
         viewUrl: @foscamViewUrl
       }
@@ -70,11 +70,11 @@ define [
           left: 47.5
           top: 13
         rotation: 90
-        videoUrl: "www.drewandtrish.com/cameras/192.168.1.16/8082"
+        videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.2/8080"
         controlUrl: "www.drewandtrish.com/cameras/192.168.1.16/8082"
         token: $routeParams.token
         proto: "https://"
-        stream: '/videostream.cgi'
+        stream: '/livingroom'
         control: '/decoder_control.cgi'
         viewUrl: @foscamViewUrl
       }
@@ -86,11 +86,11 @@ define [
           left: 37
           top: 13
         rotation: 45
-        videoUrl: "www.drewandtrish.com/cameras/192.168.1.15/8081"
+        videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.2/8080"
         controlUrl: "www.drewandtrish.com/cameras/192.168.1.15/8081"
         token: $routeParams.token
         proto: "https://"
-        stream: '/videostream.cgi'
+        stream: '/basement'
         control: '/decoder_control.cgi'
         viewUrl: @foscamViewUrl
       }

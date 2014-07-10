@@ -10,13 +10,17 @@ define [
   services.factory 'garageDoors', ['webStompResource', (Resource)->
     new Resource
       get:
+        inbound: "raspi.cmd"
+        outbound: "/exchange/garagedoor.cmd"
         subscription: "/exchange/garagedoor.status/fanout"
+        outboundTransform: (rawData)->
+          operation: 'list_doors'
         inboundTransform: (rawData, oldData)->
           zones = [
             {
               name: "right"
               floor: "mainFloor"
-              status: _.findWhere(rawData, {"door":"left"}).status
+              status: if rawData.rightDoor == 1 then "closed" else "open"
               location:
                 left: 52
                 top: 80.5
@@ -27,7 +31,7 @@ define [
             {
               name: "left"
               floor: "mainFloor"
-              status: _.findWhere(rawData, {"door":"right"}).status
+              status: if rawData.leftDoor == 1 then "closed" else "open"
               location:
                 left: 67
                 top: 80.5

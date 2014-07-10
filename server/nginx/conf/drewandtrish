@@ -1,5 +1,5 @@
   server {
-		listen       9000;
+		listen       443;
 		server_name  www.drewandtrish.com;
 		#add_header Strict-Transport-Security max-age=2592000;
 		ssl on;
@@ -14,7 +14,7 @@
 
 
 		location / {
-			root /Users/drew/dev/seneschal/client/build/resources/main;
+			root /home/pi/dev/seneschal/client/build/resources/main;
 		}
 #location /generateCredentials {
 #default_type 'text/plain';
@@ -23,11 +23,11 @@
 		location /getRabbitCredentials {
 			add_header Access-Control-Allow-Origin "*";
 			default_type 'text/plain';
-			content_by_lua_file  /opt/nginx/lua/getRabbitCredentials.lua;
+			content_by_lua_file  /usr/local/openresty/nginx/lua/getRabbitCredentials.lua;
 		}
 		location /rabbitmq{
 			access_log off;
-			proxy_pass http://localhost:15674;
+			proxy_pass http://localhost:55674;
 			proxy_set_header X-Real-IP $remote_addr;
 			proxy_set_header Host $host;
 			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -43,8 +43,19 @@
 		location /cameras {
 			add_header Access-Control-Allow-Origin *;
       proxy_redirect off;
-      rewrite_by_lua_file  /opt/nginx/lua/foscam.lua;
+      rewrite_by_lua_file  /usr/local/openresty/nginx/lua/foscam.lua;
       rewrite ^/cameras/(.+)/(.+)/(.*) /$3 break;
+      proxy_set_header        Accept-Encoding   "";
+      proxy_set_header        Host            $host;
+      proxy_set_header        X-Real-IP       $remote_addr;
+      proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_pass http://$1:$2;
+		}
+		location /proxiedCameras {
+			add_header Access-Control-Allow-Origin *;
+      proxy_redirect off;
+      rewrite_by_lua_file  /usr/local/openresty/nginx/lua/proxiedFoscam.lua;
+      rewrite ^/proxiedCameras/(.+)/(.+)/(.*) /$3 break;
       proxy_set_header        Accept-Encoding   "";
       proxy_set_header        Host            $host;
       proxy_set_header        X-Real-IP       $remote_addr;
@@ -53,4 +64,3 @@
 		}
 
 	}
-}
