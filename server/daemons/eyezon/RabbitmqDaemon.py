@@ -1,5 +1,5 @@
 from kombu import Connection, Producer, Exchange, Consumer
-import threading, Queue, kombu, socket, ConfigParser
+import threading, Queue, kombu, socket, ConfigParser, re
 
 class RabbitmqDaemon(threading.Thread):
   def __init__(self, cmd_q=None, reply_q=None):
@@ -11,6 +11,7 @@ class RabbitmqDaemon(threading.Thread):
     self.rabbitmqHost = self.settings.get('rabbitmq', 'host')
     self.conn = Connection('amqp://'+self.rabbitmqUsername+':'+self.rabbitmqPassword+'@'+self.rabbitmqHost+':5672//')
     self.producer = Producer(self.conn.channel(), exchange = Exchange('alarm.status', type='fanout'), serializer="json")
+    self.rpcProducer= Producer(self.conn.channel(), serializer="json")
 
     self.cmd_q = cmd_q or Queue.Queue()
     self.reply_q = reply_q or Queue.Queue()
@@ -44,16 +45,12 @@ class RabbitmqDaemon(threading.Thread):
     if msg != "getKeypadStatus":
       self.cmd_q.put(msg)
 
-  def rpcReply(self, message, req, **props):
-    self.producer.publish(
-      message, exchange='alarm.cmd',
-      retry=False, retry_policy=None,
-      **dict({'routing_key': req.properties['reply_to'],
-              'correlation_id': req.properties.get('correlation_id'),
-              'content_encoding': req.content_encoding
-              # 'serializer': serializers.type_to_name[req.content_type],
-              },**props)
-      )
+  def rpcReply(self, message, req):
+    replyTo = re.search('\/.*\/(.*)', req.properties['reply_to']).group(1)
+    self.rpcProducer.publish(body=message, **dict({'routing_key': replyTo,
+                'correlation_id': req.properties.get('correlation_id'),
+                'content_encoding': req.content_encoding}))
+
 
   def publishEvent(self, event):
     if event['name'] == "Zone Timer Dump":
