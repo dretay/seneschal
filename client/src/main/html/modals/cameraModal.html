@@ -1,17 +1,31 @@
 <div class="modal-header">
     <h3>{{camera.name}}</h3>
 </div>
-<div class="modal-body camera">
-    <div style="width: 640px; height: 480px;margin: 0 auto 0 auto;">
-      <img ng-class="getCameraClass()" ng-src="{{camera.viewUrl()+'&time='+timestamp}}" />
-      <div class="cameraControls" ng-show="{{camera.control !== undefined}}">
-          <div class="left" ng-mousedown="startCameraMove('left')" ng-mouseup="endCameraMove('left')"></div>
-          <div class="right" ng-mousedown="startCameraMove('right')" ng-mouseup="endCameraMove('right')"></div>
-          <div class="top" ng-mousedown="startCameraMove('up')" ng-mouseup="endCameraMove('up')"></div>
-          <div class="bottom" ng-mousedown="startCameraMove('down')" ng-mouseup="endCameraMove('down')"></div>
+<div class="modal-body camera" ng-keydown="startCameraMove($event)" ng-keyup="endCameraMove($event)" tabindex="0" focus-me="modalOpen">
+    <div class="cameraWrapper">
+      <div class="cameraContent">
+        <img style="width: 100%" ng-class="getCameraClass()" ng-src="{{camera.viewUrl()+'&time='+timestamp}}" />
+        <div class="cameraControls" ng-show="{{camera.control !== undefined}}">
+          <div class="left" ng-click="toggleCameraMove('left')"></div>
+          <div class="right" ng-click="toggleCameraMove('right')"></div>
+          <div class="top" ng-click="toggleCameraMove('up')"></div>
+          <div class="bottom" ng-click="toggleCameraMove('down')"></div>
+        </div>
       </div>
     </div>
+    <!-- <div style="width: 80%;margin: 0 auto 0 auto;">
+      <img style="width: 100%" ng-class="getCameraClass()" ng-src="{{camera.viewUrl()+'&time='+timestamp}}" />
+      <div class="cameraControlsWrapper">
+
+      </div>
+      <div class="cameraControls" ng-show="{{camera.control !== undefined}}">
+          <div class="left" ng-click="toggleCameraMove('left')"></div>
+          <div class="right" ng-click="toggleCameraMove('right')"></div>
+          <div class="top" ng-click="toggleCameraMove('up')"></div>
+          <div class="bottom" ng-click="toggleCameraMove('down')"></div>
+      </div>
+    </div> -->
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="close()">Close</button>
+  <button class="btn btn-danger pull-right" ng-click="close()">Close</button>
 </div>

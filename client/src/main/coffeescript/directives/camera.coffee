@@ -20,6 +20,8 @@ define [
 
             $scope.camera = camera
             $scope.timestamp = new Date().getTime()
+            $scope.isMoving = false
+            $scope.modalOpen = true
 
             cameraCmds =
               down:
@@ -35,6 +37,12 @@ define [
                 start: 6
                 end: 7
 
+            keyToDirection = (event)->
+              switch event.keyCode
+                when 38 then "up"
+                when 40 then "down"
+                when 37 then "left"
+                when 39 then "right"
             invertDirection = (direction)->
               switch direction
                   when "left" then return "right"
@@ -42,13 +50,32 @@ define [
                   when "up" then return "down"
                   when "down" then return "up"
 
-            $scope.startCameraMove = (direction)->
+            $scope.toggleCameraMove = (direction)->
               if $scope.camera.inverted then direction = invertDirection(direction)
-              $scope.cameraCmd(cameraCmds[direction].start)
 
-            $scope.endCameraMove = (direction)->
+              if $scope.isMoving
+                $scope.cameraCmd(cameraCmds[direction].end)
+              else
+                $scope.cameraCmd(cameraCmds[direction].start)
+
+              $scope.isMoving = !$scope.isMoving
+
+            $scope.startCameraMove = (event)->
+              direction = keyToDirection(event)
+              if $scope.camera.inverted then direction = invertDirection(direction)
+
+              unless $scope.isMoving
+                $scope.cameraCmd(cameraCmds[direction].start)
+                $scope.isMoving = !$scope.isMoving
+
+            $scope.endCameraMove = (event)->
+              direction = keyToDirection(event)
               if $scope.inverted then direction = invertDirection(direction)
-              $scope.cameraCmd(cameraCmds[direction].end)
+
+              if $scope.isMoving
+                $scope.cameraCmd(cameraCmds[direction].end)
+                $scope.isMoving = !$scope.isMoving
+
             $scope.cameraCmd = (command)->
               $.ajax({
                 url: "#{$scope.camera.proto}#{$scope.camera.controlUrl}#{$scope.camera.control}"
@@ -60,6 +87,7 @@ define [
 
 
             $scope.close = ->
+              $scope.modalOpen = false
               $modalInstance.close null
 
             $scope.cancel = ->

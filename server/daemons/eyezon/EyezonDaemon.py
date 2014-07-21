@@ -17,14 +17,11 @@ class EyezonDaemon(threading.Thread):
   def run(self):
 
     def requestZoneTimerDump():
-      if not self.pendingZoneTimerDump:
-        print "Requesting Zone Timer Dump"
-        sys.stdout.flush()
-        self.pendingZoneTimerDump = True
-        alarmSocket.send("^02,$")
-      else:
-        print "Alerady processing zone timer dump, ignoring"
-        sys.stdout.flush()
+      print "Requesting Zone Timer Dump"
+      sys.stdout.flush()
+      self.pendingZoneTimerDump = True
+      alarmSocket.send("^02,$")
+
 
     def send_cmd(message):
         msg = message.encode('utf-8')
