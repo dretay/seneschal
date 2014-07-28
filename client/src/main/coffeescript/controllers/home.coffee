@@ -8,7 +8,7 @@ define [
   'c/alarm'
   'c/dashboard'
   'c/thermostat'
-  's/lights'
+
   'd/light'
 ],
 (controllers, _, $) ->

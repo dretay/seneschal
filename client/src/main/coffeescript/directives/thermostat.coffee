@@ -1,91 +1,30 @@
 define [
   'd/directives'
+  'm/applianceMixin'
   'jquery'
   'underscore'
+  'modals/ThermostatModal'
   's/nest'
   'p/webStomp'
-  'f/celsiusToDegrees'
-  'f/degreesToCelsius'
 ],
-(directives, $, _) ->
+(directives, applianceMixin, $, _, ThermostatModal) ->
   'use strict'
 
   directives.directive 'thermostat', ->
     restrict: 'E'
     replace: false
-    templateUrl: '/html/directives/thermostat.html'
+    templateUrl: '/html/directives/appliance.html'
     scope:
-      thermostat: "="
+      appliance: "="
 
     controller: ($scope, $injector, $modal, $log)->
 
-      $scope.openThermostat= (size)->
-        modalInstance = $modal.open
-          templateUrl: '/html/modals/thermostatModal.html'
-          controller: ($scope, $modalInstance, nest, webStomp, defaultThermostat, $timeout, $filter)->
+      $scope._click= (size)-> $modal.open ThermostatModal $scope.appliance, "lg"
 
-            #TODO: this should be part of some over-arching mechanic...
-            $scope.$on '$destroy', -> webStomp.client.unsubscribe nest.subscriptionHandler.id
+      $scope.innerClassMap =
+        "fa fa-sort fa-2x" : -> true
 
-            $scope.innerRadialStyle = (temp)->
-              tempToRotation = (temp)-> (temp-32) * 3.789 -144
-              "-webkit-transform": "rotate(#{tempToRotation(temp)}deg) translateY(-5.7em)"
-              "-moz-transform": "rotate(#{tempToRotation(temp)}deg) translateY(-5.7em)"
-              "-o-transform": "rotate(#{tempToRotation(temp)}deg) translateY(-5.7em)"
-              "-ms-transform": "rotate(#{tempToRotation(temp)}deg) translateY(-5.7em)"
-              "transform": "rotate(#{tempToRotation(temp)}deg) translateY(-5.7em)"
-            $scope.radialStyle = (temp)->
-              tempToRotation = (temp)-> (temp-32) * 3.789 -144
-              "-webkit-transform": "rotate(#{tempToRotation(temp)}deg) translateY(-12.7em)"
-              "-moz-transform": "rotate(#{tempToRotation(temp)}deg) translateY(-12.7em)"
-              "-o-transform": "rotate(#{tempToRotation(temp)}deg) translateY(-12.7em)"
-              "-ms-transform": "rotate(#{tempToRotation(temp)}deg) translateY(-12.7em)"
-              "transform": "rotate(#{tempToRotation(temp)}deg) translateY(-12.7em)"
+      $scope._getDisplayLabel = -> "#{$scope.appliance.data.ambient_temperature_f}°"
 
-            $scope.isAway = ->
-              $scope.getThermostat().away != 'home'
-            $scope.defaultThermostat = defaultThermostat
-            $scope.targetTemperature = defaultThermostat.data.target_temperature_f
-            $scope.nest = nest.query({}, false)
-            $scope.changeTemperature= (adjustment)->
-
-              $scope.targetTemperature += adjustment
-
-              newTemp = $scope.targetTemperature
-
-              $timeout ->
-                if newTemp == $scope.targetTemperature
-                  $scope.nest.update
-                    targetTemperature: $scope.targetTemperature
-                    device_id: $scope.getThermostat().data.device_id
-              , 2000
-            $scope.cssFromThermostatMode = ->
-              if $scope.getThermostat().data.hvac_mode == "cool"
-                "color-circle-cool"
-              else
-                "color-circle-heat"
-
-            $scope.getThermostat = ->
-              if $scope.nest.thermostats && $scope.nest.thermostats.length > 0
-                $scope.nest.thermostats[0]
-              else
-                $scope.defaultThermostat
-            $scope.ok = ->
-                $modalInstance.close null
-
-            $scope.cancel = ->
-              $modalInstance.dismiss('cancel')
-          size: size
-          resolve:
-            defaultThermostat: -> $scope.thermostat
-
-
-
-      $scope.getClass= -> ""
-
-
-      $scope.getStyle = ->
-        "left": "#{$scope.thermostat.location.left}%"
-        "top": "#{$scope.thermostat.location.top}%"
-
-      null
+      #mix in common appliance functions
+      $injector.invoke(applianceMixin, @, {$scope: $scope})

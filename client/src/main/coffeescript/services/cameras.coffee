@@ -20,7 +20,7 @@ define [
           location:
             left: 62
             top: 47
-          rotation: 90
+            rotation: 90
           videoUrl: "www.drewandtrish.com/cameras/192.168.1.28/8081/"
           token: $routeParams.token
           proto: "https://"
@@ -36,7 +36,7 @@ define [
         location:
           left: 44
           top: 75
-        rotation: 135
+          rotation: 135
         videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.2/8080"
         controlUrl: "www.drewandtrish.com/cameras/192.168.1.18/8083"
         token: $routeParams.token
@@ -53,7 +53,7 @@ define [
         location:
           left: 36
           top: 67
-        rotation: -90
+          rotation: -90
         videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.2/8080"
         controlUrl: "www.drewandtrish.com/cameras/192.168.1.17/8080"
         token: $routeParams.token
@@ -69,7 +69,7 @@ define [
         location:
           left: 47.5
           top: 13
-        rotation: 90
+          rotation: 90
         videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.2/8080"
         controlUrl: "www.drewandtrish.com/cameras/192.168.1.16/8082"
         token: $routeParams.token
@@ -85,7 +85,7 @@ define [
         location:
           left: 37
           top: 13
-        rotation: 45
+          rotation: 45
         videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.2/8080"
         controlUrl: "www.drewandtrish.com/cameras/192.168.1.15/8081"
         token: $routeParams.token

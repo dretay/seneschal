@@ -23,8 +23,8 @@ define [
                 name: "Garage Entryway"
                 floor: "mainFloor"
                 location:
-                  left: 45
-                  top: 33
+                  left: 89
+                  top: 84
               }
               {
                 name: "Second Floor Hallway"

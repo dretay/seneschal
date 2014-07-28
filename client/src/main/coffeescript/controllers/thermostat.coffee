@@ -2,8 +2,7 @@ define [
   'c/controllers'
   'underscore'
   'p/webStomp'
-  'f/celsiusToDegrees'
-  'f/degreesToCelsius'
+
 ],
 (controllers, _) ->
   'use strict'

@@ -1,43 +1,30 @@
 define [
   'd/directives'
+  'm/applianceMixin'
   'jquery'
   'underscore'
 ],
-(directives, $, _) ->
+(directives, applianceMixin, $, _) ->
   'use strict'
 
   directives.directive 'alarmZone', ->
     restrict: 'E'
     replace: false
-    templateUrl: '/html/directives/alarmZone.html'
+    templateUrl: '/html/directives/appliance.html'
     scope:
-      zone: "="
+      appliance: "="
 
     controller: ($scope, $injector, $timeout)->
-      $scope.getClass= ->
-        delta = moment.duration(moment() - $scope.zone.timestamp)
-        if $scope.zone.open then "progress-bar progress-bar-danger"
-        else if delta.asHours() > 1 then "progress-bar progress-bar-success"
-        else "progress-bar progress-bar-warning"
+      $scope.delta = moment.duration(moment() - $scope.appliance.timestamp)
 
-      $scope.pending = false
+      $scope.outerClassMap =
+        "progress-bar progress-bar-danger": -> $scope.appliance.open
+        "progress-bar progress-bar-success": -> $scope.delta.asHours() > 1
+        "progress-bar progress-bar-warning": -> true
 
 
-      $scope.getZoneLabel = ->
-        minutes = Math.floor(moment.duration(moment() - $scope.zone.timestamp).asMinutes())
-        if minutes > 99 then "99" else minutes
+      $scope._getTooltip = -> "Last opened #{moment.duration($scope.appliance.timestamp - moment()).humanize(true)}"
 
-      $scope.getTooltip = -> "Last opened #{moment.duration($scope.zone.timestamp - moment()).humanize(true)}"
 
-      $scope.getStyle = ->
-        "left": "#{$scope.zone.location.left}%"
-        "top": "#{$scope.zone.location.top}%"
-        "width": "#{$scope.zone.dimensions.width}%"
-        "height": "#{$scope.zone.dimensions.height}%"
-
-      $scope.update = (name)->
-          $scope.light.status = !$scope.light.status
-          $scope.pending = true
-          $scope.light.update().then ->
-            $scope.pending = false
-      null
+      #mix in common appliance functions
+      $injector.invoke(applianceMixin, @, {$scope: $scope})
