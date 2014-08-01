@@ -92,7 +92,7 @@ requirejs.config({
   priority: ["angular"]
 });
 
-require(['app', 'bootstrap', 'c/home' ,'c/main', 'c/alarm', 'c/cameras', 'c/lights','c/thermostat'], function(app) {
+require(['app', 'bootstrap', 'c/main', 'c/alarm', 'c/cameras', 'c/controls','c/thermostat', 'f/doubleEncodeURIComponent'], function(app) {
   var routes;
   routes = function($routeProvider) {
     return $routeProvider.when('/alarm/:token', {
@@ -103,10 +103,10 @@ require(['app', 'bootstrap', 'c/home' ,'c/main', 'c/alarm', 'c/cameras', 'c/ligh
       reloadOnSearch: false,
       templateUrl: '/html/cameras.html',
       controller: 'cameras'
-    }).when('/lights/:token', {
+    }).when('/controls/:floor/:token', {
       reloadOnSearch: false,
-      templateUrl: '/html/lights.html',
-      controller: 'lights'
+      templateUrl: '/html/controls.html',
+      controller: 'controls'
     }).when('/thermostat/:token', {
       reloadOnSearch: false,
       templateUrl: '/html/thermostat.html',

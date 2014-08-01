@@ -1,17 +1,16 @@
 exports.config =
   minMimosaVersion:"1.0.1"
   modules: [
-    'server'
-    'require'
-    'minify'
-    'bower'
-    'require-lint'
-    'mimosa-jshint'
-    'mimosa-csslint'
-    'coffeescript'
-    'copy'
-    'stylus'
-    # 'mimosa-karma-enterprise'
+    "server"
+    "require"
+    "require-lint"
+    "minify-js"
+    "minify-css"
+    "bower"
+    "jshint"
+    "csslint"
+    "coffeescript"
+    "copy"
   ]
   server:
     defaultServer:

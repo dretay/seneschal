@@ -2,7 +2,6 @@ define [
   'c/controllers'
   'underscore'
   'jquery'
-  'c/lights'
   's/switches'
   's/alarmZones'
   's/alarmKeypads'
@@ -24,12 +23,14 @@ define [
 (controllers, _, $) ->
   'use strict'
 
-  controllers.controller 'lights', ['$scope', '$timeout', '$routeParams', 'switches', 'alarmZones', 'alarmKeypads', 'cameras', 'nest', 'garageDoors', 'webStomp', '$modal', '$log', ($scope, $timeout, $routeParams, switches, alarmZones, alarmKeypads, cameras, nest, garageDoors, webStomp, $modal, $log) ->
+  controllers.controller 'controls', ['$scope', '$timeout', '$routeParams', 'switches', 'alarmZones', 'alarmKeypads', 'cameras', 'nest', 'garageDoors', 'webStomp', '$modal', '$log', ($scope, $timeout, $routeParams, switches, alarmZones, alarmKeypads, cameras, nest, garageDoors, webStomp, $modal, $log) ->
 
     #TODO: this has to be in controller scope, but should probably be handled as a mixin!
     $scope.$on '$destroy', -> webStomp.client.unsubscribe id for id, handler of webStomp.subscriptions
 
     switches.token = $routeParams.token
+
+    $scope.activeFloor = $routeParams.floor
     $scope.switches = switches.query()
     $scope.alarmZones = alarmZones.query()
     $scope.alarmKeypads = alarmKeypads.query()
@@ -73,6 +74,6 @@ define [
         name: "secondFloor"
         url: '/stylesheets/img/2ndfloor.png'
 
-    $scope.activeFloor = $scope.floors.mainFloor
+    $scope.activeFloor = $scope.floors[$routeParams.floor]
 
   ]

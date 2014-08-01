@@ -40,8 +40,17 @@
             <li ng-class="isNavItemActive('Dashboard')">
               <a ng-href="#/dashboard/{{routeParams.token|doubleEncodeURIComponent}}">Dashboard</a>
             </li>
-            <li ng-class="isNavItemActive('Lights')">
-              <a ng-href="#/lights/{{routeParams.token|doubleEncodeURIComponent}}">Lights</a>
+            <li class="dropdown" ng-class="isNavItemActive('controls')">
+                <a ng-href="#/controls/mainFloor/{{routeParams.token|doubleEncodeURIComponent}}"
+                   class="dropdown-toggle"
+                   data-toggle="dropdown">
+                    Controls <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li ng-class="isChildNavItemActive('basement')"><a ng-href="#/controls/basement/{{routeParams.token|doubleEncodeURIComponent}}">Basement</a></li>
+                    <li ng-class="isChildNavItemActive('mainFloor')"><a ng-href="#/controls/mainFloor/{{routeParams.token|doubleEncodeURIComponent}}">Main Floor</a></li>
+                    <li ng-class="isChildNavItemActive('secondFloor')"><a ng-href="#/controls/secondFloor/{{routeParams.token|doubleEncodeURIComponent}}">Second Floor</a></li>
+                </ul>
             </li>
             <li ng-class="isNavItemActive('Cameras')">
               <a ng-href="#/cameras/{{routeParams.token|doubleEncodeURIComponent}}">Cameras</a>

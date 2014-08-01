@@ -1,15 +1,11 @@
-
 {
   "name": "Seneschal Home Automation Server",
   "version": "0.0.1",
   "dependencies": {
     "requirejs": "*",
     "requirejs-domready": "2.0.1",
-
     "jquery": "*",
-
     "moment": "*",
-
     "angular": "1.2.15",
     "angular-bootstrap": "0.11.0",
     "angular-resource": "1.2.15",
@@ -18,13 +14,16 @@
     "angular-touch": "1.2.15",
     "angular-sanitize": "~1.2.15",
     "angular-motion": "0.3.0",
-
     "bootstrap": "3.1.0",
     "underscore-amd": "1.4.4",
     "sockjs": "0.3.4",
+    "fontawesome": "4.1.x",
     "stomp-websocket": "git://github.com/jmesnil/stomp-websocket.git#2.3.0"
   },
-  "devDependencies":{
+  "devDependencies": {
     "angular-mocks": "1.2.15"
+  },
+  "resolutions": {
+    "angular": ">=1"
   }
 }

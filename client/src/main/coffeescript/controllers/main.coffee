@@ -8,6 +8,8 @@ define [
 
     $scope.routeParams = $routeParams
     $scope.location = $location
+    $scope.isChildNavItemActive = (title)->
+      if location.hash.match(new RegExp(title,'gi')) then "disabled"
     $scope.isNavItemActive = (title)->
       if location.hash.match(new RegExp(title,'gi')) then "active"
   ]
