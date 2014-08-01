@@ -11,6 +11,7 @@ exports.config =
     "csslint"
     "coffeescript"
     "copy"
+    "stylus"
   ]
   server:
     defaultServer:
