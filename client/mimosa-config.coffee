@@ -42,8 +42,10 @@ exports.config =
   jshint:
     exclude: [/.*legacy\/js\/.*/]
   require:
+
     optimize:
       overrides:
+        mainConfigFile: "src/main/coffeescript/main.js"
         optimize: "none"
 
 

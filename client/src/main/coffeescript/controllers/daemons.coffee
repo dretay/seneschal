@@ -7,11 +7,18 @@ define [
 (controllers, _) ->
   'use strict'
 
-  controllers.controller 'daemons', ['$scope', '$rootScope', '$timeout', '$routeParams', 'supervisor', ($scope, $rootScope, $timeout, $routeParams, supervisor) ->
+  controllers.controller 'daemons', ['$scope', '$rootScope', '$timeout', '$routeParams', 'supervisor', 'ngTableParams', ($scope, $rootScope, $timeout, $routeParams, supervisor, ngTableParams) ->
 
     supervisor.token = $routeParams.token
     $scope.processes = supervisor.query()
+    $scope.selectedTask = null
+    $scope.status =
+      isFirstOpen: true
+      isFirstDisabled: false
+    $scope.oneAtATime = true;
+
     $scope.get_log= (process)->
+      $scope.status.open = !$scope.status.open
       $scope.log = supervisor.query
         operation: "read_log"
         processname: process.name
@@ -26,6 +33,12 @@ define [
     $scope.stop_task= (process)->
       process.update
         operation: "task_stop"
-
+    $scope.tableParams = new ngTableParams {
+        page: 1
+        total: 1
+      },
+      counts:[]
+    $scope.selectTask = (task)->
+      $scope.selectedTask = task
 
   ]
