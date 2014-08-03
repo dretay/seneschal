@@ -35,7 +35,7 @@ define [
               else
                 final = new WebStompEntity(rawData,webStomp,@)
 
-              if action == "get" and rawData != null
+              if action == "get" and final != null and !_.isEmpty(final) and (_.isArray(final) == _.isArray(data))
                 #replace the stub with the real response
                 angular.copy(final, data)
               else

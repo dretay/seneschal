@@ -16,6 +16,7 @@
     "angular-motion": "0.3.0",
     "bootstrap": "3.1.0",
     "underscore-amd": "1.4.4",
+    "ng-table": "0.3.3",
     "sockjs": "0.3.4",
     "stomp-websocket": "git://github.com/jmesnil/stomp-websocket.git#2.3.0"
   },

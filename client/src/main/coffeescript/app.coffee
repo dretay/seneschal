@@ -5,8 +5,7 @@ define [
   'angularAnimate'
   'angularTouch'
   'angularSanitize'
-  #'angularStrap'
-  #'angularStrapTpl'
+  'ngTable'
   'angularUi'
   'c/controllers'
   'd/directives'
@@ -17,6 +16,7 @@ define [
 ], (angular) ->
   'use strict'
   angular.module 'app', [
+      'ngTable'
       'ngAnimate'
       'ngSanitize'
       'ui.bootstrap'

@@ -1,0 +1,58 @@
+<div class=".container-fluid alarm" >
+<!--   <div class="numinputwrapper">
+    <div class="numinput">
+      {{alarmLineOne|limitTo:16|oddLengthString}}
+    </div>
+    <div class="numinput">
+      {{alarmLineTwo|limitTo:16|oddLengthString}}
+    </div>
+  </div>
+  <nav>
+    <ul class="nav">
+        <div ng:repeat="num in [1,2,3,4,5,6,7,8,9,'*',0,'#']">
+        <li ng:click="keystroke(num)">
+          <a href="">
+            <span ng-switch="num">
+              <span class="alarm-icon-star specialiconsize" ng-switch-when="*"><div class="innerspacing"></div>*</span>
+              <span class="alarm-icon-pound" ng-switch-when="#">#</span>
+              <span  ng:class="'alarm-icon-'+num" ng-switch-default>{{num}}</span>
+            </span>
+          </a>
+        </li>
+      </div>
+
+    </ul>
+</nav>​ -->
+<div class="row">
+  <div class="col-md-12">
+      <table ng-table class="table">
+          <tr ng-repeat="task in processes" >
+              <td ng-click="get_log(task)" data-title="'Name'">{{task.name}}</td>
+              <td ng-click="get_log(task)" data-title="'State'">{{task.statename}}</td>
+              <td ng-click="get_log(task)" data-title="'Description'">{{task.description}}</td>
+              <td data-title="'Controls'">
+                  <button ng-click="start_task(task)" type="button" class="btn btn-success">Start</button>
+                  <button ng-click="restart_task(task)" type="button" class="btn btn-warning">Restart</button>
+                  <button ng-click="stop_task(task)" type="button" class="btn btn-danger">Stop</button>
+              </td>
+          </tr>
+      </table>
+  </div>
+  <div class="col-md-12">
+    <div ng-repeat="line in log.contents|splitOnNewline track by $index">
+        <div>{{line}}</div>
+    </div>
+  </div>
+</div>
+<!--<div class="row alarmControlBtns alarmRow">-->
+  <!--<div ng:repeat="num in [1,2,3,4,5,6,7,8,9,'*',0,'#']">-->
+    <!--<div class="col-md-4 col-xs-4">-->
+      <!--<button ng-click="keystroke(num)" type="button" class="btn btn-primary btn-lg btn-block alarmButton">{{num}}</button>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+
+<!-- <div class="row"></div>
+<div class="row"></div>
+<div class="row"></div> -->
+</div>

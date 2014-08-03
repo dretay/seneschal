@@ -14,6 +14,7 @@ define [
       @getMessageBus = -> messageBus
 
     send: (action, args={})->
+      args['entity'] = @
       @getScope().query args, false, action
 
     save: (args=@)->

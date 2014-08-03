@@ -23,10 +23,10 @@ requirejs.config({
     angularSanitize: 'vendor/managed/angular-sanitize/angular-sanitize',
 
     //bootstrap
-    //angularStrap: 'vendor/managed/angular-strap/angular-strap.min',
-    //angularStrapTpl: 'vendor/managed/angular-strap/angular-strap.tpl.min',
     twitterBootstrap: 'vendor/managed/bootstrap/bootstrap',
 
+    //3rd party libraries
+    ngTable: 'vendor/managed/ng-table/ng-table',
     domReady: 'vendor/managed/requirejs-domready/domReady',
     underscore: 'vendor/managed/underscore-amd/underscore',
     jquery: 'vendor/managed/jquery/jquery',
@@ -59,12 +59,6 @@ requirejs.config({
     'angularSanitize': {
       deps: ['angular']
     },
-    /*'angularStrap': {
-      deps: ['angular', 'twitterBootstrap']
-    },
-    'angularStrapTpl': {
-      deps: ['angularStrap']
-    },*/
     'twitterBootstrap':{
       deps: ['jquery']
     },
@@ -77,6 +71,9 @@ requirejs.config({
     },
     'bootstrap': {
       deps: ['app']
+    },
+    'ngTable': {
+      deps: ['angular']
     },
     'stomp':{
       exports: 'Stomp',
@@ -92,13 +89,13 @@ requirejs.config({
   priority: ["angular"]
 });
 
-require(['app', 'bootstrap', 'c/main', 'c/alarm', 'c/cameras', 'c/controls','c/thermostat', 'f/doubleEncodeURIComponent'], function(app) {
+require(['app', 'bootstrap', 'c/main', 'c/daemons', 'c/cameras', 'c/controls','c/thermostat', 'f/doubleEncodeURIComponent'], function(app) {
   var routes;
   routes = function($routeProvider) {
-    return $routeProvider.when('/alarm/:token', {
+    return $routeProvider.when('/daemons/:token', {
       reloadOnSearch: false,
-      templateUrl: '/html/alarm.html',
-      controller: 'alarm'
+      templateUrl: '/html/daemons.html',
+      controller: 'daemons'
     }).when('/cameras/:token', {
       reloadOnSearch: false,
       templateUrl: '/html/cameras.html',
