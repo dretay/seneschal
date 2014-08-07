@@ -92,7 +92,7 @@ requirejs.config({
 require(['app', 'bootstrap', 'c/main', 'c/daemons', 'c/cameras', 'c/controls','c/thermostat', 'f/doubleEncodeURIComponent'], function(app) {
   var routes;
   routes = function($routeProvider) {
-    return $routeProvider.when('/daemons/:token', {
+    return $routeProvider.when('/admin/daemons/:token', {
       reloadOnSearch: false,
       templateUrl: '/html/daemons.html',
       controller: 'daemons'

@@ -37,9 +37,9 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li ng-class="isNavItemActive('Dashboard')">
-              <a ng-href="#/dashboard/{{routeParams.token|doubleEncodeURIComponent}}">Dashboard</a>
-            </li>
+            <!--<li ng-class="isNavItemActive('Dashboard')">-->
+              <!--<a ng-href="#/dashboard/{{routeParams.token|doubleEncodeURIComponent}}">Dashboard</a>-->
+            <!--</li>-->
             <li class="dropdown" ng-class="isNavItemActive('controls')">
                 <a ng-href="#/controls/mainFloor/{{routeParams.token|doubleEncodeURIComponent}}"
                    class="dropdown-toggle"
@@ -52,15 +52,25 @@
                     <li ng-class="isChildNavItemActive('secondFloor')"><a ng-href="#/controls/secondFloor/{{routeParams.token|doubleEncodeURIComponent}}">Second Floor</a></li>
                 </ul>
             </li>
-            <li ng-class="isNavItemActive('daemons')">
-              <a ng-href="#/daemons/{{routeParams.token|doubleEncodeURIComponent}}">Daemons</a>
+            <li class="dropdown" ng-class="isNavItemActive('admin')">
+                <a ng-href="ng-href="#/admin/daemons/{{routeParams.token|doubleEncodeURIComponent}}"
+                   class="dropdown-toggle"
+                   data-toggle="dropdown">
+                    Admin <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                  <li ng-class="isChildNavItemActive('daemons')"><a ng-href="#/admin/daemons/{{routeParams.token|doubleEncodeURIComponent}}">Daemons</a></li>
+                </ul>
             </li>
-            <li ng-class="isNavItemActive('Alarm')">
-              <a ng-href="#/alarm/{{routeParams.token|doubleEncodeURIComponent}}">Alarm</a>
-            </li>
-            <li ng-class="isNavItemActive('Thermostat')">
-              <a ng-href="#/thermostat/{{routeParams.token|doubleEncodeURIComponent}}">Thermostat</a>
-            </li>
+            <!--<li ng-class="isNavItemActive('daemons')">-->
+              <!--<a ng-href="#/daemons/{{routeParams.token|doubleEncodeURIComponent}}">Daemons</a>-->
+            <!--</li>-->
+            <!--<li ng-class="isNavItemActive('Alarm')">-->
+              <!--<a ng-href="#/alarm/{{routeParams.token|doubleEncodeURIComponent}}">Alarm</a>-->
+            <!--</li>-->
+            <!--<li ng-class="isNavItemActive('Thermostat')">-->
+              <!--<a ng-href="#/thermostat/{{routeParams.token|doubleEncodeURIComponent}}">Thermostat</a>-->
+            <!--</li>-->
           </ul>
         </div>
       </div>
