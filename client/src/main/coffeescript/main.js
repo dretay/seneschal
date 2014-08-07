@@ -89,13 +89,17 @@ requirejs.config({
   priority: ["angular"]
 });
 
-require(['app', 'bootstrap', 'c/main', 'c/daemons', 'c/cameras', 'c/controls','c/thermostat', 'f/doubleEncodeURIComponent'], function(app) {
+require(['app', 'bootstrap', 'c/main', 'c/daemons', 'c/router', 'c/controls','c/thermostat', 'f/doubleEncodeURIComponent'], function(app) {
   var routes;
   routes = function($routeProvider) {
     return $routeProvider.when('/admin/daemons/:token', {
       reloadOnSearch: false,
       templateUrl: '/html/daemons.html',
       controller: 'daemons'
+    }).when('/admin/router/:token', {
+        reloadOnSearch: false,
+        templateUrl: '/html/router.html',
+        controller: 'router'
     }).when('/cameras/:token', {
       reloadOnSearch: false,
       templateUrl: '/html/cameras.html',

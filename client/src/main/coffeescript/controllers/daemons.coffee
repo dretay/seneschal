@@ -15,7 +15,7 @@ define [
     $scope.status =
       isFirstOpen: true
       isFirstDisabled: false
-    $scope.oneAtATime = true;
+    $scope.oneAtATime = false;
 
     $scope.get_log= (process)->
       $scope.status.open = !$scope.status.open
