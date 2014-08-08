@@ -44,7 +44,7 @@ if __name__ == '__main__':
   #global supervisor operations
   def list_mac_addresses(message=None, args=None):
     result = routerConn.run('firewall mac_cache_dump')
-    pattern = "@\d\s+ip:\s+(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\s+mac:\s(\w+:\w+:\w+:\w+:\w+:\w+)\s+valid for:\s+(-?\d+)\ssec"
+    pattern = "@\d+\s+ip:\s+(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\s+mac:\s(\w+:\w+:\w+:\w+:\w+:\w+)\s+valid for:\s+(-?\d+)\ssec"
 
     regex = re.compile(pattern)
     entries = []
