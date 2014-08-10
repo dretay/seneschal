@@ -5,6 +5,7 @@
 
                     <table ng-table="tableParams" class="table ng-table-rowselected">
                         <tr ng-repeat="entry in clients">
+                            <td header-class="text-left" data-title="'Hostname'">{{entry.hostname}}</td>
                             <td header-class="text-left" data-title="'IP'">{{entry.ip}}</td>
                             <td header-class="text-left" data-title="'Mac'">{{entry.mac}}</td>
                             <td header-class="text-left" data-title="'Secs'">{{entry.secs}}</td>
