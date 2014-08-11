@@ -18,9 +18,9 @@ define [
           status: false
           floor: "mainFloor"
           location:
-            left: 62
-            top: 47
-            rotation: 90
+            left: 70.5
+            top: 43
+            rotation: 0
           videoUrl: "www.drewandtrish.com/cameras/192.168.1.28/8081/"
           token: $routeParams.token
           proto: "https://"
@@ -34,9 +34,9 @@ define [
         status: false
         floor: "mainFloor"
         location:
-          left: 44
-          top: 75
-          rotation: 135
+          left: 41
+          top: 77
+          rotation: 0
         videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.2/8080"
         controlUrl: "www.drewandtrish.com/cameras/192.168.1.18/8083"
         token: $routeParams.token
@@ -51,9 +51,9 @@ define [
         status: false
         floor: "mainFloor"
         location:
-          left: 36
-          top: 67
-          rotation: -90
+          left: 29
+          top: 72
+          rotation: 180
         videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.2/8080"
         controlUrl: "www.drewandtrish.com/cameras/192.168.1.17/8080"
         token: $routeParams.token
@@ -67,9 +67,9 @@ define [
         status: false
         floor: "mainFloor"
         location:
-          left: 47.5
-          top: 13
-          rotation: 90
+          left: 47
+          top: 12
+          rotation: 0
         videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.2/8080"
         controlUrl: "www.drewandtrish.com/cameras/192.168.1.16/8082"
         token: $routeParams.token
@@ -83,9 +83,9 @@ define [
         status: false
         floor: "basement"
         location:
-          left: 37
-          top: 13
-          rotation: 45
+          left: 30
+          top: 11
+          rotation: -90
         videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.2/8080"
         controlUrl: "www.drewandtrish.com/cameras/192.168.1.15/8081"
         token: $routeParams.token

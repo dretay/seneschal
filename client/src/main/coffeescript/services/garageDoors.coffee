@@ -25,8 +25,8 @@ define [
                 left: 52
                 top: 80.5
               dimensions:
-                width: 11.5
-                height: 1.5
+                width: "11.5%"
+                height: "1.5%"
             }
             {
               name: "left"
@@ -36,8 +36,8 @@ define [
                 left: 67
                 top: 80.5
               dimensions:
-                width: 11.5
-                height: 1.5
+                width: "11.5%"
+                height: "1.5%"
             }
           ]
 

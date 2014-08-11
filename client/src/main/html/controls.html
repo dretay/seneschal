@@ -10,6 +10,12 @@
         <div ng:repeat="switch in switches|itemsOnFloor:activeFloor.name|switchType:'fan'">
             <fan appliance="switch"></fan>
         </div>
+        <div ng:repeat="switch in switches|itemsOnFloor:activeFloor.name|switchType:'monitor'">
+          <computer-monitor appliance="switch"></computer-monitor>
+        </div>
+        <div ng:repeat="switch in switches|itemsOnFloor:activeFloor.name|switchType:'floodLight'">
+          <flood-light appliance="switch"></flood-light>
+        </div>
         <div ng:repeat="zone in alarmZones|itemsOnFloor:activeFloor.name">
           <alarm-zone appliance="zone"></alarm-zone>
         </div>

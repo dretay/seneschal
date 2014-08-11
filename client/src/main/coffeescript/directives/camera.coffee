@@ -18,7 +18,7 @@ define [
       $scope._click= ()-> $modal.open CameraModal $scope.appliance, "lg"
 
       $scope.innerClassMap =
-        "fa fa-video-camera fa-2x" : ->true
+        "securityCamera" : ->true
 
       #mix in common appliance functions
       $injector.invoke(applianceMixin, @, {$scope: $scope})

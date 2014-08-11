@@ -22,9 +22,13 @@ define [
       $scope._click= (size)-> $modal.open ThermostatModal $scope.appliance, "lg"
 
       $scope.innerClassMap =
-        "fa fa-sort fa-2x" : -> true
+        "thermostatIcon" : -> true
 
       $scope._getDisplayLabel = -> "#{$scope.appliance.data.ambient_temperature_f}°"
+
+      $scope._getInnerStyle= ->
+        "padding-left":"30px"
+        "padding-top":"6px"
 
       #mix in common appliance functions
       $injector.invoke(applianceMixin, @, {$scope: $scope})

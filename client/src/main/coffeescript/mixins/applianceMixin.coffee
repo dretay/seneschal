@@ -29,9 +29,9 @@ define [
           unless _.isUndefined(_.deep($scope.appliance, 'location.rotation'))
             style["-webkit-transform"]= "rotate(#{$scope.appliance.location.rotation}deg)"
           unless _.isUndefined(_.deep($scope.appliance, 'dimensions.width'))
-            style["width"]= "#{$scope.appliance.dimensions.width}%"
+            style["width"]= "#{$scope.appliance.dimensions.width}"
           unless _.isUndefined(_.deep($scope.appliance, 'dimensions.height'))
-            style["height"]= "#{$scope.appliance.dimensions.height}%"
+            style["height"]= "#{$scope.appliance.dimensions.height}"
         return style
 
       #used to render the appliance itself and apply any class-based decorators
@@ -44,8 +44,8 @@ define [
 
       #apply any explicit styles to the appliance itself
       $scope.getInnerStyle = ->
-        if $scope.innerStyle?
-          $scope.innerStyle
+        if $scope._getInnerStyle?
+          $scope._getInnerStyle()
         else
           ""
 

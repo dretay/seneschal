@@ -11,6 +11,8 @@ define [
   'p/webStomp'
   'd/light'
   'd/fan'
+  'd/computerMonitor'
+  'd/floodLight'
   'd/alarmZone'
   'd/alarmKeypad'
   'd/camera'

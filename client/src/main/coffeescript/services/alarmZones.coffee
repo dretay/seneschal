@@ -32,11 +32,11 @@ define [
                 status: false
                 floor: "mainFloor"
                 location:
-                  left: 38
-                  top: 73
+                  left: 32
+                  top: 76
                 dimensions:
-                  width: 3.5
-                  height: 1.5
+                  width: "4.5%"
+                  height: "1.5%"
               }
               {
                 name: "Interior Garage Door"
@@ -44,11 +44,11 @@ define [
                 status: false
                 floor: "mainFloor"
                 location:
-                  left: 49.2
-                  top: 42
+                  left: 48.7
+                  top: 43
                 dimensions:
-                  width: 1
-                  height: 5.5
+                  width: "1.5%"
+                  height: "6.5%"
                 labelStyle:
                   "padding-top": "0.75%"
               }
@@ -61,8 +61,8 @@ define [
                   left: 50.5
                   top: 9.8
                 dimensions:
-                  width: 7
-                  height: 2
+                  width: "11%"
+                  height: "2%"
               }
               {
                 name: "Basement Door"
@@ -70,11 +70,11 @@ define [
                 status: false
                 floor: "basement"
                 location:
-                  left: 38
-                  top: 10
+                  left: 32
+                  top: 7
                 dimensions:
-                  width: 5
-                  height: 2
+                  width: "6%"
+                  height: "2%"
               }
             ]
 

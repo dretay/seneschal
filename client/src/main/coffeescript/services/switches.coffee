@@ -18,11 +18,19 @@ define [
 
           if !_.isArray(rawData) and oldData?
             filteredLights = _.filter oldData, (light)->rawData.name == light.name
-            # light = _.findWhere oldData,{name: rawData.name}
             for light in filteredLights
-              # light.status = Boolean(result.status)
               light.status = if rawData.status == "on" then true else false
-            return oldData
+
+            #hum... something to look into... if you don't strip out all the messaging shit it explodes
+            return _.map oldData, (record)->
+                name: record.name
+                status: record.status
+                floor: record.floor
+                type: record.type
+                location:
+                  left: record.location.left
+                  top: record.location.top
+                  rotation: if record.location.rotation? then record.location.rotation else 0
           else
             #todo: this needs to be in something like redis or the service... i shouldn't be storing it...
             lights = [
@@ -32,8 +40,8 @@ define [
                 floor: "mainFloor"
                 type: "fan"
                 location:
-                  left: 69
-                  top: 31
+                  left: 79
+                  top: 32
               }
               {
                 name: "Front Porch"
@@ -41,44 +49,46 @@ define [
                 floor: "mainFloor"
                 type: "light"
                 location:
-                  left: 37
-                  top: 75
+                  left: 30
+                  top: 78
               }
               {
                 name: "Front Porch"
                 status: false
                 floor: "mainFloor"
+                type: "floodLight"
+                location:
+                  left: 72
+                  top: 85
+                  rotation: 43
+              }
+              {
+                name: "Living Room"
+                status: false
+                floor: "mainFloor"
                 type: "light"
                 location:
-                  left: 64
+                  left: 9
+                  top: 57
+              }
+              {
+                name: "Living Room"
+                status: false
+                floor: "mainFloor"
+                type: "light"
+                location:
+                  left: 8
                   top: 82
-              }
-              {
-                name: "Living Room"
-                status: false
-                floor: "mainFloor"
-                type: "light"
-                location:
-                  left: 27
-                  top: 53
-              }
-              {
-                name: "Living Room"
-                status: false
-                floor: "mainFloor"
-                type: "light"
-                location:
-                  left: 23
-                  top: 79
               }
               {
                 name: "Back Yard"
                 status: false
                 floor: "mainFloor"
-                type: "light"
+                type: "floodLight"
                 location:
-                  left: 58
-                  top: 4
+                  left: 61
+                  top: 5
+                  rotation: 200
               }
               {
                 name: "Family Room Lights"
@@ -86,17 +96,20 @@ define [
                 floor: "mainFloor"
                 type: "light"
                 location:
-                  left: 64
-                  top: 31
+                  left: 74
+                  top: 32
               }
               {
                 name: "Drews Office"
                 status: false
                 floor: "secondFloor"
-                type: "light"
+                type: "monitor"
                 location:
-                  left: 29
-                  top: 43
+                  left: 15
+                  top: 34
+                dimensions:
+                  width: "3em"
+                  height: "3em"
               }
               {
                 name: "Master Bedroom"

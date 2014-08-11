@@ -1,13 +1,13 @@
 define [
-  'd/directives'
-  'm/applianceMixin'
-  'jquery'
-  'underscore'
-],
+    'd/directives'
+    'm/applianceMixin'
+    'jquery'
+    'underscore'
+  ],
 (directives, applianceMixin, $, _) ->
   'use strict'
 
-  directives.directive 'light', ->
+  directives.directive 'floodLight', ->
     restrict: 'E'
     replace: false
     templateUrl: '/html/directives/appliance.html'
@@ -19,8 +19,8 @@ define [
 
       $scope.outerClassMap =
         "fa fa-spinner fa-spin fa-3x" : ->$scope.pending
-        "lightbulb-on": -> $scope.appliance.status == true
-        "lightbulb-off": -> $scope.appliance.status == false
+        "floodLight-on": -> $scope.appliance.status == true
+        "floodLight-off": -> $scope.appliance.status == false
 
       $scope._getTooltip = ->
         $scope.appliance.name
