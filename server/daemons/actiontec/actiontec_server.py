@@ -49,10 +49,19 @@ if __name__ == '__main__':
     regex = re.compile(pattern)
     entries = []
     for match in regex.finditer(result):
+      hostname = ""
+      ip = match.group(1)
+      mac = match.group(2)
+      secs  = match.group(3)
+      try:
+        (hostname, aliaslist, ipaddrlist) = socket.gethostbyaddr(ip)
+      except socket.herror:
+        None
       entries.append({
-        "ip": match.group(1),
-        "mac": match.group(2),
-        "secs": match.group(3)
+        "hostname": hostname,
+        "ip": ip,
+        "mac": mac,
+        "secs": secs
       })
 
     statusProducer.publish(body = entries)

@@ -38,7 +38,7 @@ class KombuDaemon(threading.Thread):
       sys.stdout.flush()
       switch = env.get_switch(message['switchName'])
       rpcReply(switch.on(), args)
-      list_switches()
+      # list_switches()
 
 
     def toggle_off(message, args):
@@ -46,7 +46,7 @@ class KombuDaemon(threading.Thread):
       sys.stdout.flush()
       switch = env.get_switch(message['switchName'])
       rpcReply(switch.off(), args)
-      list_switches()
+      # list_switches()
 
 
     def list_switches(message=None, args=None):
@@ -63,18 +63,18 @@ class KombuDaemon(threading.Thread):
         #respond immediately to the guy that asked
         rpcReply(switches, args)
 
-      env.discover(seconds=5)
-      for switch in env.list_switches():
-        switches.append({
-          "name": switch,
-          "status": env.get_switch(switch).get_state()
-          })
-      print "listing finished dumping to json"
-      print json.dumps(switches)
-      sys.stdout.flush()
+      # env.discover(seconds=5)
+      # for switch in env.list_switches():
+      #   switches.append({
+      #     "name": switch,
+      #     "status": env.get_switch(switch).get_state()
+      #     })
+      # print "listing finished dumping to json"
+      # print json.dumps(switches)
+      # sys.stdout.flush()
 
       #send out an update to everyone since we have some new data (and the wemo status listeners don't always work)
-      statusProducer.publish(body = switches)
+      # statusProducer.publish(body = switches)
 
     def rpcReply(message, req):
       #this is so retarded... stomp leaves the /temp-queue in the header... so we need to strip it off
@@ -139,7 +139,7 @@ class WemoDaemon(threading.Thread):
 
     producer = Producer(self.conn.channel(), exchange = Exchange('lights.status', type='fanout'), serializer="json")
     env.start()
-    env.discover(10)
+    env.discover(60)
     print "WeMo update thread started"
     sys.stdout.flush()
     try:
