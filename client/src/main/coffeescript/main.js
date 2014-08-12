@@ -1,129 +1,137 @@
 window.loggingLevel = 'all';
 window.debug = {
-  log: console.log
+    log: console.log
 };
 
 requirejs.config({
-  paths: {
-    c: "controllers",
-    d: "directives",
-    s: "services",
-    f: "filters",
-    p: "providers",
-    m: "mixins",
-    r: "resources",
+    paths: {
+        c: "controllers",
+        d: "directives",
+        s: "services",
+        f: "filters",
+        p: "providers",
+        m: "mixins",
+        r: "resources",
 
-    //angular
-    angular: 'vendor/managed/angular/angular',
-    angularUi: 'vendor/managed/angular-bootstrap/ui-bootstrap-tpls',
-    angularRoute: 'vendor/managed/angular-route/angular-route',
-    angularResource: 'vendor/managed/angular-resource/angular-resource',
-    angularAnimate: 'vendor/managed/angular-animate/angular-animate',
-    angularTouch: 'vendor/managed/angular-touch/angular-touch',
-    angularSanitize: 'vendor/managed/angular-sanitize/angular-sanitize',
+        //angular
+        angular: 'vendor/managed/angular/angular',
+        angularUi: 'vendor/managed/angular-bootstrap/ui-bootstrap-tpls',
+        angularRoute: 'vendor/managed/angular-route/angular-route',
+        angularResource: 'vendor/managed/angular-resource/angular-resource',
+        angularAnimate: 'vendor/managed/angular-animate/angular-animate',
+        angularTouch: 'vendor/managed/angular-touch/angular-touch',
+        angularSanitize: 'vendor/managed/angular-sanitize/angular-sanitize',
 
-    //bootstrap
-    twitterBootstrap: 'vendor/managed/bootstrap/bootstrap',
+        //bootstrap
+        twitterBootstrap: 'vendor/managed/bootstrap/bootstrap',
 
-    //3rd party libraries
-    ngTable: 'vendor/managed/ng-table/ng-table',
-    domReady: 'vendor/managed/requirejs-domready/domReady',
-    underscore: 'vendor/managed/underscore-amd/underscore',
-    jquery: 'vendor/managed/jquery/jquery',
-    jqueryMigrate: 'vendor/unmanaged/jquery-migrate-1.2.1.min',
-    jquerySvg: 'vendor/unmanaged/jquery.svg',
+        //3rd party libraries
+        chroma: 'vendor/managed/chroma-js/chroma',
+        domReady: 'vendor/managed/requirejs-domready/domReady',
+        jquery: 'vendor/managed/jquery/jquery',
+        jqueryMigrate: 'vendor/unmanaged/jquery-migrate-1.2.1.min',
+        jquerySvg: 'vendor/unmanaged/jquery.svg',
+        ngTable: 'vendor/managed/ng-table/ng-table',
+        reconnectingWebsocket: 'vendor/managed/reconnectingWebsocket/reconnecting-websocket',
+        smoothie: "vendor/managed/smoothie-bower/smoothie",
+        sugar: "vendor/managed/sugar/sugar.min",
+        underscore: 'vendor/managed/underscore-amd/underscore',
 
-    //utils
-    stomp: 'vendor/managed/stomp-websocket/stomp',
-    sockjs: 'vendor/managed/sockjs/sockjs',
-    moment: 'vendor/managed/moment/moment'
+        //utils
+        stomp: 'vendor/managed/stomp-websocket/stomp',
+        sockjs: 'vendor/managed/sockjs/sockjs',
+        moment: 'vendor/managed/moment/moment'
 
 
-  },
-  shim: {
-    'jquerySvg':{
-      deps: ['jquery', 'jqueryMigrate']
     },
-    'angularUi': {
-      deps: ['angular']
+    shim: {
+        'angular': {
+            exports: 'angular',
+            deps: ['jquery']
+        },
+        'angularAnimate': {
+            deps: ['angular']
+        },
+        'angularResource': {
+            deps: ['angular']
+        },
+        'angularRoute': {
+            deps: ['angular']
+        },
+        'angularSanitize': {
+            deps: ['angular']
+        },
+        'angularTouch': {
+            deps: ['angular']
+        },
+        'angularUi': {
+            deps: ['angular']
+        },
+        'bootstrap': {
+            deps: ['app']
+        },
+        'jquerySvg': {
+            deps: ['jquery', 'jqueryMigrate']
+        },
+        'moment': {
+            exports: 'moment'
+        },
+        'ngTable': {
+            deps: ['angular']
+        },
+        'sockjs': {
+            exports: 'SockJS'
+        },
+        'stomp': {
+            exports: 'Stomp',
+            deps: ['sockjs']
+        },
+        'twitterBootstrap': {
+            deps: ['jquery']
+        }
     },
-    'angularResource': {
-      deps: ['angular']
-    },
-    'angularAnimate': {
-      deps: ['angular']
-    },
-    'angularTouch': {
-      deps: ['angular']
-    },
-    'angularSanitize': {
-      deps: ['angular']
-    },
-    'twitterBootstrap':{
-      deps: ['jquery']
-    },
-    'angular': {
-      exports: 'angular',
-      deps: ['jquery']
-    },
-    'angularRoute': {
-      deps: ['angular']
-    },
-    'bootstrap': {
-      deps: ['app']
-    },
-    'ngTable': {
-      deps: ['angular']
-    },
-    'stomp':{
-      exports: 'Stomp',
-      deps: ['sockjs']
-    },
-    'sockjs':{
-      exports: 'SockJS'
-    },
-    'moment':{
-      exports: 'moment'
-    }
-  },
-  priority: ["angular"]
+    priority: ["angular"]
 });
 
-require(['app', 'bootstrap', 'c/main', 'c/daemons', 'c/router', 'c/controls','c/thermostat', 'f/doubleEncodeURIComponent'], function(app) {
-  var routes;
-  routes = function($routeProvider) {
-    return $routeProvider.when('/admin/daemons/:token', {
-      reloadOnSearch: false,
-      templateUrl: '/html/daemons.html',
-      controller: 'daemons'
-    }).when('/admin/router/:token', {
-        reloadOnSearch: false,
-        templateUrl: '/html/router.html',
-        controller: 'router'
-    }).when('/cameras/:token', {
-      reloadOnSearch: false,
-      templateUrl: '/html/cameras.html',
-      controller: 'cameras'
-    }).when('/controls/:floor/:token', {
-      reloadOnSearch: false,
-      templateUrl: '/html/controls.html',
-      controller: 'controls'
-    }).when('/thermostat/:token', {
-      reloadOnSearch: false,
-      templateUrl: '/html/thermostat.html',
-      controller: 'thermostat'
-    }).when('/dashboard/:token', {
-      templateUrl: '/html/dashboard.html',
-      controller: 'dashboard'
-    }).otherwise({
-      redirectTo: '/login'
-    });
-  };
-  app.config(['$routeProvider', routes]);
+require(['app', 'bootstrap', 'c/main', 'c/daemons', 'c/vmstats', 'c/router', 'c/controls', 'c/thermostat', 'f/doubleEncodeURIComponent'], function (app) {
+    var routes;
+    routes = function ($routeProvider) {
+        return $routeProvider.when('/admin/daemons/:token', {
+            reloadOnSearch: false,
+            templateUrl: '/html/daemons.html',
+            controller: 'daemons'
+        }).when('/admin/router/:token', {
+            reloadOnSearch: false,
+            templateUrl: '/html/router.html',
+            controller: 'router'
+        }).when('/admin/vmstats/:token', {
+            reloadOnSearch: false,
+            templateUrl: '/html/vmstats.html',
+            controller: 'vmstats'
+        }).when('/cameras/:token', {
+            reloadOnSearch: false,
+            templateUrl: '/html/cameras.html',
+            controller: 'cameras'
+        }).when('/controls/:floor/:token', {
+            reloadOnSearch: false,
+            templateUrl: '/html/controls.html',
+            controller: 'controls'
+        }).when('/thermostat/:token', {
+            reloadOnSearch: false,
+            templateUrl: '/html/thermostat.html',
+            controller: 'thermostat'
+        }).when('/dashboard/:token', {
+            templateUrl: '/html/dashboard.html',
+            controller: 'dashboard'
+        }).otherwise({
+            redirectTo: '/login'
+        });
+    };
+    app.config(['$routeProvider', routes]);
 
-  app.config(function(webStompProvider) {
-    webStompProvider.hostname = 'www.drewandtrish.com';
-  });
+    app.config(function (webStompProvider) {
+        webStompProvider.hostname = 'www.drewandtrish.com';
+    });
 
 
 });
