@@ -71,7 +71,7 @@ define [
                 floor: "basement"
                 location:
                   left: 35
-                  top: 11
+                  top: 8.5
                 dimensions:
                   width: "6%"
                   height: "2%"

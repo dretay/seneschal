@@ -33,7 +33,7 @@ define [
                 name: "Second Floor Hallway"
                 floor: "secondFloor"
                 location:
-                  left: 43
+                  left: 42
                   top: 31
                   rotation: -35
                 dimensions:

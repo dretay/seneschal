@@ -18,7 +18,7 @@ define [
       $scope.pending = false
 
       $scope.outerClassMap =
-        "fa fa-spinner fa-spin fa-3x" : ->$scope.pending
+        "fa fa-spinner fa-spin fa-3x monitor-pending" : ->$scope.pending
         "monitor-on": -> $scope.appliance.status == true
         "monitor-off": -> $scope.appliance.status == false
 
