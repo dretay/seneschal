@@ -26,8 +26,8 @@ define [
                   left: 45
                   top: 40.5
                 dimensions:
-                  width: "2em"
-                  height: "2em"
+                  width: "3em"
+                  height: "3em"
               }
               {
                 name: "Second Floor Hallway"
@@ -35,7 +35,7 @@ define [
                 location:
                   left: 42
                   top: 31
-                  rotation: -35
+                  rotation: -31
                 dimensions:
                   width: "2em"
                   height: "2em"

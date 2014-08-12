@@ -49,7 +49,7 @@ define [
                 floor: "mainFloor"
                 type: "light"
                 location:
-                  left: 31
+                  left: 31.5
                   top: 77
               }
               {
@@ -68,7 +68,7 @@ define [
                 floor: "mainFloor"
                 type: "light"
                 location:
-                  left: 8
+                  left: 9
                   top: 54
               }
               {
