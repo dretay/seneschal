@@ -25,7 +25,7 @@ define [
                 name: "home"
                 floor: "mainFloor"
                 location:
-                  left: 27
+                  left: 28
                   top: 32
               }
             ]

@@ -41,7 +41,7 @@ define [
                 type: "fan"
                 location:
                   left: 79
-                  top: 32
+                  top: 28
               }
               {
                 name: "Front Porch"
@@ -49,8 +49,8 @@ define [
                 floor: "mainFloor"
                 type: "light"
                 location:
-                  left: 30
-                  top: 78
+                  left: 31
+                  top: 77
               }
               {
                 name: "Front Porch"
@@ -59,7 +59,7 @@ define [
                 type: "floodLight"
                 location:
                   left: 72
-                  top: 85
+                  top: 84
                   rotation: 43
               }
               {
@@ -68,8 +68,8 @@ define [
                 floor: "mainFloor"
                 type: "light"
                 location:
-                  left: 9
-                  top: 57
+                  left: 8
+                  top: 54
               }
               {
                 name: "Living Room"
@@ -78,7 +78,7 @@ define [
                 type: "light"
                 location:
                   left: 8
-                  top: 82
+                  top: 83
               }
               {
                 name: "Back Yard"
@@ -87,7 +87,7 @@ define [
                 type: "floodLight"
                 location:
                   left: 61
-                  top: 5
+                  top: 2
                   rotation: 200
               }
               {
@@ -97,7 +97,7 @@ define [
                 type: "light"
                 location:
                   left: 74
-                  top: 32
+                  top: 28
               }
               {
                 name: "Drews Office"
@@ -106,7 +106,7 @@ define [
                 type: "monitor"
                 location:
                   left: 15
-                  top: 34
+                  top: 30
                 dimensions:
                   width: "3em"
                   height: "3em"
@@ -117,8 +117,17 @@ define [
                 floor: "secondFloor"
                 type: "light"
                 location:
-                  left: 60
-                  top: 24
+                  left: 88
+                  top: 8
+              }
+              {
+                name: "Master Bedroom"
+                status: false
+                floor: "secondFloor"
+                type: "light"
+                location:
+                  left: 88
+                  top: 30
               }
             ]
 

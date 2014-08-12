@@ -35,7 +35,7 @@ define [
         floor: "mainFloor"
         location:
           left: 41
-          top: 77
+          top: 74.5
           rotation: 0
         videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.2/8080"
         controlUrl: "www.drewandtrish.com/cameras/192.168.1.18/8083"
@@ -51,8 +51,8 @@ define [
         status: false
         floor: "mainFloor"
         location:
-          left: 29
-          top: 72
+          left: 30
+          top: 70
           rotation: 180
         videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.2/8080"
         controlUrl: "www.drewandtrish.com/cameras/192.168.1.17/8080"
@@ -68,7 +68,7 @@ define [
         floor: "mainFloor"
         location:
           left: 47
-          top: 12
+          top: 9.5
           rotation: 0
         videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.2/8080"
         controlUrl: "www.drewandtrish.com/cameras/192.168.1.16/8082"
@@ -83,8 +83,8 @@ define [
         status: false
         floor: "basement"
         location:
-          left: 30
-          top: 11
+          left: 32
+          top: 14
           rotation: -90
         videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.2/8080"
         controlUrl: "www.drewandtrish.com/cameras/192.168.1.15/8081"
