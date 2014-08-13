@@ -1,59 +1,83 @@
-from python_actiontec.actiontec.actiontec import Actiontec
+from ouimeaux.environment import Environment
+from ouimeaux.utils import matcher
+from ouimeaux.signals import receiver, statechange, devicefound
 from kombu import Connection, Producer, Exchange, Queue, Consumer, common as kombucommon
-import json, sys, ConfigParser, re, socket
+from scapy.all import srp,Ether,ARP,conf
 
-#
-# Executes if the program is started normally, not if imported
-#
-if __name__ == '__main__':
+import threading, json, time, socket, signal, sys, requests, ConfigParser, re
 
-  #read in config
-  settings = ConfigParser.ConfigParser()
-  settings.read('../config/site.ini')
-  rabbitmqUsername = settings.get('rabbitmq', 'username')
-  rabbitmqPassword = settings.get('rabbitmq', 'password')
-  rabbitmqHost = settings.get('rabbitmq', 'host')
-
-  actiontecPassword = settings.get('actiontec', 'password')
-
-  #setup rabbitmq connections
-  rmqConn = Connection('amqp://'+rabbitmqUsername+':'+rabbitmqPassword+'@'+rabbitmqHost+':5672//')
-  rpcProducer= Producer(rmqConn.channel(), serializer="json")
-  statusProducer = Producer(rmqConn.channel(), exchange = Exchange('router.status', type='fanout'), serializer="json")
-  queue = Queue(
-    name="actiontec.cmd",
-    exchange=Exchange('router.cmd'),
-    channel=rmqConn.channel(),
-    durable=False,
-    exclusive=False,
-    auto_delete=True)
-
-  #setup router connection
-  routerConn = Actiontec(password=actiontecPassword)
-
-  #setup message handlers
-  def rpcReply(message, req):
-  #this is so retarded... stomp leaves the /temp-queue in the header... so we need to strip it off
-  #or it won't get routed to the appropriate queue
-    replyTo = re.search('\/.*\/(.*)', req.properties['reply_to']).group(1)
-    rpcProducer.publish(body=message, **dict({'routing_key': replyTo,
-                'correlation_id': req.properties.get('correlation_id'),
-                'content_encoding': req.content_encoding}))
+class KombuDaemon(threading.Thread):
+  def __init__(self):
+    threading.Thread.__init__(self)
+    self.settings = ConfigParser.ConfigParser()
+    self.settings.read('../config/site.ini')
+    self.rabbitmqUsername = self.settings.get('rabbitmq', 'username')
+    self.rabbitmqPassword = self.settings.get('rabbitmq', 'password')
+    self.rabbitmqHost = self.settings.get('rabbitmq', 'host')
+    self.rmqConn = Connection('amqp://'+self.rabbitmqUsername+':'+self.rabbitmqPassword+'@'+self.rabbitmqHost+':5672//')
+  def run(self):
 
 
-  #global supervisor operations
-  def list_mac_addresses(message=None, args=None):
-    result = routerConn.run('firewall mac_cache_dump')
-    pattern = "@\d+\s+ip:\s+(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\s+mac:\s(\w+:\w+:\w+:\w+:\w+:\w+)\s+valid for:\s+(-?\d+)\ssec"
+    def list_mac_addresses(message=None, args=None):
+      rpcReply(entries, args)
 
-    regex = re.compile(pattern)
+    def rpcReply(message, req):
+      #this is so retarded... stomp leaves the /temp-queue in the header... so we need to strip it off
+      #or it won't get routed to the appropriate queue
+      replyTo = re.search('\/.*\/(.*)', req.properties['reply_to']).group(1)
+      rpcProducer.publish(body=message, **dict({'routing_key': replyTo,
+                  'correlation_id': req.properties.get('correlation_id'),
+                  'content_encoding': req.content_encoding}))
+    operations = {
+      "list_mac_addresses" : list_mac_addresses
+    }
+
+    def on_request(body, req):
+      message = json.loads(body)
+      print "Received message ",message
+      sys.stdout.flush()
+      operations[message['operation']](message, req)
+
+    rpcProducer= Producer(self.rmqConn.channel(), serializer="json")
+
+    queue = Queue(
+      name="actiontec.cmd",
+      exchange=Exchange('router.cmd'),
+      channel=self.rmqConn.channel(),
+      durable=False,
+      exclusive=False,
+      auto_delete=True)
+    consumer = Consumer(self.rmqConn.channel(), queues = queue, auto_declare=True, callbacks=[on_request])
+    consumer.consume(no_ack=True)
+
+
+    while True:
+      self.rmqConn.drain_events()
+
+class ArpDiscoveryDaemon(threading.Thread):
+  def __init__(self):
+    threading.Thread.__init__(self)
+    self.settings = ConfigParser.ConfigParser()
+    self.settings.read('../config/site.ini')
+    self.rabbitmqUsername = self.settings.get('rabbitmq', 'username')
+    self.rabbitmqPassword = self.settings.get('rabbitmq', 'password')
+    self.rabbitmqHost = self.settings.get('rabbitmq', 'host')
+    self.rmqConn = Connection('amqp://'+self.rabbitmqUsername+':'+self.rabbitmqPassword+'@'+self.rabbitmqHost+':5672//')
+    self.statusProducer = Producer(self.rmqConn.channel(), exchange = Exchange('router.status', type='fanout'), serializer="json")
+    self.subnet = self.settings.get('actiontec', 'subnet')
+
+  def run(self):
+    ans,unans=srp(Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst=self.subnet),timeout=2)
     entries = []
-    for match in regex.finditer(result):
+    for snd,rcv in ans:
       hostname = ""
-      ip = match.group(1)
-      mac = match.group(2)
-      secs  = match.group(3)
+      ip = rcv.sprintf(r"%ARP.psrc%")
+      mac = rcv.sprintf(r"%Ether.src%")
+      secs  = 0
       try:
+        if hasattr(socket, 'setdefaulttimeout'):
+          socket.setdefaulttimeout(1)
+        print "looking up host for",ip
         (hostname, aliaslist, ipaddrlist) = socket.gethostbyaddr(ip)
       except socket.herror:
         None
@@ -63,24 +87,24 @@ if __name__ == '__main__':
         "mac": mac,
         "secs": secs
       })
+    self.statusProducer.publish(body = entries)
+#
+# Executes if the program is started normally, not if imported
+#
+if __name__ == '__main__':
+  rlock = threading.RLock()
 
-    statusProducer.publish(body = entries)
+  entries = []
 
-  def on_request(body, req):
-    message = json.loads(body)
-    print "Received message ",message
-    sys.stdout.flush()
-    operations = {
-      "list_mac_addresses" : list_mac_addresses
-    }
-    operations[message['operation']](message, req)
+  arpDiscoveryDaemon = ArpDiscoveryDaemon()
+  arpDiscoveryDaemon.setDaemon(True)
+  arpDiscoveryDaemon.start()
 
-  #lets light this candle
-  consumer = Consumer(rmqConn.channel(), queues = queue, auto_declare=True, callbacks=[on_request])
-  consumer.consume(no_ack=False)
+  kombuDaemon = KombuDaemon()
+  kombuDaemon.setDaemon(True)
+  kombuDaemon.start()
 
-  while True:
-    try:
-      rmqConn.drain_events(timeout=5)
-    except socket.timeout:
-      list_mac_addresses()
+  while threading.active_count() > 0:
+    time.sleep(0.1)
+    if arpDiscoveryDaemon.isAlive() is not True or kombuDaemon.isAlive() is not True:
+      sys.exit()

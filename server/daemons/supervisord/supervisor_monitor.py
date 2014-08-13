@@ -108,7 +108,7 @@ if __name__ == '__main__':
 
   #lets light this candle
   consumer = Consumer(rmqConn.channel(), queues = queue, auto_declare=True, callbacks=[on_request])
-  consumer.consume(no_ack=False)
+  consumer.consume(no_ack=True)
 
   while True:
     rmqConn.drain_events()

@@ -16,6 +16,35 @@
 		location / {
 			root /home/pi/dev/seneschal/client/build/resources/main;
 		}
+		location /vmstats {
+			proxy_pass http://192.168.1.2:9090;
+      # WebSocket support (nginx 1.4)
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection "upgrade";
+			access_by_lua '
+          --get request arguments
+          local args = ngx.req.get_uri_args()
+
+          --grab token and remove from args table
+          local token = ngx.decode_base64(args["token"])
+          args["token"] = nil
+
+          --decrypt token and build username / password
+          local aes = require "resty.aes"
+          local str = require "resty.string"
+          local split = require "utils"
+          local aes_256_cbc_sha512x5 = aes:new("AKeyForAES-256-CBC", "145a2f0e39c6d84c58ccba257dd43908", aes.cipher(256,"cbc"), aes.hash.sha512, 1000)
+
+          local decrypted = JSON:decode(aes_256_cbc_sha512x5:decrypt(token))
+          if string.len(decrypted.foscam) > 0 then
+            return
+          else
+            ngx.exit(ngx.HTTP_FORBIDDEN)
+          end
+      ';
+      rewrite ^.* / break;
+		}
 #location /generateCredentials {
 #default_type 'text/plain';
 #content_by_lua_file  /opt/nginx/lua/getCredentials.lua;
