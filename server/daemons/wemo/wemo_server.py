@@ -104,7 +104,7 @@ class KombuDaemon(threading.Thread):
       exclusive=False,
       auto_delete=True)
     consumer = Consumer(self.conn.channel(), queues = queue, auto_declare=True, callbacks=[on_request])
-    consumer.consume(no_ack=False)
+    consumer.consume(no_ack=True)
     print "WeMo command thread started"
     sys.stdout.flush()
 

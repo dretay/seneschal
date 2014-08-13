@@ -24,7 +24,7 @@ class RabbitmqDaemon(threading.Thread):
         exclusive=False,
         auto_delete=True)
     self.consumer = Consumer(self.conn.channel(), queues = queue, auto_declare=True, callbacks=[self.send_cmd])
-    self.consumer.consume(no_ack=False)
+    self.consumer.consume(no_ack=True)
 
     self.alarmCache = {
       "zoneTimerDump": None,
