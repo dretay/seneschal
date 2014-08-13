@@ -42,7 +42,7 @@ define [
         'wa': 'Time spent waiting for IO'
 
     streamStats = ->
-      ws = new ReconnectingWebSocket('wss://'+ location.host + '/vmstats')
+      ws = new ReconnectingWebSocket("wss://#{location.host}/vmstats?token=#{encodeURIComponent($routeParams.token)}")
       lineCount =0
       colHeadings = []
       ws.onopen = ->
