@@ -9,7 +9,7 @@ define [
 
   controllers.controller 'daemons', ['$scope', '$rootScope', '$timeout', '$routeParams', 'supervisor', 'ngTableParams', ($scope, $rootScope, $timeout, $routeParams, supervisor, ngTableParams) ->
 
-    supervisor.token = $routeParams.token
+
     $scope.processes = supervisor.query()
     $scope.selectedTask = null
     $scope.status =

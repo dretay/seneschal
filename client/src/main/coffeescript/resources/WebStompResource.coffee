@@ -20,7 +20,7 @@ define [
         deferred = $.Deferred()
         data = if isArray then [] else {}
 
-        webStomp.getClient(@token).then (client)=>
+        webStomp.getClient().then (client)=>
           handleResponse = (response)=>
             if response?
               @lastUpdate = new Date().getTime()
