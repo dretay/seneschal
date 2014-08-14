@@ -5,6 +5,7 @@ define [
 (filters, _) ->
   'use strict'
 
-  filters.filter 'splitOnNewline', [-> (line) ->
-    if _.isString line then line.split("\n") else ""
+  filters.filter 'splitOnNewline', [->
+    (line) ->
+      if _.isString line then line.split("\n") else ""
   ]

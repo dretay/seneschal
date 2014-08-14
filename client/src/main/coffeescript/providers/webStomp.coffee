@@ -1,11 +1,11 @@
 #defined as a provider so that it can be configured prior to injection
 define [
-  'p/providers'
-  'stomp'
-  'sockjs'
-  'jquery'
-  'underscore'
-],
+    'p/providers'
+    'stomp'
+    'sockjs'
+    'jquery'
+    'underscore'
+  ],
 (providers, Stomp, SockJS, $)->
   'use strict'
   providers.provider 'webStomp', ->
@@ -16,28 +16,29 @@ define [
       unless _.isString @password then @password = 'guest'
 
 
-      client= null
-      connectionStatus= 0
-      getSocket= =>
+      client = null
+      connectionStatus = 0
+      getSocket = =>
         console.log "getting connection... "
         ws = new SockJS("https://#{@hostname}:#{@port}/rabbitmq/stomp")
         client = Stomp.over(ws)
-        # client.debug = -> null
+        if @logger? then client.debug = @logger
 
         client.heartbeat.outgoing = 0
         client.heartbeat.incoming = 0
         return client
-      getRabbitCredentials= (token)=>
+      getRabbitCredentials = (token)=>
         $.ajax
-            type: 'GET'
-            url: "https://#{@hostname}:#{@port}/getRabbitCredentials"
-            dataType: 'json'
-            data:
-              token: token
+          type: 'GET'
+          url: "https://#{@hostname}:#{@port}/getRabbitCredentials"
+          dataType: 'json'
+          data:
+            token: token
 
       client: null
       subscriptions: []
-      setToken: (token)-> @token=token
+      setToken: (token)->
+        @token = token
       getClient: (token, deferred)->
         token = if @token? then @token else token
         if client == null then @client = client = getSocket() else @client = client
@@ -62,19 +63,18 @@ define [
             deferred.reject client
           connectionStatus = 1
           getRabbitCredentials(token).then (data)->
-              connectionStatus = 2
-              username = data.username
-              password = data.password
-              client.connect(username, password, on_connect, on_error, '/')
+            connectionStatus = 2
+            username = data.username
+            password = data.password
+            client.connect(username, password, on_connect, on_error, '/')
 
         isResolved = =>
           if connectionStatus == 3 and deferred.state() != "resolved"
-              console.log "connection ready... resolving within watcher"
-              deferred.resolve client
+            console.log "connection ready... resolving within watcher"
+            deferred.resolve client
           else if deferred.state() == "pending"
             console.log "connection not ready yet... trying again"
             @getClient token, deferred
-
 
 
         setTimeout isResolved, 500

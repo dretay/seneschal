@@ -1,10 +1,10 @@
 define [
-  'd/directives'
-  'm/applianceMixin'
-  'jquery'
-  'underscore'
-  'modals/AlarmModal'
-],
+    'd/directives'
+    'm/applianceMixin'
+    'jquery'
+    'underscore'
+    'modals/AlarmModal'
+  ],
 (directives, applianceMixin, $, _, AlarmModal) ->
   'use strict'
 
@@ -21,15 +21,17 @@ define [
 #        "fa fa-lock fa-5x" : -> $scope.isArmed()
 #        "fa fa-unlock fa-5x" : -> !$scope.isArmed()
       $scope.outerClassMap =
-        "alarmKeypad-armed": -> $scope.isArmed()
-        "alarmKeypad-disarmed": -> !$scope.isArmed()
+        "alarmKeypad-armed": ->
+          $scope.isArmed()
+        "alarmKeypad-disarmed": ->
+          !$scope.isArmed()
 
-      $scope._click= ()->
+      $scope._click = ()->
         modalInstance = $modal.open AlarmModal $scope.appliance, "sm"
 
         modalInstance.result.then (command)->
-            webStomp.client.send "/exchange/alarm.cmd",null, command
-        ,->
+          webStomp.client.send "/exchange/alarm.cmd", null, command
+        , ->
           $log.info('Modal dismissed at: ' + new Date());
 
       $scope.isArmed = ()->

@@ -1,12 +1,12 @@
 define [
-  'f/filters'
-  'underscore'
-],
+    'f/filters'
+    'underscore'
+  ],
 (filters) ->
   'use strict'
 
-  filters.filter 'doubleEncodeURIComponent', [-> (string) ->
-
-    return encodeURIComponent(encodeURIComponent(string))
+  filters.filter 'doubleEncodeURIComponent', [->
+    (string) ->
+      return encodeURIComponent(encodeURIComponent(string))
 
   ]

@@ -1,9 +1,9 @@
 define [
-  'angular'
-  's/services'
-  'moment'
-  'r/WebStompResource'
-],
+    'angular'
+    's/services'
+    'moment'
+    'r/WebStompResource'
+  ],
 (angular, services, moment) ->
   'use strict'
 

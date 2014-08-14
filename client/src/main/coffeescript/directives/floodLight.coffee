@@ -14,13 +14,15 @@ define [
     scope:
       appliance: "="
     controller: ($scope, $injector, $timeout)->
-
       $scope.pending = false
 
       $scope.outerClassMap =
-        "fa fa-spinner fa-spin fa-3x" : ->$scope.pending
-        "floodLight-on": -> $scope.appliance.status == true
-        "floodLight-off": -> $scope.appliance.status == false
+        "fa fa-spinner fa-spin fa-3x": ->
+          $scope.pending
+        "floodLight-on": ->
+          $scope.appliance.status == true
+        "floodLight-off": ->
+          $scope.appliance.status == false
 
       $scope._getTooltip = ->
         $scope.appliance.name

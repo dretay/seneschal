@@ -20,10 +20,10 @@ define [
             return {operation: "list_processes"}
 
         inboundTransform: (rawData, oldData)->
-            if _.isArray rawData
-              return rawData
-            else if _.isString rawData
-              return {contents: rawData}
+          if _.isArray rawData
+            return rawData
+          else if _.isString rawData
+            return {contents: rawData}
 
 
       update:

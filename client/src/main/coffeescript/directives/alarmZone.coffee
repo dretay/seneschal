@@ -1,9 +1,9 @@
 define [
-  'd/directives'
-  'm/applianceMixin'
-  'jquery'
-  'underscore'
-],
+    'd/directives'
+    'm/applianceMixin'
+    'jquery'
+    'underscore'
+  ],
 (directives, applianceMixin, $, _) ->
   'use strict'
 
@@ -18,12 +18,16 @@ define [
       $scope.delta = moment.duration(moment() - $scope.appliance.timestamp)
 
       $scope.outerClassMap =
-        "progress-bar progress-bar-danger": -> $scope.appliance.open
-        "progress-bar progress-bar-success": -> $scope.delta.asHours() > 1
-        "progress-bar progress-bar-warning": -> true
+        "progress-bar progress-bar-danger": ->
+          $scope.appliance.open
+        "progress-bar progress-bar-success": ->
+          $scope.delta.asHours() > 1
+        "progress-bar progress-bar-warning": ->
+          true
 
 
-      $scope._getTooltip = -> "Last opened #{moment.duration($scope.appliance.timestamp - moment()).humanize(true)}"
+      $scope._getTooltip = ->
+        "Last opened #{moment.duration($scope.appliance.timestamp - moment()).humanize(true)}"
 
 
       #mix in common appliance functions

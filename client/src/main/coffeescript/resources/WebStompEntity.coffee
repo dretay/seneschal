@@ -1,25 +1,27 @@
 define [
-  'jquery'
-  'underscore'
-  'util/_deep'
-],
-($,_)->
+    'jquery'
+    'underscore'
+    'util/_deep'
+  ],
+($, _)->
   class WebStompEntity
-    constructor: (data,messageBus, scope)->
+    constructor: (data, messageBus, scope)->
       for key, value of data
         @[key] = value
 
       #close over the scope and bus so they don't look like response properties
-      @getScope = -> scope
-      @getMessageBus = -> messageBus
+      @getScope = ->
+        scope
+      @getMessageBus = ->
+        messageBus
 
-    send: (action, args={})->
+    send: (action, args = {})->
       args['entity'] = @
       @getScope().query args, false, action
 
-    save: (args=@)->
+    save: (args = @)->
       @send('save', args)
-    delete: (args=@)->
+    delete: (args = @)->
       @send('delete', args)
-    update: (args=@)->
+    update: (args = @)->
       @send('update', args)

@@ -1,8 +1,8 @@
 define [
-  'd/directives'
-  'jquery'
-  'underscore'
-],
+    'd/directives'
+    'jquery'
+    'underscore'
+  ],
 (directives, $, _) ->
   'use strict'
 
@@ -10,6 +10,7 @@ define [
     link: (scope, element, attrs)->
       model = $parse(attrs.focusMe)
       scope.$watch model, (value)->
-        if(value == true)  then $timeout -> element[0].focus()
+        if(value == true)  then $timeout ->
+          element[0].focus()
       element.bind 'blur', ->
-         scope.$apply model.assign(scope, false)
+        scope.$apply model.assign(scope, false)

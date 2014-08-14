@@ -1,42 +1,44 @@
 <div class=".container-fluid">
-  <div class="row" style="padding-top: 10px">
-    <div class="col-md-12 floorplan alarmBorder"  ng-class="alarmBorderClass()">
+    <div class="row" style="padding-top: 10px">
+        <div class="col-md-12 floorplan alarmBorder" ng-class="alarmBorderClass()">
 
-      <img ng-src="{{activeFloor.url}}"></img>
-      <div class="lightOverlay">
-        <div ng:repeat="switch in switches|itemsOnFloor:activeFloor.name|switchType:'light'">
-          <light appliance="switch"></light>
-        </div>
-        <div ng:repeat="switch in switches|itemsOnFloor:activeFloor.name|switchType:'fan'">
-            <fan appliance="switch"></fan>
-        </div>
-        <div ng:repeat="switch in switches|itemsOnFloor:activeFloor.name|switchType:'monitor'">
-          <computer-monitor appliance="switch"></computer-monitor>
-        </div>
-        <div ng:repeat="switch in switches|itemsOnFloor:activeFloor.name|switchType:'floodLight'">
-          <flood-light appliance="switch"></flood-light>
-        </div>
-        <div ng:repeat="zone in alarmZones|itemsOnFloor:activeFloor.name">
-          <alarm-zone appliance="zone"></alarm-zone>
-        </div>
-        <div ng:repeat="keypad in alarmKeypads|itemsOnFloor:activeFloor.name">
-          <alarm-keypad appliance="keypad"></alarm-keypad>
-        </div>
-        <div ng:repeat="camera in cameras|itemsOnFloor:activeFloor.name">
-          <camera appliance="camera"></camera>
-        </div>
+            <img ng-src="{{activeFloor.url}}"></img>
 
-        <div ng:repeat="thermostat in nest.thermostats|itemsOnFloor:activeFloor.name" ng-if="_.has(nest,'thermostats')">
-          <thermostat appliance="thermostat"></thermostat>
-        </div>
+            <div class="lightOverlay">
+                <div ng:repeat="switch in switches|itemsOnFloor:activeFloor.name|switchType:'light'">
+                    <light appliance="switch"></light>
+                </div>
+                <div ng:repeat="switch in switches|itemsOnFloor:activeFloor.name|switchType:'fan'">
+                    <fan appliance="switch"></fan>
+                </div>
+                <div ng:repeat="switch in switches|itemsOnFloor:activeFloor.name|switchType:'monitor'">
+                    <computer-monitor appliance="switch"></computer-monitor>
+                </div>
+                <div ng:repeat="switch in switches|itemsOnFloor:activeFloor.name|switchType:'floodLight'">
+                    <flood-light appliance="switch"></flood-light>
+                </div>
+                <div ng:repeat="zone in alarmZones|itemsOnFloor:activeFloor.name">
+                    <alarm-zone appliance="zone"></alarm-zone>
+                </div>
+                <div ng:repeat="keypad in alarmKeypads|itemsOnFloor:activeFloor.name">
+                    <alarm-keypad appliance="keypad"></alarm-keypad>
+                </div>
+                <div ng:repeat="camera in cameras|itemsOnFloor:activeFloor.name">
+                    <camera appliance="camera"></camera>
+                </div>
 
-        <div ng:repeat="garageDoor in garageDoors|itemsOnFloor:activeFloor.name">
-          <garage-door door="garageDoor"></garage-door>
-        </div>
-      </div>
+                <div ng:repeat="thermostat in nest.thermostats|itemsOnFloor:activeFloor.name"
+                     ng-if="_.has(nest,'thermostats')">
+                    <thermostat appliance="thermostat"></thermostat>
+                </div>
 
+                <div ng:repeat="garageDoor in garageDoors|itemsOnFloor:activeFloor.name">
+                    <garage-door door="garageDoor"></garage-door>
+                </div>
+            </div>
+
+        </div>
     </div>
-  </div>
 
 
 </div>

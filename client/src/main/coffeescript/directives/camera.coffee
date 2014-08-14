@@ -1,10 +1,10 @@
 define [
-  'd/directives'
-  'm/applianceMixin'
-  'modals/CameraModal'
-  'jquery'
-  'underscore'
-],
+    'd/directives'
+    'm/applianceMixin'
+    'modals/CameraModal'
+    'jquery'
+    'underscore'
+  ],
 (directives, applianceMixin, CameraModal, $, _) ->
   'use strict'
 
@@ -15,10 +15,12 @@ define [
     scope:
       appliance: "="
     controller: ($scope, $injector, $timeout, $modal, $log)->
-      $scope._click= ()-> $modal.open CameraModal $scope.appliance, "lg"
+      $scope._click = ()->
+        $modal.open CameraModal $scope.appliance, "lg"
 
       $scope.innerClassMap =
-        "securityCamera" : ->true
+        "securityCamera": ->
+          true
 
       #mix in common appliance functions
       $injector.invoke(applianceMixin, @, {$scope: $scope})
