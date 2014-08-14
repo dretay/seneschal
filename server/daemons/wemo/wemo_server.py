@@ -63,15 +63,15 @@ class KombuDaemon(threading.Thread):
         #respond immediately to the guy that asked
         rpcReply(switches, args)
 
-      # env.discover(seconds=5)
-      # for switch in env.list_switches():
-      #   switches.append({
-      #     "name": switch,
-      #     "status": env.get_switch(switch).get_state()
-      #     })
-      # print "listing finished dumping to json"
-      # print json.dumps(switches)
-      # sys.stdout.flush()
+      env.discover(seconds=5)
+      for switch in env.list_switches():
+        switches.append({
+          "name": switch,
+          "status": env.get_switch(switch).get_state()
+          })
+      print "listing finished dumping to json"
+      print json.dumps(switches)
+      sys.stdout.flush()
 
       #send out an update to everyone since we have some new data (and the wemo status listeners don't always work)
       # statusProducer.publish(body = switches)
