@@ -1,7 +1,6 @@
-window.loggingLevel = 'all';
-window.debug = {
-    log: console.log
-};
+window.loggingLevel = 'error';
+window.debug = null
+
 
 requirejs.config({
     paths: {
@@ -130,15 +129,25 @@ require(['app', 'bootstrap', 'c/main', 'c/daemons', 'c/vmstats', 'c/router', 'c/
 
     app.config(function (webStompProvider) {
         webStompProvider.hostname = 'www.drewandtrish.com';
+        webStompProvider.logger = function(){};
     });
-    app.run(function($rootScope, $location, webStomp) {
+    app.run(function($rootScope, $location, $timeout, webStomp) {
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             //this should be a register not a set
             //https://docs.angularjs.org/guide/module
             webStomp.setToken(next.pathParams.token);
+
+            var subscription;
+            for (subscription in webStomp.subscriptions) {
+                if(/^\/temp-queue/.test(subscription)){
+                    delete webStomp.client.subscriptions[subscription];
+                }
+                else {
+                    console.log("unsubscribing from "+subscription);
+                    webStomp.client.unsubscribe(subscription);
+                }
+            }
         });
     });
-
-
 
 });

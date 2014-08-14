@@ -1,12 +1,11 @@
 define [
-  'jquery'
-  'underscore'
-],
-($,_)->
+    'jquery'
+    'underscore'
+  ],
+($, _)->
   (appliance, size)->
     templateUrl: '/html/modals/cameraModal.html'
     controller: ($scope, $modalInstance, camera)->
-
       $scope.camera = camera
       $scope.timestamp = new Date().getTime()
       $scope.isMoving = false
@@ -34,10 +33,10 @@ define [
           when 39 then "right"
       invertDirection = (direction)->
         switch direction
-            when "left" then return "right"
-            when "right" then return "left"
-            when "up" then return "down"
-            when "down" then return "up"
+          when "left" then return "right"
+          when "right" then return "left"
+          when "up" then return "down"
+          when "down" then return "up"
 
       $scope.toggleCameraMove = (direction)->
         if $scope.camera.inverted then direction = invertDirection(direction)
@@ -83,4 +82,5 @@ define [
         $modalInstance.dismiss('cancel')
     size: size
     resolve:
-      camera: -> appliance
+      camera: ->
+        appliance

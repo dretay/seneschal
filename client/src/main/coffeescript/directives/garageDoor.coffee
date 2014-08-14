@@ -1,8 +1,8 @@
 define [
-  'd/directives'
-  'jquery'
-  'underscore'
-],
+    'd/directives'
+    'jquery'
+    'underscore'
+  ],
 (directives, $, _) ->
   'use strict'
 
@@ -14,10 +14,11 @@ define [
       door: "="
 
     controller: ($scope, $injector, $timeout)->
-      $scope.getClass= ()->
+      $scope.getClass = ()->
         if $scope.door.status == "open" then "progress-bar progress-bar-danger" else "progress-bar progress-bar-success"
 
-      $scope.getTooltip=-> ""
+      $scope.getTooltip = ->
+        ""
 
       $scope.getStyle = ->
         "left": "#{$scope.door.location.left}%"
@@ -26,5 +27,5 @@ define [
         "height": "#{$scope.door.dimensions.height}%"
 
       $scope.toggleDoor = ()->
-          $scope.door.update()
+        $scope.door.update()
       null

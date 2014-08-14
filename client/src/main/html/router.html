@@ -1,18 +1,16 @@
-<div class=".container-fluid alarm" >
+<div class=".container-fluid router">
     <div class="row">
         <div class="col-md-12">
             <h1 class="page-header">Visible Network Clients</h1>
 
-                    <table ng-table="tableParams" class="table ng-table-rowselected">
-                        <tr ng-repeat="entry in clients">
-                            <td header-class="text-left" data-title="'Hostname'">{{entry.hostname}}</td>
-                            <td header-class="text-left" data-title="'IP'">{{entry.ip}}</td>
-                            <td header-class="text-left" data-title="'Mac'">{{entry.mac}}</td>
-                            <td header-class="text-left" data-title="'Secs'">{{entry.secs}}</td>
-                        </tr>
-                    </table>
-
-
+            <table ng-table="tableParams" class="table ng-table-rowselected">
+                <tr ng-repeat="entry in clients">
+                    <td header-class="text-left" data-title="'Hostname'">{{entry.hostname}}</td>
+                    <td header-class="text-left" data-title="'IP'">{{entry.ip}}</td>
+                    <td header-class="text-left" data-title="'Mac'">{{entry.mac}}</td>
+                    <td header-class="text-left" data-title="'Last Seen'">{{entry.timestamp|timestampAge}}</td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>

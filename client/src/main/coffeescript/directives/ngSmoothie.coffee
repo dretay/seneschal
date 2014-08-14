@@ -11,7 +11,8 @@ define [
   'use strict'
 
   directives.directive 'ngSmoothie', (webStomp, $timeout)->
-    toDomName = (eventName)->eventName.replace(/\/|\./g,"_")
+    toDomName = (eventName)->
+      eventName.replace(/\/|\./g, "_")
 
     restrict: 'EA'
     scope:
@@ -34,7 +35,7 @@ define [
 
       post: (scope, iElement, iAttrs)->
         index = 0
-        scope.toDomName= toDomName
+        scope.toDomName = toDomName
         scope.smoothie = new SmoothieChart
           sharpLines: true
           verticalSections: 5
@@ -42,12 +43,12 @@ define [
           millisPerPixel: iAttrs.speed || 20,
           interpolation: iAttrs.interpolation || 'bezier'
           labels:
-              disabled: true
+            disabled: true
 
         scope._series = []
         scope._labels = []
         $timeout ->
-          scope.smoothie.streamTo($('#'+toDomName(scope.eventName)+'_chart')[0], 1000)
+          scope.smoothie.streamTo($('#' + toDomName(scope.eventName) + '_chart')[0], 1000)
           colors = chroma.brewer['Pastel2']
           for name, valueDescription of scope.series
             color = colors[index++]
@@ -65,13 +66,13 @@ define [
               style:
                 "color": color
 
-        ,100
+        , 100
 
         webStomp.getClient().then (client)=>
-          subscription = client.subscribe iAttrs.listenTo,  (data)->
+          subscription = client.subscribe iAttrs.listenTo, (data)->
             data = JSON.parse(data.body)
             for element, i in data
-              scope._series[i].append(new Date().getTime(),data[i])
+              scope._series[i].append(new Date().getTime(), data[i])
               scope._labels[i].value = data[i]
               scope.$apply()
 

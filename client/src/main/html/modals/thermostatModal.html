@@ -7,12 +7,14 @@
             <div class="color-circle" ng-class="cssFromThermostatMode()">
                 <div class="text-readout">
                     <i class="fa fa-angle-up fa-3 thermostatControlTop" ng-click="changeTemperature(1)"></i>
+
                     <div class="hvacInfo" ng-show="!isAway()">{{getThermostat().data.hvac_mode}} set to</div>
                     <div class="degree">
                         <span ng-show="!isAway()">
                             {{targetTemperature}}&deg;
                         </span>
-                        <span ng-show="isAway()" style="text-transform: uppercase;font-size: 90pt;left: -15px;position: relative;">
+                        <span ng-show="isAway()"
+                              style="text-transform: uppercase;font-size: 90pt;left: -15px;position: relative;">
                             {{getThermostat().away}}
                         </span>
                     </div>
@@ -21,21 +23,62 @@
             </div>
         </div>
         <ul class="minute-marks">
-            <li></li><li></li><li></li><li></li><li></li><li></li>
-            <li></li><li></li><li></li><li></li><li></li><li></li>
-            <li></li><li></li><li></li><li></li><li></li><li></li>
-            <li></li><li></li><li></li><li></li><li></li><li></li>
-            <li></li><li></li><li></li><li></li><li></li><li></li>
-            <li></li><li></li><li></li><li></li><li></li><li></li>
-            <li></li><li></li><li></li><li></li><li></li><li></li>
-            <li></li><li></li><li></li><li></li><li></li><li></li>
             <li></li>
-      </ul>
-      <div ng-style="radialStyle(targetTemperature)" class="thermostat-target-needle"></div>
-      <div ng-style="radialStyle(getThermostat().data.ambient_temperature_f)" class="thermostat-current-needle"></div>
-      <div ng-style="innerRadialStyle(getThermostat().data.ambient_temperature_f-2)" class="thermostat-current-number">
-        {{getThermostat().data.ambient_temperature_f}}
-      </div>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <div ng-style="radialStyle(targetTemperature)" class="thermostat-target-needle"></div>
+        <div ng-style="radialStyle(getThermostat().data.ambient_temperature_f)" class="thermostat-current-needle"></div>
+        <div ng-style="innerRadialStyle(getThermostat().data.ambient_temperature_f-2)"
+             class="thermostat-current-number">
+            {{getThermostat().data.ambient_temperature_f}}
+        </div>
 
     </div>
 </div>

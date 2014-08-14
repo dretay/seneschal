@@ -1,8 +1,8 @@
 define [
-  'angular'
-  's/services'
-  'r/WebStompResource'
-],
+    'angular'
+    's/services'
+    'r/WebStompResource'
+  ],
 (angular, services) ->
   'use strict'
 
@@ -15,22 +15,22 @@ define [
         outboundTransform: (rawData)->
           operation: 'list_switches'
         inboundTransform: (rawData, oldData)->
-
           if !_.isArray(rawData) and oldData?
-            filteredLights = _.filter oldData, (light)->rawData.name == light.name
+            filteredLights = _.filter oldData, (light)->
+              rawData.name == light.name
             for light in filteredLights
               light.status = if rawData.status == "on" then true else false
 
             #hum... something to look into... if you don't strip out all the messaging shit it explodes
             return _.map oldData, (record)->
-                name: record.name
-                status: record.status
-                floor: record.floor
-                type: record.type
-                location:
-                  left: record.location.left
-                  top: record.location.top
-                  rotation: if record.location.rotation? then record.location.rotation else 0
+              name: record.name
+              status: record.status
+              floor: record.floor
+              type: record.type
+              location:
+                left: record.location.left
+                top: record.location.top
+                rotation: if record.location.rotation? then record.location.rotation else 0
           else
             #todo: this needs to be in something like redis or the service... i shouldn't be storing it...
             lights = [
@@ -132,7 +132,8 @@ define [
             ]
 
             for result in rawData
-              filteredLights = _.filter lights, (light)->result.name == light.name
+              filteredLights = _.filter lights, (light)->
+                result.name == light.name
               for light in filteredLights
                 light.status = Boolean(result.status)
 

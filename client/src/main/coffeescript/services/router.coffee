@@ -3,6 +3,7 @@ define [
     's/services'
     'underscore'
     'r/WebStompResource'
+
   ],
 (angular, services, _) ->
   'use strict'
@@ -11,5 +12,12 @@ define [
     new Resource
       get:
         subscription: "/exchange/router.status/fanout"
+        outbound: "/exchange/router.cmd"
+        inbound: "actiontec.cmd"
+        outboundTransform: ->
+          operation: "list_mac_addresses"
+        inboundTransform: (data)->
+          _.map data, (ele)->
+            ele
 
   ]

@@ -1,9 +1,9 @@
 define [
-  'angular'
-  's/services'
-  'moment'
-  'r/WebStompResource'
-],
+    'angular'
+    's/services'
+    'moment'
+    'r/WebStompResource'
+  ],
 (angular, services, moment) ->
   'use strict'
 
@@ -13,7 +13,7 @@ define [
         subscription: "/exchange/alarm.status/fanout"
         outbound: "/exchange/alarm.cmd"
         inbound: "eyezon.alarm"
-        outboundTransform:->
+        outboundTransform: ->
           "getKeypadStatus"
         inboundTransform: (rawData, oldData)->
           if rawData.name == "Virtual Keypad Update"

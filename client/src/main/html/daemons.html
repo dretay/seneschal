@@ -1,4 +1,4 @@
-<div class=".container-fluid alarm" >
+<div class=".container-fluid alarm">
     <div class="row">
         <div class="col-md-12">
             <h1 class="page-header">Configured Daemons</h1>
@@ -9,13 +9,21 @@
                             ng-click="selectTask(task)"
                             ng-class="{'active': selectedTask == task}">
                             <td ng-click="get_log(task)" header-class="text-left" data-title="'Name'">{{task.name}}</td>
-                            <td ng-click="get_log(task)" header-class="text-left" data-title="'State'">{{task.statename}}</td>
-                            <td ng-click="get_log(task)" header-class="text-left" data-title="'Description'">{{task.description}}</td>
+                            <td ng-click="get_log(task)" header-class="text-left" data-title="'State'">
+                                {{task.statename}}
+                            </td>
+                            <td ng-click="get_log(task)" header-class="text-left" data-title="'Description'">
+                                {{task.description}}
+                            </td>
                             <td data-title="'Controls'" header-class="text-right">
                                 <div class="pull-right">
-                                    <button ng-click="start_task(task)" type="button" class="btn btn-success">Start</button>
-                                    <button ng-click="restart_task(task)" type="button" class="btn btn-warning">Restart</button>
-                                    <button ng-click="stop_task(task)" type="button" class="btn btn-danger">Stop</button>
+                                    <button ng-click="start_task(task)" type="button" class="btn btn-success">Start
+                                    </button>
+                                    <button ng-click="restart_task(task)" type="button" class="btn btn-warning">
+                                        Restart
+                                    </button>
+                                    <button ng-click="stop_task(task)" type="button" class="btn btn-danger">Stop
+                                    </button>
                                 </div>
                             </td>
                         </tr>

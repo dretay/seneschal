@@ -1,9 +1,9 @@
 define [
-  'angular'
-  's/services'
-  'moment'
-  'r/WebStompResource'
-],
+    'angular'
+    's/services'
+    'moment'
+    'r/WebStompResource'
+  ],
 (angular, services, moment) ->
   'use strict'
 
@@ -13,13 +13,16 @@ define [
         subscription: "/exchange/alarm.status/fanout"
         outbound: "/exchange/alarm.cmd"
         inbound: "eyezon.alarm"
-        outboundTransform: -> "^02,$"
+        outboundTransform: ->
+          "^02,$"
         inboundTransform: (rawData, oldData)->
           #if the partition changes to ready
           if rawData.name == "Partition State Change"
-            partition = _.find rawData.payload.partitions, (partition)->partition.partition == 0
+            partition = _.find rawData.payload.partitions, (partition)->
+              partition.partition == 0
 
-            if partition.status == "Ready" and oldData? then _.map oldData, (zone)-> zone.open = false
+            if partition.status == "Ready" and oldData? then _.map oldData, (zone)->
+              zone.open = false
 
             return oldData
 
@@ -79,7 +82,8 @@ define [
             ]
 
             for zone in zones
-              serverData = _.find rawData.payload.timers, (entry)-> entry.zone == zone.zone
+              serverData = _.find rawData.payload.timers, (entry)->
+                entry.zone == zone.zone
               zone.timestamp = moment(serverData.timestamp)
               zone.open = if serverData.delta >= 10 and oldData? then false else true
 

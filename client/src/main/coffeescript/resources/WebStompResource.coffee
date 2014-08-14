@@ -1,22 +1,22 @@
 define [
-  'angular'
-  'underscore'
-  './WebStompEntity'
-  'jquery'
-  'r/resources'
-  'p/webStomp'
+    'angular'
+    'underscore'
+    './WebStompEntity'
+    'jquery'
+    'r/resources'
+    'p/webStomp'
 
-],
+  ],
 (angular, _, WebStompEntity, $, resources) ->
   'use strict'
   resources.factory 'webStompResource', ['$rootScope', 'webStomp', ($rootScope, webStomp)->
     class WebStompResource
 
 
-      constructor: (config={})->
-        {@get,@save,@delete,@update, @token} = config
+      constructor: (config = {})->
+        {@get, @save, @delete, @update, @token} = config
 
-      query: (query={}, isArray=true, action="get")->
+      query: (query = {}, isArray = true, action = "get")->
         deferred = $.Deferred()
         data = if isArray then [] else {}
 
@@ -31,9 +31,10 @@ define [
 
               #map the raw data into a Response
               if _.isArray rawData
-                final = _.map rawData, (element)=> new WebStompEntity(element,webStomp,@)
+                final = _.map rawData, (element)=>
+                  new WebStompEntity(element, webStomp, @)
               else
-                final = new WebStompEntity(rawData,webStomp,@)
+                final = new WebStompEntity(rawData, webStomp, @)
 
               if action == "get" and final != null and !_.isEmpty(final) and (_.isArray(final) == _.isArray(data))
                 #replace the stub with the real response
@@ -55,15 +56,15 @@ define [
 
           if @[action].outbound and query?
             if @[action].outbound.indexOf("/") == -1
-              client.send "/amq/queue/#{@[action].outbound}",headers, query
+              client.send "/amq/queue/#{@[action].outbound}", headers, query
             else
-              client.send "#{@[action].outbound}",headers, query
+              client.send "#{@[action].outbound}", headers, query
           if @[action].subscription? then @subscriptionHandler = client.subscribe @[action].subscription, handleResponse
-          if @[action].inbound? then client.subscriptions["/temp-queue/#{@[action].inbound}"]= handleResponse
+          if @[action].inbound? then client.subscriptions["/temp-queue/#{@[action].inbound}"] = handleResponse
 
 
         if action == "get" then return data else return deferred.promise()
 
       create: (data)->
-        new WebStompEntity(data,webStomp,@)
+        new WebStompEntity(data, webStomp, @)
     ]
