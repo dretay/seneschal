@@ -34,4 +34,4 @@ class ArpDiscoveryDaemon(threading.Thread):
         print "Discovery complete, found",len(entries),"hosts"
         sys.stdout.flush()
         self.arpQueue.put(entries)
-      time.sleep(60)
+      time.sleep(300)

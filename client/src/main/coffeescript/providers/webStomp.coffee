@@ -37,7 +37,9 @@ define [
 
       client: null
       subscriptions: []
+      setToken: (token)-> @token=token
       getClient: (token, deferred)->
+        token = if @token? then @token else token
         if client == null then @client = client = getSocket() else @client = client
         unless deferred? then deferred = $.Deferred()
         username = null

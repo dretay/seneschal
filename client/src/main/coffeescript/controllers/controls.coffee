@@ -30,7 +30,6 @@ define [
     #TODO: this has to be in controller scope, but should probably be handled as a mixin!
     $scope.$on '$destroy', -> webStomp.client.unsubscribe id for id, handler of webStomp.subscriptions
 
-    switches.token = $routeParams.token
 
     $scope.activeFloor = $routeParams.floor
     $scope.switches = switches.query()
@@ -66,15 +65,15 @@ define [
     $scope.floors =
       basement:
         name: "basement"
-        url: '/stylesheets/img/basement.jpg'
+        url: '/stylesheets/img/basement.png'
 
       mainFloor:
         name: "mainFloor"
-        url: '/stylesheets/img/mainfloor.jpg'
+        url: '/stylesheets/img/mainfloor.png'
 
       secondFloor:
         name: "secondFloor"
-        url: '/stylesheets/img/2ndfloor.jpg'
+        url: '/stylesheets/img/2ndfloor.png'
 
     $scope.activeFloor = $scope.floors[$routeParams.floor]
 

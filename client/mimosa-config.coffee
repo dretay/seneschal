@@ -56,9 +56,8 @@ exports.config =
     copy:
       outRoot: "managed"
       mainOverrides:
-        "font-awesome":["fonts/fontawesome-webfont.woff","fonts/fontawesome-webfont.svg","fonts/FontAwesome.otf","fonts/fontawesome-webfont.eot","fonts/fontawesome-webfont.ttf","css/font-awesome.css"]
         "angular-motion":["dist/angular-motion.css"]
-        "stomp-websocket":["lib/stomp.js"]
+        "engine.io-client": ["engine.io.js"]
+        "font-awesome":["fonts/fontawesome-webfont.woff","fonts/fontawesome-webfont.svg","fonts/FontAwesome.otf","fonts/fontawesome-webfont.eot","fonts/fontawesome-webfont.ttf","css/font-awesome.css"]
         "requirejs-domready":["domReady.js"]
-        "requirejs-i18n":["i18n.js"]
-        "jquery.svg": ["jquery.svg.js"]
+        "stomp-websocket":["lib/stomp.js"]

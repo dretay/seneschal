@@ -28,13 +28,12 @@ requirejs.config({
         //3rd party libraries
         chroma: 'vendor/managed/chroma-js/chroma',
         domReady: 'vendor/managed/requirejs-domready/domReady',
+        engineio: 'vendor/managed/engine.io-client/engine.io',
         jquery: 'vendor/managed/jquery/jquery',
         jqueryMigrate: 'vendor/unmanaged/jquery-migrate-1.2.1.min',
         jquerySvg: 'vendor/unmanaged/jquery.svg',
         ngTable: 'vendor/managed/ng-table/ng-table',
-        reconnectingWebsocket: 'vendor/managed/reconnectingWebsocket/reconnecting-websocket',
         smoothie: "vendor/managed/smoothie-bower/smoothie",
-        sugar: "vendor/managed/sugar/sugar.min",
         underscore: 'vendor/managed/underscore-amd/underscore',
 
         //utils
@@ -132,6 +131,14 @@ require(['app', 'bootstrap', 'c/main', 'c/daemons', 'c/vmstats', 'c/router', 'c/
     app.config(function (webStompProvider) {
         webStompProvider.hostname = 'www.drewandtrish.com';
     });
+    app.run(function($rootScope, $location, webStomp) {
+        $rootScope.$on("$routeChangeStart", function (event, next, current) {
+            //this should be a register not a set
+            //https://docs.angularjs.org/guide/module
+            webStomp.setToken(next.pathParams.token);
+        });
+    });
+
 
 
 });

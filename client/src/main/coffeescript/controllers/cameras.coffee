@@ -7,7 +7,7 @@ define [
 
   controllers.controller 'cameras', ['$scope', '$timeout', '$routeParams', 'lights', ($scope, $timeout, $routeParams ,lights) ->
     # $scope.$parent.cfg.pageTitle = "Cameras"
-    $scope.token = $routeParams.token
+
 
     $scope.cameras = [
       {

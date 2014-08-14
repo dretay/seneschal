@@ -2,16 +2,55 @@
     <div class="row" style="padding-top: 10px">
         <div class="col-md-12">
             <main id="charts">
-                <section class="chart template">
-                    <h2 class="title"></h2>
-                    <canvas width="600" height="80"></canvas>
-                    <ul class="stats">
-                        <li class="stat template">
-                            <span class="stat-name"></span>
-                            <span class="stat-value"></span>
-                        </li>
-                    </ul>
-                </section>
+                <ng-smoothie
+                        listen-to="/exchange/system.status.processes/fanout"
+                        height="80"
+                        width=600"
+                        stroke-style="#ff0000"
+                        fill-style="rgba(255, 0, 0, 0.4)"
+                        series="series.proc">
+                </ng-smoothie>
+                <ng-smoothie
+                        listen-to="/exchange/system.status.memory/fanout"
+                        height="80"
+                        width=600"
+                        stroke-style="#ff0000"
+                        fill-style="rgba(255, 0, 0, 0.4)"
+                        series="series.mem">
+                </ng-smoothie>
+                <ng-smoothie
+                        listen-to="/exchange/system.status.swap/fanout"
+                        height="80"
+                        width=600"
+                        stroke-style="#ff0000"
+                        fill-style="rgba(255, 0, 0, 0.4)"
+                        series="series.swap">
+                </ng-smoothie>
+                <ng-smoothie
+                        listen-to="/exchange/system.status.io/fanout"
+                        height="80"
+                        width=600"
+                        stroke-style="#ff0000"
+                        fill-style="rgba(255, 0, 0, 0.4)"
+                        series="series.io">
+                </ng-smoothie>
+                <ng-smoothie
+                        listen-to="/exchange/system.status.system/fanout"
+                        height="80"
+                        width=600"
+                        stroke-style="#ff0000"
+                        fill-style="rgba(255, 0, 0, 0.4)"
+                        series="series.sys">
+                </ng-smoothie>
+                <ng-smoothie
+                        listen-to="/exchange/system.status.cpu/fanout"
+                        height="80"
+                        width=600"
+                        stroke-style="#ff0000"
+                        fill-style="rgba(255, 0, 0, 0.4)"
+                        series="series.cpu">
+                </ng-smoothie>
+
             </main>
         </div>
     </div>

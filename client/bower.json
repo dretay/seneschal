@@ -15,12 +15,10 @@
       "jquery": "*",
       "moment": "*",
       "ng-table": "0.3.3",
-      "reconnectingWebsocket": "*",
       "requirejs": "*",
       "requirejs-domready": "2.0.1",
       "smoothie-bower": "1.19.x",
       "sockjs": "0.3.4",
-      "sugar": "1.4.x",
       "stomp-websocket": "git://github.com/jmesnil/stomp-websocket.git#2.3.0",
       "underscore-amd": "1.4.4"
   },

@@ -15,7 +15,7 @@ define [
     $scope.targetTemperatureType = ""
     stompClient = null
     subscriptions = []
-    webStomp.getClient($routeParams.token).then (client)=>
+    webStomp.getClient().then (client)=>
       stompClient = client
       subscriptions.push client.subscribe "/exchange/nest.thermostat/fanout", (data)->
         info = JSON.parse data.body
