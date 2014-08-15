@@ -1,16 +1,53 @@
 <div class=".container-fluid router">
     <div class="row">
         <div class="col-md-12">
-            <h1 class="page-header">Visible Network Clients</h1>
+            <h1 class="page-header">Router</h1>
+            <accordion close-others="oneAtATime">
+                <accordion-group heading="Host Statistics" is-open="status.open">
+                    <div style="margin:auto;width:930px">
+                        <div style="float:left;padding-right:30px">
+                            <ng-smoothie
+                                listen-to="/exchange/router.status/fanout"
+                                height="80"
+                                width="300"
+                                stroke-style="#ff0000"
+                                fill-style="rgba(255, 0, 0, 0.4)"
+                                criteria="criteria"
+                                key = "stats"
+                                series="tranSeries">
+                            </ng-smoothie>
+                        </div>
+                        <div style="float:left">
+                            <ng-smoothie
+                                    listen-to="/exchange/router.status/fanout"
+                                    height="80"
+                                    width="600"
+                                    stroke-style="#ff0000"
+                                    fill-style="rgba(255, 0, 0, 0.4)"
+                                    criteria="criteria"
+                                    key = "stats"
+                                    series="qualSeries">
+                            </ng-smoothie>
+                        </div>
+                    </div>
+                </accordion-group>
+                <accordion-group heading="Visible Network Client" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+                    <table ng-table="tableParams" class="table ng-table-rowselected">
+                        <tr ng-repeat="entry in clients" ng-click="setCriteria(entry.mac)" ng-class="{'active': criteria.mac == entry.mac}">
+                            <td header-class="text-left" data-title="'Hostname'">{{entry.hostname}}</td>
+                            <td header-class="text-left" data-title="'IP'">{{entry.ip}}</td>
+                            <td header-class="text-left" data-title="'Mac'">{{entry.mac}}</td>
+                            <td header-class="text-left" data-title="'Transmission Rate'">{{entry.rate}}</td>
+                        </tr>
+                    </table>
+                </accordion-group>
 
-            <table ng-table="tableParams" class="table ng-table-rowselected">
-                <tr ng-repeat="entry in clients">
-                    <td header-class="text-left" data-title="'Hostname'">{{entry.hostname}}</td>
-                    <td header-class="text-left" data-title="'IP'">{{entry.ip}}</td>
-                    <td header-class="text-left" data-title="'Mac'">{{entry.mac}}</td>
-                    <td header-class="text-left" data-title="'Last Seen'">{{entry.timestamp|timestampAge}}</td>
-                </tr>
-            </table>
+
+
+            </accordion>
+
+
+
         </div>
     </div>
 </div>

@@ -14,10 +14,11 @@ define [
       $scope.status =
         isFirstOpen: true
         isFirstDisabled: false
-      $scope.oneAtATime = false;
+      $scope.oneAtATime = false
 
       $scope.get_log = (process)->
-        $scope.status.open = !$scope.status.open
+        if !$scope.selectedTask? or process.name == $scope.selectedTask.name
+          $scope.status.open = !$scope.status.open
         $scope.log = supervisor.query
           operation: "read_log"
           processname: process.name

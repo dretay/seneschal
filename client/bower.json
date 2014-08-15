@@ -19,7 +19,7 @@
       "requirejs-domready": "2.0.1",
       "smoothie-bower": "1.19.x",
       "sockjs": "0.3.4",
-      "stomp-websocket": "git://github.com/jmesnil/stomp-websocket.git#2.3.0",
+      "stomp-websocket": "git://github.com/jmesnil/stomp-websocket.git#2.3.2",
       "underscore-amd": "1.4.4"
   },
   "devDependencies": {

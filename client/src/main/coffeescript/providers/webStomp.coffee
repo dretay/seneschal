@@ -15,7 +15,7 @@ define [
       unless _.isString @username then @username = 'guest'
       unless _.isString @password then @password = 'guest'
 
-
+      connectionAttempts = 0
       client = null
       connectionStatus = 0
       getSocket = =>
@@ -40,6 +40,7 @@ define [
       setToken: (token)->
         @token = token
       getClient: (token, deferred)->
+
         token = if @token? then @token else token
         if client == null then @client = client = getSocket() else @client = client
         unless deferred? then deferred = $.Deferred()
@@ -58,7 +59,10 @@ define [
             connectionStatus = 3
             @subscriptions = client.subscriptions
             if deferred.state() != "resolved" then deferred.resolve client
-          on_error = =>
+          on_error = (error)=>
+            if error == "Whoops! Lost connection to undefined"
+              location.reload()
+
             console.log "RABBITMQ STOMP ERROR HANDLER CALLED!!!!!!!!!!!!!! #{JSON.stringify arguments}"
             deferred.reject client
           connectionStatus = 1
@@ -73,7 +77,9 @@ define [
             console.log "connection ready... resolving within watcher"
             deferred.resolve client
           else if deferred.state() == "pending"
-            console.log "connection not ready yet... trying again"
+            connectionAttempts +=1
+            console.log "connection not ready yet... trying again #{connectionAttempts}"
+            if connectionAttempts > 20 then location.reload()
             @getClient token, deferred
 
 
