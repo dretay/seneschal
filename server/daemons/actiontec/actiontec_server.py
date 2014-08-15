@@ -1,6 +1,7 @@
 import threading, Queue, time, sys
-from ArpDiscoveryDaemon import ArpDiscoveryDaemon
+from ActiontecDiscoveryDaemon import ActiontecDiscoveryDaemon
 from RabbitmqDaemon import RabbitmqDaemon
+from TimecapsuleDiscoveryDaemon import TimecapsuleDiscoveryDaemon
 
 
 
@@ -10,19 +11,24 @@ from RabbitmqDaemon import RabbitmqDaemon
 if __name__ == '__main__':
   rlock = threading.RLock()
 
-  arpQueue = Queue.Queue()
+  actiontecQueue = Queue.Queue()
+  timecapsuleQueue = Queue.Queue()
 
   entries = []
 
-  arpDiscoveryDaemon = ArpDiscoveryDaemon(arpQueue)
-  arpDiscoveryDaemon.setDaemon(True)
-  arpDiscoveryDaemon.start()
+  actiontecDiscoveryDaemon = ActiontecDiscoveryDaemon(actiontecQueue)
+  actiontecDiscoveryDaemon.setDaemon(True)
+  actiontecDiscoveryDaemon.start()
 
-  rabbitmqDaemon = RabbitmqDaemon(arpQueue)
+  timecapsuleDiscoveryDaemon = TimecapsuleDiscoveryDaemon(timecapsuleQueue)
+  timecapsuleDiscoveryDaemon.setDaemon(True)
+  timecapsuleDiscoveryDaemon.start()
+
+  rabbitmqDaemon = RabbitmqDaemon(actiontecQueue, timecapsuleQueue)
   rabbitmqDaemon.setDaemon(True)
   rabbitmqDaemon.start()
 
   while threading.active_count() > 0:
     time.sleep(0.1)
-    if arpDiscoveryDaemon.isAlive() is not True or rabbitmqDaemon.isAlive() is not True:
+    if actiontecDiscoveryDaemon.isAlive() is not True or rabbitmqDaemon.isAlive() is not True or timecapsuleDiscoveryDaemon.isAlive() is not True:
       sys.exit()

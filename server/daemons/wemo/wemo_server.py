@@ -38,7 +38,7 @@ class KombuDaemon(threading.Thread):
       sys.stdout.flush()
       switch = env.get_switch(message['switchName'])
       rpcReply(switch.on(), args)
-      # list_switches()
+      discover_switches()
 
 
     def toggle_off(message, args):
@@ -46,8 +46,19 @@ class KombuDaemon(threading.Thread):
       sys.stdout.flush()
       switch = env.get_switch(message['switchName'])
       rpcReply(switch.off(), args)
-      # list_switches()
+      discover_switches()
 
+
+    def discover_switches():
+      env.discover(seconds=5)
+      switches = []
+      for switch in env.list_switches():
+        switches.append({
+          "name": switch,
+          "status": env.get_switch(switch).get_state()
+          })
+      #send out an update to everyone since we have some new data (and the wemo status listeners don't always work)
+      statusProducer.publish(body = switches)
 
     def list_switches(message=None, args=None):
       switches = []
@@ -62,19 +73,8 @@ class KombuDaemon(threading.Thread):
         sys.stdout.flush()
         #respond immediately to the guy that asked
         rpcReply(switches, args)
+        discover_switches()
 
-      env.discover(seconds=5)
-      for switch in env.list_switches():
-        switches.append({
-          "name": switch,
-          "status": env.get_switch(switch).get_state()
-          })
-      print "listing finished dumping to json"
-      print json.dumps(switches)
-      sys.stdout.flush()
-
-      #send out an update to everyone since we have some new data (and the wemo status listeners don't always work)
-      # statusProducer.publish(body = switches)
 
     def rpcReply(message, req):
       #this is so retarded... stomp leaves the /temp-queue in the header... so we need to strip it off
