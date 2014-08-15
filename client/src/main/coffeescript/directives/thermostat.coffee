@@ -22,8 +22,8 @@ define [
         $modal.open ThermostatModal $scope.appliance, "lg"
 
       $scope.innerClassMap =
-        "thermostatIcon": ->
-          true
+        "thermostatCoolIcon": ->$scope.appliance.data.hvac_mode == "cool"
+        "thermostatHotIcon": ->$scope.appliance.data.hvac_mode != "cool"
 
       $scope._getDisplayLabel = ->
         "#{$scope.appliance.data.ambient_temperature_f}°"
