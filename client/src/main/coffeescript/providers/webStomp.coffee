@@ -20,7 +20,7 @@ define [
       connectionStatus = 0
       getSocket = =>
         $log.debug "getting connection... "
-        ws = new SockJS("https://#{@hostname}:#{@port}/rabbitmq/stomp")
+        ws = new SockJS("https://#{@hostname}:#{@port}/rabbitmq/stomp",null,{devel:true,debug:true})
         client = Stomp.over(ws)
         if @logger? then client.debug = @logger
 
@@ -56,8 +56,8 @@ define [
             @subscriptions = client.subscriptions
             if deferred.state() != "resolved" then deferred.resolve client
           on_error = (error)=>
-            if error == "Whoops! Lost connection to undefined"
-              location.reload()
+#            if error == "Whoops! Lost connection to undefined"
+#              location.reload()
 
             $log.error  "RABBITMQ STOMP ERROR HANDLER CALLED!!!!!!!!!!!!!! #{JSON.stringify arguments}"
             deferred.reject client

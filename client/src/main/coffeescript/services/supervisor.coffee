@@ -29,9 +29,9 @@ define [
       update:
         inbound: "supervisor.cmd"
         outbound: "/exchange/system.cmd"
-        outboundTransform: (rawData, args)->
+        outboundTransform: (rawData, entity)->
           operation: rawData.operation
-          processname: rawData.entity.name
+          processname: entity.name
 
 
   ]
