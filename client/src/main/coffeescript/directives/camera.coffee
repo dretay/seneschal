@@ -18,9 +18,8 @@ define [
       $scope._click = ()->
         $modal.open CameraModal $scope.appliance, "lg"
 
-      $scope.innerClassMap =
-        "securityCamera": ->
-          true
+      $scope.outerClassMap =
+        "securityCamera": -> true
 
       #mix in common appliance functions
       $injector.invoke(applianceMixin, @, {$scope: $scope})

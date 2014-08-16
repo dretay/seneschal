@@ -35,7 +35,7 @@ define [
                 status: false
                 floor: "mainFloor"
                 location:
-                  left: 33
+                  left: 35
                   top: 74
                 dimensions:
                   width: "4.5%"
@@ -61,7 +61,7 @@ define [
                 status: false
                 floor: "mainFloor"
                 location:
-                  left: 50.5
+                  left: 52.5
                   top: 8.1
                 dimensions:
                   width: "11%"
@@ -73,7 +73,7 @@ define [
                 status: false
                 floor: "basement"
                 location:
-                  left: 35
+                  left: 37
                   top: 8.5
                 dimensions:
                   width: "6%"

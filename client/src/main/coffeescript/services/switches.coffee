@@ -40,7 +40,7 @@ define [
                 floor: "mainFloor"
                 type: "fan"
                 location:
-                  left: 79
+                  left: 77
                   top: 28
               }
               {
@@ -49,7 +49,7 @@ define [
                 floor: "mainFloor"
                 type: "light"
                 location:
-                  left: 31.5
+                  left: 29.5
                   top: 77
               }
               {
@@ -58,7 +58,7 @@ define [
                 floor: "mainFloor"
                 type: "floodLight"
                 location:
-                  left: 72
+                  left: 70
                   top: 84
                   rotation: 43
               }
@@ -68,7 +68,7 @@ define [
                 floor: "mainFloor"
                 type: "light"
                 location:
-                  left: 9
+                  left: 7
                   top: 54
               }
               {
@@ -77,7 +77,7 @@ define [
                 floor: "mainFloor"
                 type: "light"
                 location:
-                  left: 8
+                  left: 6
                   top: 83
               }
               {
@@ -96,7 +96,7 @@ define [
                 floor: "mainFloor"
                 type: "light"
                 location:
-                  left: 74
+                  left: 72
                   top: 28
               }
               {
@@ -105,11 +105,11 @@ define [
                 floor: "secondFloor"
                 type: "monitor"
                 location:
-                  left: 15
+                  left: 14
                   top: 30
-                dimensions:
-                  width: "3em"
-                  height: "3em"
+#                dimensions:
+#                  width: "3em"
+#                  height: "3em"
               }
               {
                 name: "Master Bedroom"
@@ -117,7 +117,7 @@ define [
                 floor: "secondFloor"
                 type: "light"
                 location:
-                  left: 88
+                  left: 86
                   top: 8
               }
               {
@@ -126,7 +126,7 @@ define [
                 floor: "secondFloor"
                 type: "light"
                 location:
-                  left: 88
+                  left: 86
                   top: 30
               }
             ]
@@ -142,11 +142,11 @@ define [
       update:
         inbound: "wemo.lights"
         outbound: "/exchange/lights.cmd"
-        outboundTransform: (rawData, args)->
-          unless rawData.status
+        outboundTransform: (query, oldEntity)->
+          unless oldEntity.status
             operation: 'toggle_on'
-            switchName: rawData.name
+            switchName: oldEntity.name
           else
             operation: 'toggle_off'
-            switchName: rawData.name
+            switchName: oldEntity.name
   ]

@@ -1,8 +1,10 @@
 <div
-        ng-class="getOuterClass()"
         ng-style="{{getOuterStyle()}}"
-        ng-attr-title="{{getTooltip()}}"
-        ng-click="click(appliance)"
         class="appliance">
-    <i ng-class="getInnerClass()" ng-style="{{getInnerStyle()}}">{{getDisplayLabel()}}</i>
+    <div
+        ng-class="getOuterClass()"
+        ng-attr-title="{{getTooltip()}}"
+        ng-click="click(appliance)">
+        <i ng-class="getInnerClass()" ng-style="{{getInnerStyle()}}">{{getDisplayLabel()}}</i>
+    </div>
 </div>

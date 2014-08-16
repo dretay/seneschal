@@ -12,15 +12,15 @@ define [
   resources.factory 'webStompResource', ['$rootScope', 'webStomp', '$log', ($rootScope, webStomp, $log)->
     class WebStompResource
 
-      constructor: (config = {})-> {@get, @save, @delete, @update, @subscribe} = config
+      constructor: (config = {})-> { @get, @save, @delete, @update, @subscribe } = config
 
       query: (query = {}, opts={})->
 
         #process args
-        {isArray,action,scope} = opts
-        isArray = true if _.isUndefined isArray
-        action = "get" if _.isUndefined action
-        scope = null if _.isUndefined scope
+        isArray = if _.isUndefined opts.isArray then true else opts.isArray
+        action = if _.isUndefined opts.action then "get"  else opts.action
+        scope = if _.isUndefined opts.scope then null else opts.scope
+        oldEntity = if _.isUndefined opts.oldEntity then null else opts.oldEntity
         client = null
         subscription = null
 
@@ -61,7 +61,7 @@ define [
           client = webStompClient
 
           #perform outbound transform of data if desired
-          query = @[action].outboundTransform(query) if _.isFunction @[action].outboundTransform
+          query = @[action].outboundTransform(query, oldEntity) if _.isFunction @[action].outboundTransform
 
           #if the query is already stringified don't do anything
           #if its not stringified then stringify it

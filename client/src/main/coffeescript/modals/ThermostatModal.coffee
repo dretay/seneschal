@@ -9,9 +9,9 @@ define [
     templateUrl: '/html/modals/thermostatModal.html'
     controller: ($scope, $modalInstance, nest, webStomp, defaultThermostat, $timeout, $filter)->
 
-      #TODO: this should be part of some over-arching mechanic...
-      $scope.$on '$destroy', ->
-        webStomp.client.unsubscribe nest.subscriptionHandler.id
+#      #TODO: this should be part of some over-arching mechanic...
+#      $scope.$on '$destroy', ->
+#        webStomp.client.unsubscribe nest.subscriptionHandler.id
 
       $scope.innerRadialStyle = (temp)->
         tempToRotation = (temp)->
@@ -34,7 +34,7 @@ define [
         $scope.getThermostat().away != 'home'
       $scope.defaultThermostat = defaultThermostat
       $scope.targetTemperature = defaultThermostat.data.target_temperature_f
-      $scope.nest = nest.query({}, false)
+      $scope.nest = nest.query(null,{isArray:false, scope:$scope})
       $scope.changeTemperature = (adjustment)->
         $scope.targetTemperature += adjustment
 

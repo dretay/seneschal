@@ -23,22 +23,22 @@ define [
                 name: "Garage Entryway"
                 floor: "mainFloor"
                 location:
-                  left: 45
+                  left: 43
                   top: 40.5
-                dimensions:
-                  width: "3em"
-                  height: "3em"
+#                dimensions:
+#                  width: "3em"
+#                  height: "3em"
               }
               {
                 name: "Second Floor Hallway"
                 floor: "secondFloor"
                 location:
-                  left: 42
+                  left: 40
                   top: 31
                   rotation: -31
-                dimensions:
-                  width: "2em"
-                  height: "2em"
+#                dimensions:
+#                  width: "2em"
+#                  height: "2em"
               }
 
             ]

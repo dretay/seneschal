@@ -18,11 +18,11 @@ define [
       $scope.delta = moment.duration(moment() - $scope.appliance.timestamp)
 
       $scope.outerClassMap =
-        "progress-bar progress-bar-danger": ->
+        " progress-bar progress-bar-danger alarmZone": ->
           $scope.appliance.open
-        "progress-bar progress-bar-success": ->
+        " progress-bar progress-bar-success alarmZone": ->
           $scope.delta.asHours() > 1
-        "progress-bar progress-bar-warning": ->
+        " progress-bar progress-bar-warning alarmZone": ->
           true
 
 

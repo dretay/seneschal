@@ -11,12 +11,12 @@ define [
     controller: ($scope, $modalInstance, alarmKeypads, webStomp, defaultKeypad)->
       this.alarmKeypads = alarmKeypads
 
-      #TODO: this should be part of some over-arching mechanic...
-      $scope.$on '$destroy', ->
-        webStomp.client.unsubscribe alarmKeypads.subscriptionHandler.id
+#      #TODO: this should be part of some over-arching mechanic...
+#      $scope.$on '$destroy', ->
+#        webStomp.client.unsubscribe alarmKeypads.subscriptionHandler.id
 
       $scope.defaultKeypad = defaultKeypad
-      $scope.keypads = alarmKeypads.query()
+      $scope.keypads = alarmKeypads.query(null,{scope:$scope})
       $scope.modalOpen = true
       $scope.form =
         commands:

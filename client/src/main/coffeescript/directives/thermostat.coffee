@@ -29,8 +29,9 @@ define [
         "#{$scope.appliance.data.ambient_temperature_f}°"
 
       $scope._getInnerStyle = ->
-        "padding-left": "30px"
-        "padding-top": "6px"
+        "padding-left": "60%"
+        "padding-top": "25%"
+        "padding-bottom": "25%"
 
       #mix in common appliance functions
       $injector.invoke(applianceMixin, @, {$scope: $scope})

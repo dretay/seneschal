@@ -15,13 +15,12 @@ define [
       @getMessageBus = ->
         messageBus
 
-    send: (action, args = {})->
-      args['entity'] = @
-      @getScope().query args, false, action
+    send: (args, opts)->
+      @getScope().query args, opts
 
-    save: (args = @)->
-      @send('save', args)
-    delete: (args = @)->
-      @send('delete', args)
-    update: (args = @)->
-      @send('update', args)
+    save: (args)->
+      @send(args, {oldEntity:@, action: "save", isArray: false})
+    delete: (args)->
+      @send(args, {oldEntity:@, action: "delete", isArray: false})
+    update: (args)->
+      @send(args, {oldEntity:@, action: "update", isArray: false})

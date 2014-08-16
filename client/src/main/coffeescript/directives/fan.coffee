@@ -16,14 +16,15 @@ define [
     controller: ($scope, $injector, $timeout)->
       $scope.pending = false
 
-      $scope.innerClassMap =
-        "fa fa-spinner fa-spin fa-3x": ->
-          $scope.pending
-        "fan": ->
-          !$scope.pending
+#      $scope.innerClassMap =
+#        "fa fa-spinner fa-spin fa-3x": ->
+#          $scope.pending
+#        "fan": ->
+#          !$scope.pending
       $scope.outerClassMap =
-        "fa fa-spin": ->
-          $scope.appliance.status == true
+        "fa fa-spinner fa-spin fa-3x": -> $scope.pending
+        "fan fa fa-spin": -> $scope.appliance.status == true
+        "fan": -> $scope.appliance.status == false
 
       $scope._getTooltip = ->
         $scope.appliance.name
