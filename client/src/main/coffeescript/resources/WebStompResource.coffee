@@ -9,62 +9,98 @@ define [
   ],
 (angular, _, WebStompEntity, $, resources) ->
   'use strict'
-  resources.factory 'webStompResource', ['$rootScope', 'webStomp', ($rootScope, webStomp)->
+  resources.factory 'webStompResource', ['$rootScope', 'webStomp', '$log', ($rootScope, webStomp, $log)->
     class WebStompResource
 
+      constructor: (config = {})-> {@get, @save, @delete, @update, @subscribe} = config
 
-      constructor: (config = {})->
-        {@get, @save, @delete, @update, @token} = config
+      query: (query = {}, opts={})->
 
-      query: (query = {}, isArray = true, action = "get")->
+        #process args
+        {isArray,action,scope} = opts
+        isArray = true if _.isUndefined isArray
+        action = "get" if _.isUndefined action
+        scope = null if _.isUndefined scope
+        client = null
+        subscription = null
+
         deferred = $.Deferred()
         data = if isArray then [] else {}
+        handleResponse = (response)=>
+          $log.debug "WebStompResource::handleResponse Received message on #{@[action].inbound}: #{response.headers['content-length']} chars of #{response.headers['content-type']}"
+          #delete the temporary queue once the reply is received
+          if client.subscriptions["/temp-queue/#{@[action].inbound}"]?
+            $log.debug "WebStompResource::handleResponse RPC message received; deleting temporary queue #{@[action].inbound}"
+            delete client.subscriptions["/temp-queue/#{@[action].inbound}"]
 
-        webStomp.getClient().then (client)=>
-          handleResponse = (response)=>
-            if response?
-              @lastUpdate = new Date().getTime()
-              rawData = JSON.parse response.body
+          if response?
+            @lastUpdate = new Date().getTime()
+            rawData = JSON.parse response.body
 
-              #apply any mapping that's necessary
-              rawData = @[action].inboundTransform(rawData, data, client) if _.isFunction @[action].inboundTransform
+            #apply any mapping that's necessary
+            rawData = @[action].inboundTransform(rawData, data, client) if _.isFunction @[action].inboundTransform
 
-              #map the raw data into a Response
-              if _.isArray rawData
-                final = _.map rawData, (element)=>
-                  new WebStompEntity(element, webStomp, @)
-              else
-                final = new WebStompEntity(rawData, webStomp, @)
+            #map the raw data into a Response
+            if _.isArray rawData
+              final = _.map rawData, (element)=>
+                new WebStompEntity(element, webStomp, @)
+            else
+              final = new WebStompEntity(rawData, webStomp, @)
 
-              if action == "get" and final != null and !_.isEmpty(final) and (_.isArray(final) == _.isArray(data))
-                #replace the stub with the real response
-                angular.copy(final, data)
-              else
-                deferred.resolve(final)
+            #make really really sure this isn't something weird
+            if action == "get" and final != null and !_.isEmpty(final) and (_.isArray(final) == _.isArray(data))
+              #replace the stub with the real response
+              angular.copy(final, data)
+            else
+              deferred.resolve(final)
 
-              $rootScope.$apply()
+            if scope? then scope.$apply() else $rootScope.$apply()
 
+
+        webStomp.getClient().then (webStompClient)=>
+          client = webStompClient
+
+          #perform outbound transform of data if desired
           query = @[action].outboundTransform(query) if _.isFunction @[action].outboundTransform
+
+          #if the query is already stringified don't do anything
+          #if its not stringified then stringify it
           if _.isString query or _.isNumber query
             query = query
           else
-            query = unless _.isEmpty query then JSON.stringify query else null
+            query = unless _.isEmpty query then JSON.stringify query
+
+          #setup temporary queue and handler if we're expecting an rpc reply
+          #TODO:  this delete itself when a message comes in
           if @[action].inbound?
-            console.log "expecting a reply"
             headers =
               'reply-to': "/temp-queue/#{@[action].inbound}"
+            client.subscriptions["/temp-queue/#{@[action].inbound}"] = handleResponse
 
+          #determine if we're sending to queues created outside the STOMP gateway
           if @[action].outbound and query?
             if @[action].outbound.indexOf("/") == -1
               client.send "/amq/queue/#{@[action].outbound}", headers, query
             else
               client.send "#{@[action].outbound}", headers, query
-          if @[action].subscription? then @subscriptionHandler = client.subscribe @[action].subscription, handleResponse
-          if @[action].inbound? then client.subscriptions["/temp-queue/#{@[action].inbound}"] = handleResponse
+
+          #if a scope and subscription are defined then subscribe
+          if @[action].subscription?
+            if _.isNull(scope)
+              $log.error("WebStompResource::query Subscription defined without scope - subscriptions will not be cleaned up!")
+            subscription = client.subscribe @[action].subscription, handleResponse
+            $log.debug "WebStompResource::query Subscribing to #{@[action].subscription} (#{subscription.id})"
+            if scope?
+              scope.$on '$destroy', =>
+                $log.info "WebStompResource::query Unsubscribing to #{@[action].subscription} (#{subscription.id})"
+                client.unsubscribe subscription.id
 
 
+
+
+        #if we're 'getting' return a placeholder that can be copied over, else return a deferred
         if action == "get" then return data else return deferred.promise()
 
       create: (data)->
         new WebStompEntity(data, webStomp, @)
-    ]
+  ]

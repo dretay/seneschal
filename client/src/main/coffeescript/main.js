@@ -136,17 +136,6 @@ require(['app', 'bootstrap', 'c/main', 'c/daemons', 'c/vmstats', 'c/router', 'c/
             //this should be a register not a set
             //https://docs.angularjs.org/guide/module
             webStomp.setToken(next.pathParams.token);
-
-            var subscription;
-            for (subscription in webStomp.subscriptions) {
-                if(/^\/temp-queue/.test(subscription)){
-                    delete webStomp.client.subscriptions[subscription];
-                }
-                else {
-                    console.log("unsubscribing from "+subscription);
-                    webStomp.client.unsubscribe(subscription);
-                }
-            }
         });
     });
 

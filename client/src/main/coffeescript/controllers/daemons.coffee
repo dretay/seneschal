@@ -9,7 +9,7 @@ define [
 
   controllers.controller 'daemons', ['$scope', '$rootScope', '$timeout', '$routeParams', 'supervisor', 'ngTableParams',
     ($scope, $rootScope, $timeout, $routeParams, supervisor, ngTableParams) ->
-      $scope.processes = supervisor.query()
+      $scope.processes = supervisor.query(null,{scope:$scope})
       $scope.selectedTask = null
       $scope.status =
         isFirstOpen: true

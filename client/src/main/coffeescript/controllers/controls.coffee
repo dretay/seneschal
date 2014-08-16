@@ -34,9 +34,9 @@ define [
 
 
       $scope.activeFloor = $routeParams.floor
-      $scope.switches = switches.query()
-      $scope.alarmZones = alarmZones.query()
-      $scope.alarmKeypads = alarmKeypads.query()
+      $scope.switches = switches.query(null,{scope:$scope})
+      $scope.alarmZones = alarmZones.query(null,{scope:$scope})
+      $scope.alarmKeypads = alarmKeypads.query(null,{scope:$scope})
       $scope.cameras = cameras.query()
       $scope.nest = nest.query({}, false)
 #      $scope.garageDoors = garageDoors.query()

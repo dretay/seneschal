@@ -9,7 +9,7 @@ define [
 (providers, Stomp, SockJS, $)->
   'use strict'
   providers.provider 'webStomp', ->
-    $get: ->
+    $get: ($log)->
       unless _.isString @hostname then @hostname = 'localhost'
       unless _.isNumber @port then @port = 443
       unless _.isString @username then @username = 'guest'
@@ -19,7 +19,7 @@ define [
       client = null
       connectionStatus = 0
       getSocket = =>
-        console.log "getting connection... "
+        $log.debug "getting connection... "
         ws = new SockJS("https://#{@hostname}:#{@port}/rabbitmq/stomp")
         client = Stomp.over(ws)
         if @logger? then client.debug = @logger
@@ -47,15 +47,11 @@ define [
         username = null
         password = null
 
-        #if we're requesting a connection for the first time and one's already been established
-        # if connectionStatus == 3
-        #  deferred.resolve client
-        #  return
 
         if connectionStatus == 0
-          console.log "starting connection..."
+          $log.debug  "WebStomp::getClient starting connection"
           on_connect = =>
-            console.log "connection ready... resolving within connect callback"
+            $log.info  "WebStomp::getClient connection ready"
             connectionStatus = 3
             @subscriptions = client.subscriptions
             if deferred.state() != "resolved" then deferred.resolve client
@@ -63,7 +59,7 @@ define [
             if error == "Whoops! Lost connection to undefined"
               location.reload()
 
-            console.log "RABBITMQ STOMP ERROR HANDLER CALLED!!!!!!!!!!!!!! #{JSON.stringify arguments}"
+            $log.error  "RABBITMQ STOMP ERROR HANDLER CALLED!!!!!!!!!!!!!! #{JSON.stringify arguments}"
             deferred.reject client
           connectionStatus = 1
           getRabbitCredentials(token).then (data)->
@@ -74,11 +70,11 @@ define [
 
         isResolved = =>
           if connectionStatus == 3 and deferred.state() != "resolved"
-            console.log "connection ready... resolving within watcher"
+            $log.debug  "WebStomp::getClient returning established connection"
             deferred.resolve client
           else if deferred.state() == "pending"
             connectionAttempts +=1
-            console.log "connection not ready yet... trying again #{connectionAttempts}"
+            $log.debug  "WebStomp::getClient connection not ready on attempt #{connectionAttempts}"
             if connectionAttempts > 20 then location.reload()
             @getClient token, deferred
 

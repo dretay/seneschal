@@ -10,7 +10,7 @@ define [
 
   controllers.controller 'router', ['$scope', '$rootScope', '$timeout', '$routeParams', 'router', 'ngTableParams',
     ($scope, $rootScope, $timeout, $routeParams, router, ngTableParams) ->
-      $scope.clients = router.query()
+      $scope.clients = router.query(null,{scope:$scope})
       $scope.criteria= null
       $scope.setCriteria = (mac)->
         if !$scope.criteria? or mac == $scope.criteria.mac
