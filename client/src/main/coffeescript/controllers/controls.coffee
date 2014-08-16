@@ -39,7 +39,7 @@ define [
       $scope.alarmKeypads = alarmKeypads.query()
       $scope.cameras = cameras.query()
       $scope.nest = nest.query({}, false)
-      $scope.garageDoors = garageDoors.query()
+#      $scope.garageDoors = garageDoors.query()
       $scope.loading = true
       $scope._ = _
 

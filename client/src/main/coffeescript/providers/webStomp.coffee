@@ -24,8 +24,8 @@ define [
         client = Stomp.over(ws)
         if @logger? then client.debug = @logger
 
-        client.heartbeat.outgoing = 0
-        client.heartbeat.incoming = 0
+#        client.heartbeat.outgoing = 1
+#        client.heartbeat.incoming = 1
         return client
       getRabbitCredentials = (token)=>
         $.ajax
