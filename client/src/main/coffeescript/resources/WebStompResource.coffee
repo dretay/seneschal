@@ -87,7 +87,7 @@ define [
           #if a scope and subscription are defined then subscribe
           if @[action].subscription?
             if _.isNull(scope)
-              $log.error("WebStompResource::query Subscription defined without scope - subscriptions will not be cleaned up!")
+              $log.error("WebStompResource::query Subscription #{@[action].subscription} defined without scope - subscriptions will not be cleaned up!")
             subscription = client.subscribe @[action].subscription, handleResponse
             $log.debug "WebStompResource::query Subscribing to #{@[action].subscription} (#{subscription.id})"
             if scope?

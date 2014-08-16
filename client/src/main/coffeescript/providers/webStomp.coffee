@@ -51,7 +51,7 @@ define [
         if connectionStatus == 0
           $log.debug  "WebStomp::getClient starting connection"
           on_connect = =>
-            $log.info  "WebStomp::getClient connection ready"
+            $log.info  "WebStomp::getClient connection ready over #{@client.ws.protocol}"
             connectionStatus = 3
             @subscriptions = client.subscriptions
             if deferred.state() != "resolved" then deferred.resolve client
