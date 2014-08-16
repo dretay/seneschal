@@ -19,11 +19,11 @@ define [
       $scope.get_log = (process)->
         if !$scope.selectedTask? or process.name == $scope.selectedTask.name
           $scope.status.open = !$scope.status.open
-        $scope.log = supervisor.query
-          operation: "read_log"
-          processname: process.name
-          limit: "1024"
-        , false
+        $scope.log = supervisor.query {
+            operation: "read_log"
+            processname: process.name
+            limit: "1024"
+          },{isArray: false,subscription:{}}
       $scope.start_task = (process)->
         process.update
           operation: "task_start"

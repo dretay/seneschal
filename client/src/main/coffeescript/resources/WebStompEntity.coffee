@@ -6,6 +6,7 @@ define [
 ($, _)->
   class WebStompEntity
     constructor: (data, messageBus, scope)->
+
       for key, value of data
         @[key] = value
 

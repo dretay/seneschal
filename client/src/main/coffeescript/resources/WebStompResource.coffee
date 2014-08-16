@@ -21,8 +21,8 @@ define [
         action = if _.isUndefined opts.action then "get"  else opts.action
         scope = if _.isUndefined opts.scope then null else opts.scope
         oldEntity = if _.isUndefined opts.oldEntity then null else opts.oldEntity
+        subscription = if _.isUndefined opts.subscription then null else opts.subscription
         client = null
-        subscription = null
 
         deferred = $.Deferred()
         data = if isArray then [] else {}
@@ -85,7 +85,7 @@ define [
               client.send "#{@[action].outbound}", headers, query
 
           #if a scope and subscription are defined then subscribe
-          if @[action].subscription?
+          if @[action].subscription? and not subscription?
             if _.isNull(scope)
               $log.error("WebStompResource::query Subscription #{@[action].subscription} defined without scope - subscriptions will not be cleaned up!")
             subscription = client.subscribe @[action].subscription, handleResponse
