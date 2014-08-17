@@ -14,6 +14,9 @@
                 <div ng:repeat="switch in switches|itemsOnFloor:activeFloor.name|switchType:'monitor'">
                     <computer-monitor appliance="switch"></computer-monitor>
                 </div>
+                <div ng:repeat="switch in switches|itemsOnFloor:activeFloor.name|switchType:'dehumidifier'">
+                    <dehumidifier appliance="switch"></dehumidifier>
+                </div>
                 <div ng:repeat="switch in switches|itemsOnFloor:activeFloor.name|switchType:'floodLight'">
                     <flood-light appliance="switch"></flood-light>
                 </div>
