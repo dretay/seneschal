@@ -32,6 +32,8 @@ define [
           style["width"] = "#{$scope.appliance.dimensions.width}"
         unless _.isUndefined(_.deep($scope.appliance, 'dimensions.height'))
           style["height"] = "#{$scope.appliance.dimensions.height}"
+        unless _.isUndefined(_.deep($scope.appliance, 'dimensions.padding'))
+          style["padding"] = "#{$scope.appliance.dimensions.padding}"
       return style
 
     #used to render the appliance itself and apply any class-based decorators

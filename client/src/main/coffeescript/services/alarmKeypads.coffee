@@ -34,9 +34,10 @@ define [
                 floor: "secondFloor"
                 location:
                   left: 40
-                  top: 31
-                  rotation: -31
-#                dimensions:
+                  top: 30
+                  rotation: -35
+                dimensions:
+                  padding: "0.5%"
 #                  width: "2em"
 #                  height: "2em"
               }
