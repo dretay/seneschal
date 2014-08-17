@@ -9,6 +9,7 @@ define [
     's/nest'
     's/garageDoors'
     'p/webStomp'
+    'd/dehumidifier'
     'd/light'
     'd/fan'
     'd/computerMonitor'

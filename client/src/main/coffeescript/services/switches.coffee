@@ -35,6 +35,16 @@ define [
             #todo: this needs to be in something like redis or the service... i shouldn't be storing it...
             lights = [
               {
+                name: "Basement Dehumidifier"
+                status: false
+                floor: "basement"
+                type: "dehumidifier"
+                location:
+                  left: 47
+                  top: 11
+                  rotation: 90
+              }
+              {
                 name: "Family Room Fan"
                 status: false
                 floor: "mainFloor"
