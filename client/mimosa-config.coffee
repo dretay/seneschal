@@ -27,8 +27,10 @@ exports.config =
   #   externalConfig: true
   # copy:
     # extensions: ["csv", "properties", "js","css","png","jpg","jpeg","gif","html","eot","svg","ttf","woff","otf","yaml","kml","ico","htc","htm","json","txt","xml","xsd","map"]
-  minify:
-    exclude:[/\.min\./, "coffeescript/main.js", "coffeescript/app.js"]
+  minifyJS:
+    exclude:[/\.min\./, "coffeescript/main.js"]
+    mangleNames: false
+
   watch:
     sourceDir: 'src/main'
     javascriptDir: 'coffeescript'
