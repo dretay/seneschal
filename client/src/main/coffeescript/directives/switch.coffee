@@ -7,7 +7,7 @@ define [
 (directives, applianceMixin, $, _) ->
   'use strict'
 
-  directives.directive 'computerMonitor', ->
+  directives.directive 'switch', ->
     restrict: 'E'
     replace: false
     templateUrl: '/html/directives/appliance.html'
@@ -16,13 +16,8 @@ define [
     controller: ($scope, $injector, $timeout)->
       $scope.pending = false
 
-      $scope.outerClassMap =
-        "fa fa-spinner fa-spin fa-3x monitor-pending": ->
-          $scope.pending
-        "monitor-on": ->
-          $scope.appliance.status == true
-        "monitor-off": ->
-          $scope.appliance.status == false
+      if _.isFunction $scope.appliance.getOuterClassMap then $scope.outerClassMap = $scope.appliance.getOuterClassMap($scope)
+
 
       $scope._getTooltip = ->
         $scope.appliance.name

@@ -33,6 +33,27 @@ define [
                 rotation: if record.location.rotation? then record.location.rotation else 0
           else
             #todo: this needs to be in something like redis or the service... i shouldn't be storing it...
+            outerClassMaps =
+              light: ($scope)->
+                "fa fa-spinner fa-spin fa-3x": -> $scope.pending
+                "lightbulb-on": -> $scope.appliance.status == true
+                "lightbulb-off": -> $scope.appliance.status == false
+              flood: ($scope)->
+                "fa fa-spinner fa-spin fa-3x": -> $scope.pending
+                "floodLight-on": -> $scope.appliance.status == true
+                "floodLight-off": -> $scope.appliance.status == false
+              fan: ($scope)->
+                "fa fa-spinner fa-spin fa-3x": -> $scope.pending
+                "fan fa fa-spin": -> $scope.appliance.status == true
+                "fan": -> $scope.appliance.status == false
+              dehumidifier: ($scope)->
+                "fa fa-spinner fa-spin fa-3x": -> $scope.pending
+                "dehumidifier-on": -> $scope.appliance.status == true
+                "dehumidifier-off": -> $scope.appliance.status == false
+              monitor: ($scope)->
+                "fa fa-spinner fa-spin fa-3x monitor-pending": -> $scope.pending
+                "monitor-on": -> $scope.appliance.status == true
+                "monitor-off": -> $scope.appliance.status == false
             lights = [
               {
                 name: "Basement Dehumidifier"
@@ -43,6 +64,7 @@ define [
                   left: 47
                   top: 11
                   rotation: 90
+                getOuterClassMap: outerClassMaps['dehumidifier']
               }
               {
                 name: "Family Room Fan"
@@ -52,6 +74,7 @@ define [
                 location:
                   left: 77
                   top: 28
+                getOuterClassMap: outerClassMaps['fan']
               }
               {
                 name: "Front Porch"
@@ -61,6 +84,7 @@ define [
                 location:
                   left: 29.5
                   top: 77
+                getOuterClassMap: outerClassMaps['light']
               }
               {
                 name: "Front Porch"
@@ -71,6 +95,7 @@ define [
                   left: 70
                   top: 84
                   rotation: 43
+                getOuterClassMap: outerClassMaps['flood']
               }
               {
                 name: "Living Room"
@@ -80,6 +105,7 @@ define [
                 location:
                   left: 7
                   top: 54
+                getOuterClassMap: outerClassMaps['light']
               }
               {
                 name: "Living Room"
@@ -89,6 +115,8 @@ define [
                 location:
                   left: 6
                   top: 83
+                getOuterClassMap: outerClassMaps['light']
+
               }
               {
                 name: "Back Yard"
@@ -99,6 +127,8 @@ define [
                   left: 61
                   top: 2
                   rotation: 200
+                getOuterClassMap: outerClassMaps['flood']
+
               }
               {
                 name: "Family Room Lights"
@@ -108,6 +138,7 @@ define [
                 location:
                   left: 72
                   top: 28
+                getOuterClassMap: outerClassMaps['light']
               }
               {
                 name: "Drews Office"
@@ -117,6 +148,7 @@ define [
                 location:
                   left: 14
                   top: 30
+                getOuterClassMap: outerClassMaps['monitor']
 #                dimensions:
 #                  width: "3em"
 #                  height: "3em"
@@ -129,6 +161,7 @@ define [
                 location:
                   left: 86
                   top: 8
+                getOuterClassMap: outerClassMaps['light']
               }
               {
                 name: "Master Bedroom"
@@ -138,6 +171,7 @@ define [
                 location:
                   left: 86
                   top: 30
+                getOuterClassMap: outerClassMaps['light']
               }
             ]
 

@@ -9,11 +9,7 @@ define [
     's/nest'
     's/garageDoors'
     'p/webStomp'
-    'd/dehumidifier'
-    'd/light'
-    'd/fan'
-    'd/computerMonitor'
-    'd/floodLight'
+    'd/switch'
     'd/alarmZone'
     'd/alarmKeypad'
     'd/camera'
@@ -21,7 +17,6 @@ define [
     'd/garageDoor'
     'f/itemsOnFloor'
     'f/oddLengthString'
-    'f/switchType'
   ],
 (controllers, _, $) ->
   'use strict'

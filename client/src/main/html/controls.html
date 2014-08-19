@@ -5,21 +5,10 @@
             <img ng-src="{{activeFloor.url}}"></img>
 
             <div class="lightOverlay">
-                <div ng:repeat="switch in switches|itemsOnFloor:activeFloor.name|switchType:'light'">
-                    <light appliance="switch"></light>
+                <div ng:repeat="switch in switches|itemsOnFloor:activeFloor.name">
+                    <switch appliance="switch"></switch>
                 </div>
-                <div ng:repeat="switch in switches|itemsOnFloor:activeFloor.name|switchType:'fan'">
-                    <fan appliance="switch"></fan>
-                </div>
-                <div ng:repeat="switch in switches|itemsOnFloor:activeFloor.name|switchType:'monitor'">
-                    <computer-monitor appliance="switch"></computer-monitor>
-                </div>
-                <div ng:repeat="switch in switches|itemsOnFloor:activeFloor.name|switchType:'dehumidifier'">
-                    <dehumidifier appliance="switch"></dehumidifier>
-                </div>
-                <div ng:repeat="switch in switches|itemsOnFloor:activeFloor.name|switchType:'floodLight'">
-                    <flood-light appliance="switch"></flood-light>
-                </div>
+
                 <div ng:repeat="zone in alarmZones|itemsOnFloor:activeFloor.name">
                     <alarm-zone appliance="zone"></alarm-zone>
                 </div>
