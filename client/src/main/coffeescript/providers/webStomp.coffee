@@ -15,12 +15,16 @@ define [
       unless _.isString @username then @username = 'guest'
       unless _.isString @password then @password = 'guest'
 
+      subscriptions= []
       connectionAttempts = 0
       client = null
       connectionStatus = 0
+      ws = null
       getSocket = =>
         $log.debug "getting connection... "
-        ws = new SockJS("https://#{@hostname}:#{@port}/rabbitmq/stomp",null,{devel:true,debug:true})
+        ws = new SockJS "https://#{@hostname}:#{@port}/rabbitmq/stomp",
+          devel:true
+          debug:true
         client = Stomp.over(ws)
         if @logger? then client.debug = @logger
 
@@ -36,17 +40,32 @@ define [
             token: token
 
       client: null
-      subscriptions: []
+
+      subscribe: (topic, handler, scope, resubscription)->
+        @getClient().then (client)=>
+          subscription = client.subscribe topic, handler
+
+          unless resubscription then subscriptions.push
+            topic: topic
+            handler: handler
+            scope: scope
+          $log.debug "WebStomp::subscribe Subscribing to #{topic} (#{subscription.id})"
+
+          if scope? and not resubscription
+            scope.$on '$destroy', =>
+              $log.info "WebStomp::subscribe Unsubscribing to #{topic} (#{subscription.id})"
+              client.unsubscribe subscription.id
+
       setToken: (token)->
         @token = token
-      getClient: (token, deferred)->
+
+      getClient: (token, deferred, reconnect)->
 
         token = if @token? then @token else token
-        if client == null then @client = client = getSocket() else @client = client
+        if client == null || reconnect then @client = client = getSocket() else @client = client
         unless deferred? then deferred = $.Deferred()
         username = null
         password = null
-
 
         if connectionStatus == 0
           $log.debug  "WebStomp::getClient starting connection"
@@ -56,11 +75,19 @@ define [
             @subscriptions = client.subscriptions
             if deferred.state() != "resolved" then deferred.resolve client
           on_error = (error)=>
-#            if error == "Whoops! Lost connection to undefined"
-#              location.reload()
+            if error == "Whoops! Lost connection to undefined"
+              $log.error  "WebStomp::getClient Lost connection to broker, attempting to reconnect"
+              connectionStatus = 0
+              deferred = $.Deferred()
+              @getClient(token,deferred, true)
+              deferred.then (client)=>
+                for subscription in subscriptions
+                  @subscribe subscription.topic, subscription.handler, subscription.scope, true
 
-            $log.error  "RABBITMQ STOMP ERROR HANDLER CALLED!!!!!!!!!!!!!! #{JSON.stringify arguments}"
-            deferred.reject client
+
+            else
+              $log.error  "RABBITMQ STOMP ERROR HANDLER CALLED!!!!!!!!!!!!!! #{JSON.stringify arguments}"
+              deferred.reject client
           connectionStatus = 1
           getRabbitCredentials(token).then (data)->
             connectionStatus = 2

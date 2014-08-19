@@ -88,14 +88,7 @@ define [
           if @[action].subscription? and not subscription?
             if _.isNull(scope)
               $log.error("WebStompResource::query Subscription #{@[action].subscription} defined without scope - subscriptions will not be cleaned up!")
-            subscription = client.subscribe @[action].subscription, handleResponse
-            $log.debug "WebStompResource::query Subscribing to #{@[action].subscription} (#{subscription.id})"
-            if scope?
-              scope.$on '$destroy', =>
-                $log.info "WebStompResource::query Unsubscribing to #{@[action].subscription} (#{subscription.id})"
-                client.unsubscribe subscription.id
-
-
+            webStomp.subscribe(@[action].subscription, handleResponse, scope)
 
 
         #if we're 'getting' return a placeholder that can be copied over, else return a deferred
