@@ -16,13 +16,10 @@ define [
     controller: ($scope, $injector, $timeout)->
       $scope.pending = false
 
-      if _.isFunction $scope.appliance.getOuterClassMap then $scope.outerClassMap = $scope.appliance.getOuterClassMap($scope)
-
-
       $scope._getTooltip = ->
         $scope.appliance.name
 
-      $scope._click = (name)->
+      $scope._click = ()->
         $scope.pending = true
         $scope.appliance.update().then ->
           $scope.pending = false

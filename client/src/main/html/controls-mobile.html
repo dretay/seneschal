@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="row" style="padding-top: 10%">
+        <div class="col-md-12">
+            <accordion>
+                <accordion-group heading="Switches">
+                    <div ng:repeat="switch in switches" style="height: 3em;width: 100%;border-bottom: 1px solid grey">
+                        <switch style="float: left;clear:both" appliance="switch"></switch>
+                        <div style="float: left;height:100%;vertical-align: middle;line-height: 3em"
+                             >{{switch.name}}</div>
+                    </div>
+                </accordion-group>
+
+
+                <accordion-group heading="Cameras">
+                    <div ng:repeat="camera in cameras" style="height: 3em;width: 100%;border-bottom: 1px solid grey">
+                        <camera style="float: left;clear:both" appliance="camera"></camera>
+                        <div style="float: left;height:100%;vertical-align: middle;line-height: 3em" >{{camera.name}}</div>
+                    </div>
+                </accordion-group>
+                <accordion-group heading="Misc">
+                    <div ng:repeat="keypad in alarmKeypads|itemsOnFloor:'mainFloor'" style="height: 3em;width: 100%;border-bottom: 1px solid grey">
+                        <alarm-keypad style="float: left;clear:both" appliance="keypad"></alarm-keypad>
+                        <div style="float: left;height:100%;vertical-align: middle;line-height: 3em" >{{keypad.name}}</div>
+                    </div>
+                    <div ng:repeat="thermostat in nest.thermostats" style="height: 3em;width: 100%;border-bottom: 1px solid grey">
+                        <thermostat style="float: left;clear:both" appliance="thermostat"></thermostat>
+                        <div style="float: left;height:100%;vertical-align: middle;line-height: 3em;padding-left: 20px" >Thermostat</div>
+                    </div>
+                </accordion-group>
+
+            </accordion>
+
+
+        </div>
+    </div>
+</div>

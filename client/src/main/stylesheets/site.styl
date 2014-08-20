@@ -41,11 +41,39 @@ html,body
 
 .garageDoor
   cursor pointer
+
 //iphone overrides
-@media only screen and (min-device-width : 320px) and (max-device-width : 480px) and (orientation : landscape)
-  .floorplan
-    img
-      height 250px
+@media screen and (device-aspect-ratio: 40/71)
+  body
+    font-size 1em
+  .panel-title
+    font-size 2em
+  .alarmDisplay
+    font-size 1em
+  .modal-body
+    font-size 1em
+  .thermostat
+    font-size .5em
+    .thermostat-target-needle
+      top: 21em;
+      left: 31em;
+    .thermostat-current-needle
+      top: 21em;
+      left: 31em;
+    .thermostat-current-number
+      top: 11em;
+      left: 16em;
+
+    .minute-marks li
+      left 30em
+      top 21em
+      /*.text-readout*/
+        /*font-size 2em*/
+
+/*@media only screen and (min-device-width : 320px) and (max-device-width : 480px) and (orientation : landscape)*/
+  /*.floorplan*/
+    /*img*/
+      /*height 250px*/
 
 div:focus
     outline 0

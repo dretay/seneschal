@@ -22,6 +22,7 @@ define [
               {
                 name: "Garage Entryway"
                 floor: "mainFloor"
+                type: "keypad"
                 location:
                   left: 43
                   top: 40.5
@@ -36,6 +37,7 @@ define [
                   left: 40
                   top: 30
                   rotation: -35
+                type: "keypad"
                 dimensions:
                   padding: "0.5%"
 #                  width: "2em"

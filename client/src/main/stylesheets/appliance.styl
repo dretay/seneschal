@@ -7,11 +7,30 @@
   z-index 1
   height 6%
   width 6%
+.applianceMobile
+  top auto
+  left auto
+  height 2em
+  width 2em
+  margin .5em
+
+
+
+
 appliance-style(urlIn)
   background-image url(urlIn)
   background-size contain
-  display block
+  display inline-block
   background-repeat no-repeat
   background-position: center center
   width 100%
   height 100%
+
+
+.applianceLoading
+  appliance-style("/stylesheets/img/loading.svg")
+  animation spin 2s infinite linear
+
+@keyframes applianceLoading
+  from {transform:rotate(0deg);}
+  to {transform:rotate(360deg);}

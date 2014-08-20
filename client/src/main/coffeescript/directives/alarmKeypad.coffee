@@ -20,11 +20,11 @@ define [
 #      $scope.innerClassMap =
 #        "fa fa-lock fa-5x" : -> $scope.isArmed()
 #        "fa fa-unlock fa-5x" : -> !$scope.isArmed()
-      $scope.outerClassMap =
-        "alarmKeypad-armed": ->
-          $scope.isArmed()
-        "alarmKeypad-disarmed": ->
-          !$scope.isArmed()
+#      $scope.outerClassMap =
+#        "alarmKeypad-armed": ->
+#          $scope.isArmed()
+#        "alarmKeypad-disarmed": ->
+#          !$scope.isArmed()
 
       $scope._click = ()->
         modalInstance = $modal.open AlarmModal $scope.appliance, "sm"

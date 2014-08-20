@@ -13,8 +13,8 @@
                         <span ng-show="!isAway()">
                             {{targetTemperature}}&deg;
                         </span>
-                        <span ng-show="isAway()"
-                              style="text-transform: uppercase;font-size: 90pt;left: -15px;position: relative;">
+                        <span ng-show="isAway()" class="isAwayTextMsg">
+
                             {{getThermostat().away}}
                         </span>
                     </div>
