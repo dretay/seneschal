@@ -1,5 +1,6 @@
 <div class="modal-header">
-    <h3>{{camera.name}}</h3>
+    <h3>{{camera.name}}
+    </h3>
 </div>
 <div class="modal-body camera" ng-keydown="startCameraMove($event)" ng-keyup="endCameraMove($event)" tabindex="0"
      focus-me="modalOpen">
@@ -18,4 +19,6 @@
 </div>
 <div class="modal-footer">
     <button class="btn btn-danger pull-right" ng-click="close()">Close</button>
+    <button class="btn btn-primary pull-left" ng-click="cameraCmd(95)" style="margin-right: 1em;"><i class="fa fa-eye"></i></button>
+    <button class="btn btn-primary pull-left" ng-click="cameraCmd(94)" style="margin-right: 1em;"><i class="fa fa-eye-slash"></i></button>
 </div>
