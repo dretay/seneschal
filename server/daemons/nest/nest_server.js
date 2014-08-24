@@ -37,7 +37,7 @@ connection.addListener('ready', function () {
         q.subscribe(function (message, headers, deliveryInfo, messageObject) {
           message = JSON.parse(message.data.toString());
           if(message.cmd === "snapshot"){
-            replyTo = deliveryInfo.replyTo.split("/")[2]
+            replyTo = deliveryInfo.replyTo;
             console.log("sending snapshot back on queue "+replyTo);
             connection.publish(replyTo,snapshot.val());
           }

@@ -46,8 +46,7 @@ class RabbitmqDaemon(threading.Thread):
       self.cmd_q.put(msg)
 
   def rpcReply(self, message, req):
-    replyTo = re.search('\/.*\/(.*)', req.properties['reply_to']).group(1)
-    self.rpcProducer.publish(body=message, **dict({'routing_key': replyTo,
+    self.rpcProducer.publish(body=message, **dict({'routing_key': req.properties['reply_to'],
                 'correlation_id': req.properties.get('correlation_id'),
                 'content_encoding': req.content_encoding}))
 
