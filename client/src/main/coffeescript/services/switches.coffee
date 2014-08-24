@@ -69,7 +69,7 @@ define [
                 floor: "mainFloor"
                 type: "floodLight"
                 location:
-                  left: 70
+                  left: 69
                   top: 84
                   rotation: 43
               }

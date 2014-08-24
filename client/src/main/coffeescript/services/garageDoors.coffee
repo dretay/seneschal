@@ -10,39 +10,43 @@ define [
   services.factory 'garageDoors', ['webStompResource', (Resource)->
     new Resource
       get:
-        inbound: "raspi.cmd"
-        outbound: "/exchange/garagedoor.cmd"
-        subscription: "/exchange/garagedoor.status/fanout"
+        inbound: "garage.cmd"
+        outbound: "/exchange/garage.cmd"
+        subscription: "/exchange/garage.status/fanout"
         outboundTransform: (rawData)->
-          operation: 'list_doors'
+          operation: 'dump_door_timers'
         inboundTransform: (rawData, oldData)->
-          zones = [
+          doors = [
             {
-              name: "right"
+              name: "Left Door"
+              zone: 7
+              status: false
               floor: "mainFloor"
-              status: if rawData.rightDoor == 1 then "closed" else "open"
               location:
-                left: 52
-                top: 80.5
+                left: 75
+                top: 81.5
               dimensions:
-                width: "11.5%"
-                height: "1.5%"
+                width: "15%"
+                height: "2%"
             }
             {
-              name: "left"
+              name: "Right Door"
+              zone: 11
+              status: false
               floor: "mainFloor"
-              status: if rawData.leftDoor == 1 then "closed" else "open"
               location:
-                left: 67
-                top: 80.5
+                left: 53
+                top: 81.5
               dimensions:
-                width: "11.5%"
-                height: "1.5%"
+                width: "15%"
+                height: "2%"
             }
           ]
+          for door in doors
+            door.timestamp = moment(rawData[door.zone].timestamp*1000)
+            door.open = rawData[door.zone].state
 
-
-          return zones
+          return doors
       update:
         outbound: "/exchange/garagedoor.cmd"
         outboundTransform: (rawData, args)->

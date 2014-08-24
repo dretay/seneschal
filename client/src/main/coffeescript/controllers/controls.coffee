@@ -35,7 +35,7 @@ define [
       $scope.alarmKeypads = alarmKeypads.query(null,{scope:$scope})
       $scope.cameras = cameras.query()
       $scope.nest = nest.query(null,{isArray:false, scope:$scope})
-#      $scope.garageDoors = garageDoors.query()
+      $scope.garageDoors = garageDoors.query(null,{scope:$scope})
       $scope.loading = true
       $scope._ = _
 

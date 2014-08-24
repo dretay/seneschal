@@ -19,7 +19,7 @@ define [
           status: false
           floor: "mainFloor"
           location:
-            left: 70.5
+            left: 68.5
             top: 43
             rotation: 0
           videoUrl: "www.drewandtrish.com/cameras/192.168.1.28/8081/"
