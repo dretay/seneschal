@@ -43,7 +43,7 @@ define [
             }
           ]
           for door in doors
-            door.timestamp = moment(rawData[door.zone].timestamp*1000)
+            door.timestamp = moment(rawData[door.zone].timestamp*1000).add('minutes', moment().zone())
             door.open = rawData[door.zone].state
 
           return doors
