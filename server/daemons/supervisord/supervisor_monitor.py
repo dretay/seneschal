@@ -35,10 +35,7 @@ if __name__ == '__main__':
 
   #setup message handlers
   def rpcReply(message, req):
-  #this is so retarded... stomp leaves the /temp-queue in the header... so we need to strip it off
-  #or it won't get routed to the appropriate queue
-    replyTo = re.search('\/.*\/(.*)', req.properties['reply_to']).group(1)
-    rpcProducer.publish(body=message, **dict({'routing_key': replyTo,
+    rpcProducer.publish(body=message, **dict({'routing_key': req.properties['reply_to'],
                 'correlation_id': req.properties.get('correlation_id'),
                 'content_encoding': req.content_encoding}))
 
