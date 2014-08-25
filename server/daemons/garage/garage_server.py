@@ -27,8 +27,15 @@ if __name__ == '__main__':
     auto_delete=True)
 
   GPIO.setmode(GPIO.BOARD)
-  GPIO.setup(7, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+
+  #trish's door
   GPIO.setup(11, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+  GPIO.setup(16, GPIO.OUT, initial=GPIO.HIGH)
+
+
+  #drew's door
+  GPIO.setup(7, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+  GPIO.setup(18, GPIO.OUT, initial=GPIO.HIGH)
 
   doors = {
     #drew's
@@ -43,6 +50,7 @@ if __name__ == '__main__':
 
     }
   }
+
   def door_state_changed(channel):
     # self.reply_q.put(event)
     doors[channel] = {
@@ -66,6 +74,14 @@ if __name__ == '__main__':
                 'content_encoding': req.content_encoding}))
 
 
+  def toggle_door(message=None, args=None):
+    doorChannel = int(message['channel'])
+    print "Toggling door on channel",doorChannel
+
+    GPIO.output(doorChannel, False)
+    time.sleep(1)
+    GPIO.output(doorChannel, True)
+
   def dump_door_timers(message=None, args=None):
     rpcReply(doors, args)
 
@@ -74,7 +90,8 @@ if __name__ == '__main__':
     print "Received message ",message
     sys.stdout.flush()
     operations = {
-      "dump_door_timers" : dump_door_timers
+      "dump_door_timers" : dump_door_timers,
+      "toggle_door" : toggle_door
     }
     operations[message['operation']](message, req)
 
