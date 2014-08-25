@@ -78,6 +78,7 @@ if __name__ == '__main__':
   #global supervisor operations
   def list_processes(message=None, args=None):
     result = supervisorConn.supervisor.getAllProcessInfo()
+    rpcReply(result, args)
     statusProducer.publish(body = result)
 
   def task_stopall(message=None, args=None):
