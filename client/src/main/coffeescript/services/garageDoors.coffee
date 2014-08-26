@@ -48,7 +48,8 @@ define [
 
           return doors
       update:
-        outbound: "/exchange/garagedoor.cmd"
-        outboundTransform: (rawData, args)->
-          rawData.name
+        outbound: "/exchange/garage.cmd"
+        outboundTransform: (query, oldEntity)->
+          operation: 'toggle_door'
+          channel: if oldEntity.zone == 11 then 16 else 18
   ]

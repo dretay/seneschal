@@ -26,6 +26,6 @@ define [
         "width": "#{$scope.door.dimensions.width}%"
         "height": "#{$scope.door.dimensions.height}%"
 
-      $scope.toggleDoor = ()->
+      $scope._click = ()->
         $scope.door.update()
       null

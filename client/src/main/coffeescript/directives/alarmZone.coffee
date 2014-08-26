@@ -28,7 +28,8 @@ define [
 
       $scope._getTooltip = ->
         "Last opened #{moment.duration($scope.appliance.timestamp - moment()).humanize(true)}"
-
+      $scope._click = ()->
+        $scope.appliance.update()
 
       #mix in common appliance functions
       $injector.invoke(applianceMixin, @, {$scope: $scope})
