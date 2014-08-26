@@ -29,29 +29,30 @@ if __name__ == '__main__':
   GPIO.setmode(GPIO.BOARD)
 
   #trish's door
-  GPIO.setup(11, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+  GPIO.setup(11, GPIO.IN, GPIO.PUD_UP)
   GPIO.setup(16, GPIO.OUT, initial=GPIO.HIGH)
 
 
   #drew's door
-  GPIO.setup(7, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+  GPIO.setup(7, GPIO.IN, GPIO.PUD_UP)
   GPIO.setup(18, GPIO.OUT, initial=GPIO.HIGH)
 
   doors = {
     #drew's
-    7:{
-      "state": False if GPIO.input(7) == 1 else True,
+    "7":{
+      "state": False if GPIO.input(7) == 0 else True,
       "timestamp": (datetime.datetime.now() - datetime.datetime(1970,1,1)).total_seconds()
     },
     #trish's
-    11:{
-      "state": False if GPIO.input(11) == 1 else True,
+    "11":{
+      "state": False if GPIO.input(11) == 0 else True,
       "timestamp": (datetime.datetime.now() - datetime.datetime(1970,1,1)).total_seconds()
 
     }
   }
 
   def door_state_changed(channel):
+    channel = str(channel)
     # self.reply_q.put(event)
     doors[channel] = {
       "state": not doors[channel]['state'],
@@ -61,10 +62,10 @@ if __name__ == '__main__':
     print "Door ",channel,"state changed ",doors[channel]
 
   #drew's door
-  GPIO.add_event_detect(7, GPIO.BOTH, callback=door_state_changed, bouncetime=5000)
+  GPIO.add_event_detect(7, GPIO.BOTH, callback=door_state_changed, bouncetime=500)
 
   #trish's door
-  GPIO.add_event_detect(11, GPIO.BOTH, callback=door_state_changed, bouncetime=5000)
+  GPIO.add_event_detect(11, GPIO.BOTH, callback=door_state_changed, bouncetime=500)
 
 
   #setup message handlers
@@ -75,7 +76,7 @@ if __name__ == '__main__':
 
 
   def toggle_door(message=None, args=None):
-    doorChannel = int(message['channel'])
+    doorChannel = message['channel']
     print "Toggling door on channel",doorChannel
 
     GPIO.output(doorChannel, False)
