@@ -39,12 +39,12 @@ if __name__ == '__main__':
 
   doors = {
     #drew's
-    "7":{
+    7:{
       "state": False if GPIO.input(7) == 0 else True,
       "timestamp": (datetime.datetime.now() - datetime.datetime(1970,1,1)).total_seconds()
     },
     #trish's
-    "11":{
+    11:{
       "state": False if GPIO.input(11) == 0 else True,
       "timestamp": (datetime.datetime.now() - datetime.datetime(1970,1,1)).total_seconds()
 
@@ -52,7 +52,8 @@ if __name__ == '__main__':
   }
 
   def door_state_changed(channel):
-    channel = str(channel)
+    #newState = False if GPIO.input(int(channel)) == 0 else True
+    #if newState != doors[channel]["state"]:
     # self.reply_q.put(event)
     doors[channel] = {
       "state": not doors[channel]['state'],
@@ -61,11 +62,11 @@ if __name__ == '__main__':
     statusProducer.publish(body = doors)
     print "Door ",channel,"state changed ",doors[channel]
 
-  #drew's door
-  GPIO.add_event_detect(7, GPIO.BOTH, callback=door_state_changed, bouncetime=500)
+  # #drew's door
+  # GPIO.add_event_detect(7, GPIO.BOTH, callback=door_state_changed)
 
-  #trish's door
-  GPIO.add_event_detect(11, GPIO.BOTH, callback=door_state_changed, bouncetime=500)
+  # #trish's door
+  # GPIO.add_event_detect(11, GPIO.BOTH, callback=door_state_changed)
 
 
   #setup message handlers
@@ -103,6 +104,10 @@ if __name__ == '__main__':
   print "Garage doors started",doors
   while True:
     try:
-      rmqConn.drain_events(timeout=0.1)
+      rmqConn.drain_events(timeout=2)
     except socket.timeout:
-      None
+
+      if GPIO.input(7) != doors[7]['state']:
+        door_state_changed(7)
+      if GPIO.input(11) != doors[11]['state']:
+        door_state_changed(11)
