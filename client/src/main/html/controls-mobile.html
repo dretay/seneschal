@@ -17,14 +17,25 @@
                         <div style="float: left;height:100%;vertical-align: middle;line-height: 3em" >{{camera.name}}</div>
                     </div>
                 </accordion-group>
-                <accordion-group heading="Misc">
+                <accordion-group heading="Alarm">
                     <div ng:repeat="keypad in alarmKeypads|itemsOnFloor:'mainFloor'" style="height: 3em;width: 100%;border-bottom: 1px solid grey">
                         <alarm-keypad style="float: left;clear:both" appliance="keypad"></alarm-keypad>
                         <div style="float: left;height:100%;vertical-align: middle;line-height: 3em" >{{keypad.name}}</div>
                     </div>
+                    <div ng:repeat="zone in alarmZones" style="height: 3em;width: 100%;border-bottom: 1px solid grey">
+                        <alarm-zone style="float: left;clear:both" appliance="zone"></alarm-zone>
+                        <div style="float: left;height:100%;vertical-align: middle;line-height: 3em" >{{zone.name}}</div>
+                    </div>
+                </accordion-group>
+                <accordion-group heading="Misc">
+
                     <div ng:repeat="thermostat in nest.thermostats" style="height: 3em;width: 100%;border-bottom: 1px solid grey">
                         <thermostat style="float: left;clear:both" appliance="thermostat"></thermostat>
                         <div style="float: left;height:100%;vertical-align: middle;line-height: 3em;padding-left: 20px" >Thermostat</div>
+                    </div>
+                    <div ng:repeat="garageDoor in garageDoors" style="height: 3em;width: 100%;border-bottom: 1px solid grey">
+                        <alarm-zone style="float: left;clear:both" appliance="garageDoor"></alarm-zone>
+                        <div style="float: left;height:100%;vertical-align: middle;line-height: 3em" >{{garageDoor.name}}</div>
                     </div>
                 </accordion-group>
 

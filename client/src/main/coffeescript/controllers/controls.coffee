@@ -14,7 +14,6 @@ define [
     'd/alarmKeypad'
     'd/camera'
     'd/thermostat'
-    'd/garageDoor'
     'f/itemsOnFloor'
     'f/oddLengthString'
   ],

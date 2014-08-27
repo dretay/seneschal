@@ -17,10 +17,10 @@
    enable-background="new 0 0 100 100"
    xml:space="preserve"
    inkscape:version="0.48.5 r10040"
-   sodipodi:docname="monitor-on.svg"><metadata
+   sodipodi:docname="monitor-off.svg"><metadata
      id="metadata11"><rdf:RDF><cc:Work
          rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title /></cc:Work></rdf:RDF></metadata><defs
      id="defs9" /><sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -45,7 +45,7 @@
      id="path3" /><path
      d="M63.4,89.811c-0.859-0.611-1.596-1.147-2.225-2.405C60.546,86.147,59.736,75,59.736,75h-9.062h-0.268h-0.018h-0.268h-9.063  c0,0-0.809,11.147-1.438,12.405c-0.628,1.258-1.366,1.749-2.224,2.36c-0.49,0.348-0.17,0.895,0,1.354  C37.533,91.492,43.594,92,50.389,92c0.003,0,0.006,0,0.009,0s0.006,0,0.009,0c6.795,0,12.855-0.485,12.994-0.858  C63.568,90.681,63.889,90.158,63.4,89.811z"
      id="path5" /><path
-     style="fill:#ff0000"
+     style="fill:#b3b3b3"
      d="M 7.4174527,59.48697 C 6.8219617,59.247136 6.3958044,58.609047 6.2326639,57.712983 6.0925328,56.943301 6.0343401,47.097876 6.1033468,35.834264 6.224077,16.12809 6.2598645,15.332271 7.0513261,14.753755 7.7485133,14.244148 14.307801,14.152542 50.100059,14.152542 c 40.369945,0 42.257051,0.03407 42.927488,0.77489 0.633093,0.69956 0.701267,2.859849 0.701267,22.221736 l 0,21.446845 -0.941742,0.659623 c -0.837521,0.586622 -5.56189,0.656648 -42.690678,0.632758 C 26.973045,59.873521 7.9325515,59.694432 7.4174527,59.48697 l 0,0 z"
-     id="path2988"
+     id="path2984"
      inkscape:connector-curvature="0" /></svg>

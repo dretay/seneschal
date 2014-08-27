@@ -37,6 +37,21 @@ define [
       keypad: ($scope)->
         "alarmKeypad-armed": ->$scope.isArmed()
         "alarmKeypad-disarmed": ->!$scope.isArmed()
+      garageDoor: ($scope)->
+        "garagedoor-open": -> $scope.appliance.open && isMobile
+        "garagedoor-recent-close": -> $scope.delta.asHours() < 1 && isMobile
+        "garagedoor-closed": -> isMobile
+        "progress-bar progress-bar-danger alarmZone": -> $scope.appliance.open
+        "progress-bar progress-bar-success alarmZone": -> $scope.delta.asHours() > 1
+        "progress-bar progress-bar-warning alarmZone": -> true
+      doorZone: ($scope)->
+        "door-open": -> $scope.appliance.open && isMobile
+        "door-recent-close": -> $scope.delta.asHours() < 1 && isMobile
+        "door-closed": -> isMobile
+        "progress-bar progress-bar-danger alarmZone": -> $scope.appliance.open
+        "progress-bar progress-bar-success alarmZone": -> $scope.delta.asHours() > 1
+        "progress-bar progress-bar-warning alarmZone": -> true
+
 
 
 

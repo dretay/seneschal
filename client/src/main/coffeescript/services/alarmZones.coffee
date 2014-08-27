@@ -34,6 +34,7 @@ define [
                 zone: 0
                 status: false
                 floor: "mainFloor"
+                type: "doorZone"
                 location:
                   left: 35
                   top: 74
@@ -46,6 +47,7 @@ define [
                 zone: 1
                 status: false
                 floor: "mainFloor"
+                type: "doorZone"
                 location:
                   left: 49
                   top: 41
@@ -60,6 +62,7 @@ define [
                 zone: 3
                 status: false
                 floor: "mainFloor"
+                type: "doorZone"
                 location:
                   left: 52.5
                   top: 8.1
@@ -72,6 +75,7 @@ define [
                 zone: 4
                 status: false
                 floor: "basement"
+                type: "doorZone"
                 location:
                   left: 37
                   top: 8.5

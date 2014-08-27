@@ -18,10 +18,11 @@ define [
         inboundTransform: (rawData, oldData)->
           doors = [
             {
-              name: "Left Door"
+              name: "Drew's Garage Door"
               zone: 7
               status: false
               floor: "mainFloor"
+              type: "garageDoor"
               location:
                 left: 75
                 top: 81.5
@@ -30,10 +31,11 @@ define [
                 height: "2%"
             }
             {
-              name: "Right Door"
+              name: "Trish's Garage Door"
               zone: 11
               status: false
               floor: "mainFloor"
+              type: "garageDoor"
               location:
                 left: 53
                 top: 81.5
@@ -47,9 +49,9 @@ define [
             door.open = rawData[door.zone].state
 
           return doors
-      update:
-        outbound: "/exchange/garage.cmd"
-        outboundTransform: (query, oldEntity)->
-          operation: 'toggle_door'
-          channel: if oldEntity.zone == 11 then 16 else 18
+#      update:
+#        outbound: "/exchange/garage.cmd"
+#        outboundTransform: (query, oldEntity)->
+#          operation: 'toggle_door'
+#          channel: if oldEntity.zone == 11 then 16 else 18
   ]
