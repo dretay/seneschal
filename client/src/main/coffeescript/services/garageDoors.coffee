@@ -49,9 +49,9 @@ define [
             door.open = rawData[door.zone].state
 
           return doors
-#      update:
-#        outbound: "/exchange/garage.cmd"
-#        outboundTransform: (query, oldEntity)->
-#          operation: 'toggle_door'
-#          channel: if oldEntity.zone == 11 then 16 else 18
+      update:
+        outbound: "/exchange/garage.cmd"
+        outboundTransform: (query, oldEntity)->
+          operation: 'toggle_door'
+          channel: if oldEntity.zone == 11 then 16 else 18
   ]
