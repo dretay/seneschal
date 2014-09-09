@@ -9,8 +9,7 @@ define [
   services.factory 'switches', ['webStompResource', (Resource)->
     new Resource
       get:
-        inbound: "wemo.lights"
-        outbound: "/exchange/lights.cmd"
+        outbound_rpc: "/exchange/lights.cmd"
         subscription: "/exchange/lights.status/fanout"
         outboundTransform: (rawData)->
           operation: 'list_switches'

@@ -10,8 +10,7 @@ define [
   services.factory 'garageDoors', ['webStompResource', (Resource)->
     new Resource
       get:
-        inbound: "garage.cmd"
-        outbound: "/exchange/garage.cmd"
+        outbound_rpc: "/exchange/garage.cmd"
         subscription: "/exchange/garage.status/fanout"
         outboundTransform: (rawData)->
           operation: 'dump_door_timers'

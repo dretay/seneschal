@@ -4,15 +4,17 @@ define [
     './WebStompEntity'
     'jquery'
     'r/resources'
+    'uuid'
     'p/webStomp'
 
   ],
-(angular, _, WebStompEntity, $, resources) ->
+(angular, _, WebStompEntity, $, resources, uuid) ->
   'use strict'
   resources.factory 'webStompResource', ['$rootScope', 'webStomp', '$log', ($rootScope, webStomp, $log)->
     class WebStompResource
 
-      constructor: (config = {})-> { @get, @save, @delete, @update, @subscribe } = config
+      constructor: (config = {})->
+        {@get,@save,@delete,@update,@subscribe} = config
 
       query: (query = {}, opts={})->
 
@@ -23,15 +25,18 @@ define [
         oldEntity = if _.isUndefined opts.oldEntity then null else opts.oldEntity
         subscription = if _.isUndefined opts.subscription then null else opts.subscription
         client = null
+        rpc_uuid = null
 
         deferred = $.Deferred()
         data = if isArray then [] else {}
         handleResponse = (response)=>
-          $log.debug "WebStompResource::handleResponse Received message on #{@[action].inbound}: #{response.headers['content-length']} chars of #{response.headers['content-type']}"
           #delete the temporary queue once the reply is received
-          if client.subscriptions["/temp-queue/#{@[action].inbound}"]?
-            $log.debug "WebStompResource::handleResponse RPC message received; deleting temporary queue #{@[action].inbound}"
-            delete client.subscriptions["/temp-queue/#{@[action].inbound}"]
+          if client.subscriptions["/temp-queue/#{rpc_uuid}"]?
+            $log.debug "WebStompResource::handleResponse RPC message received from request on #{@[action].outbound_rpc}; deleting temporary queue #{rpc_uuid}"
+            delete client.subscriptions["/temp-queue/#{rpc_uuid}"]
+          else
+            $log.debug "WebStompResource::handleResponse Received message on #{response.headers['destination']}: #{response.headers['content-length']} chars of #{response.headers['content-type']}"
+
 
           if response?
             @lastUpdate = new Date().getTime()
@@ -72,17 +77,19 @@ define [
 
           #setup temporary queue and handler if we're expecting an rpc reply
           #TODO:  this delete itself when a message comes in
-          if @[action].inbound?
+          if @[action].outbound_rpc?
+            rpc_uuid = uuid.v4()
             headers =
-              'reply-to': "/temp-queue/#{@[action].inbound}"
-            client.subscriptions["/temp-queue/#{@[action].inbound}"] = handleResponse
+              'reply-to': "/temp-queue/#{rpc_uuid}"
+            client.subscriptions["/temp-queue/#{rpc_uuid}"] = handleResponse
 
           #determine if we're sending to queues created outside the STOMP gateway
-          if @[action].outbound and query?
-            if @[action].outbound.indexOf("/") == -1
-              client.send "/amq/queue/#{@[action].outbound}", headers, query
+          outbound = if @[action].outbound? then @[action].outbound else @[action].outbound_rpc
+          if outbound and query?
+            if outbound.indexOf("/") == -1
+              client.send "/amq/queue/#{outbound}", headers, query
             else
-              client.send "#{@[action].outbound}", headers, query
+              client.send "#{outbound}", headers, query
 
           #if a scope and subscription are defined then subscribe
           if @[action].subscription? and not subscription?

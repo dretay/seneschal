@@ -34,6 +34,7 @@ requirejs.config({
         ngTable: 'vendor/managed/ng-table/ng-table',
         smoothie: "vendor/managed/smoothie-bower/smoothie",
         underscore: 'vendor/managed/underscore-amd/underscore',
+        uuid: 'vendor/managed/node-uuid/uuid',
 
         //utils
         stomp: 'vendor/managed/stomp-websocket/stomp',
@@ -86,6 +87,9 @@ requirejs.config({
         },
         'twitterBootstrap': {
             deps: ['jquery']
+        },
+        'uuid': {
+          exports: 'uuid'
         }
     },
     priority: ["angular"]

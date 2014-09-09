@@ -11,8 +11,7 @@ define [
     new Resource
       get:
         subscription: "/exchange/alarm.status/fanout"
-        outbound: "/exchange/alarm.cmd"
-        inbound: "eyezon.alarm"
+        outbound_rpc: "/exchange/alarm.cmd"
         outboundTransform: ->
           "getKeypadStatus"
         inboundTransform: (rawData, oldData)->

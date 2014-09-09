@@ -12,8 +12,7 @@ define [
     new Resource
       get:
         subscription: "/exchange/thermostat.status/fanout"
-        outbound: "/exchange/thermostat.cmd"
-        inbound: "nest.cmd"
+        outbound_rpc: "/exchange/thermostat.cmd"
         outboundTransform: (rawData)->
           cmd: "snapshot"
         inboundTransform: (rawData, oldData)->

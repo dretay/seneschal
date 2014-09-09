@@ -13,7 +13,6 @@ define [
       get:
         subscription: "/exchange/router.status/fanout"
         outbound: "/exchange/router.cmd"
-        inbound: "actiontec.cmd"
         outboundTransform: ->
           operation: "list_mac_addresses"
         inboundTransform: (data)->

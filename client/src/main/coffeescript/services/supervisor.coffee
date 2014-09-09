@@ -11,8 +11,7 @@ define [
     new Resource
       get:
         subscription: "/exchange/supervisor.status/fanout"
-        outbound: "/exchange/system.cmd"
-        inbound: "supervisor.cmd"
+        outbound_rpc: "/exchange/system.cmd"
         outboundTransform: (command)->
           if _.isObject(command) and !_.isEmpty(command)
             return command
