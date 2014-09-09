@@ -24,7 +24,7 @@ define [
               type: "garageDoor"
               location:
                 left: 75
-                top: 81.5
+                top: 82.5
               dimensions:
                 width: "15%"
                 height: "2%"
@@ -37,7 +37,7 @@ define [
               type: "garageDoor"
               location:
                 left: 53
-                top: 81.5
+                top: 82.5
               dimensions:
                 width: "15%"
                 height: "2%"

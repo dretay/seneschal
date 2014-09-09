@@ -79,7 +79,7 @@ define [
                 type: "light"
                 location:
                   left: 7
-                  top: 54
+                  top: 55
               }
               {
                 name: "Living Room"
@@ -87,8 +87,8 @@ define [
                 floor: "mainFloor"
                 type: "light"
                 location:
-                  left: 6
-                  top: 83
+                  left: 7
+                  top: 85
               }
               {
                 name: "Back Yard"

@@ -49,8 +49,10 @@ define [
             if _.isArray rawData
               final = _.map rawData, (element)=>
                 new WebStompEntity(element, webStomp, @)
-            else
+            else if rawData?
               final = new WebStompEntity(rawData, webStomp, @)
+            else
+              final = null
 
             #make really really sure this isn't something weird
             if action == "get" and final != null and !_.isEmpty(final) and (_.isArray(final) == _.isArray(data))

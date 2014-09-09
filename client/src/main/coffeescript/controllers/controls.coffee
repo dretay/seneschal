@@ -2,9 +2,10 @@ define [
     'c/controllers'
     'underscore'
     'jquery'
+    'modals/AlarmModal'
     's/switches'
     's/alarmZones'
-    's/alarmKeypads'
+    's/alarmKeypad'
     's/cameras'
     's/nest'
     's/garageDoors'
@@ -16,13 +17,14 @@ define [
     'd/thermostat'
     'f/itemsOnFloor'
     'f/oddLengthString'
+
   ],
-(controllers, _, $) ->
+(controllers, _, $, AlarmModal) ->
   'use strict'
 
-  controllers.controller 'controls', ['$scope', '$timeout', '$routeParams', 'switches', 'alarmZones', 'alarmKeypads',
+  controllers.controller 'controls', ['$scope', '$timeout', '$routeParams', 'switches', 'alarmZones', 'alarmKeypad',
                                       'cameras', 'nest', 'garageDoors', 'webStomp', '$modal', '$log',
-    ($scope, $timeout, $routeParams, switches, alarmZones, alarmKeypads, cameras, nest, garageDoors, webStomp, $modal, $log) ->
+    ($scope, $timeout, $routeParams, switches, alarmZones, alarmKeypad, cameras, nest, garageDoors, webStomp, $modal, $log) ->
 
       #TODO: this has to be in controller scope, but should probably be handled as a mixin!
 #      $scope.$on '$destroy', -> webStomp.client.unsubscribe id for id, handler of webStomp.subscriptions
@@ -31,7 +33,7 @@ define [
       $scope.activeFloor = $routeParams.floor
       $scope.switches = switches.query(null,{scope:$scope})
       $scope.alarmZones = alarmZones.query(null,{scope:$scope})
-      $scope.alarmKeypads = alarmKeypads.query(null,{scope:$scope})
+      $scope.alarmKeypad = alarmKeypad.query(null,{isArray:false, scope:$scope})
       $scope.cameras = cameras.query()
       $scope.nest = nest.query(null,{isArray:false, scope:$scope})
       $scope.garageDoors = garageDoors.query(null,{scope:$scope})
@@ -39,24 +41,31 @@ define [
       $scope._ = _
 
 
+      $scope.openAlarmModal = ()->
+        modalInstance = $modal.open AlarmModal $scope.alarmKeypad, "sm"
+
+        modalInstance.result.then (command)->
+          webStomp.client.send "/exchange/alarm.cmd", null, command
+        , ->
+          $log.info('Modal dismissed at: ' + new Date());
+
       $scope.isArmed = ->
-        if _.isObject($scope.alarmKeypads[0])
-          leds = $scope.alarmKeypads[0].data.leds
-          if (leds['ARMED STAY'] || leds['ARMED (ZERO ENTRY DELAY)'] || leds['ARMED AWAY']) then return "armed" else return "unarmed"
+        if not _.isEmpty $scope.alarmKeypad
+          leds = $scope.alarmKeypad.data.leds
+          if (leds['ARMED STAY'] || leds['ARMED (ZERO ENTRY DELAY)'] || leds['ARMED AWAY']) then return "Armed" else return "Disarmed"
         "unavailable"
 
-      $scope.alarmColor = ->
-        if $scope.isArmed() == "unavailable"
-          "grey"
-        else if $scope.isArmed() == "armed"
-          "red"
-        else
-          "green"
-      $scope.alarmStatusClass = ->
-        "alarmStatus-#{$scope.alarmColor()}"
 
-      $scope.alarmBorderClass = ->
-        "alarmBorder-#{$scope.alarmColor()}"
+      $scope.alarmColorClass = ->
+        if $scope.isArmed() == "unavailable"
+          "text-default"
+        else if $scope.isArmed() == "Armed"
+          "text-danger"
+        else
+          "text-success"
+
+      $scope.alarmStatusMsg = ->
+        if not _.isEmpty $scope.alarmKeypad then $scope.alarmKeypad.data.message.substr(0,15)
 
       $scope.isActiveFloor = (floor)->
         if floor == $scope.activeFloor then "active" else ""

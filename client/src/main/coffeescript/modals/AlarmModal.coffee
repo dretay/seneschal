@@ -1,22 +1,18 @@
 define [
     'jquery'
     'underscore'
-    's/alarmKeypads'
+    's/alarmKeypad'
     'p/webStomp'
     'd/focusMe'
   ],
 ($, _)->
   (appliance, size)->
     templateUrl: '/html/modals/keypadModal.html'
-    controller: ($scope, $modalInstance, alarmKeypads, webStomp, defaultKeypad)->
-      this.alarmKeypads = alarmKeypads
-
-#      #TODO: this should be part of some over-arching mechanic...
-#      $scope.$on '$destroy', ->
-#        webStomp.client.unsubscribe alarmKeypads.subscriptionHandler.id
+    controller: ($scope, $modalInstance, alarmKeypad, webStomp, defaultKeypad)->
+      this.alarmKeypad = alarmKeypad
 
       $scope.defaultKeypad = defaultKeypad
-      $scope.keypads = alarmKeypads.query(null,{scope:$scope})
+      $scope.keypad = alarmKeypad.query(null,{isArray:false, scope:$scope})
       $scope.modalOpen = true
       $scope.form =
         commands:
@@ -26,10 +22,7 @@ define [
         passcode: ""
 
       $scope.getKeypad = ->
-        if $scope.keypads.length > 0
-          $scope.keypads[0]
-        else
-          $scope.defaultKeypad
+        if not _.isEmpty $scope.keypad then $scope.keypad else $scope.defaultKeypad
       $scope.ok = ->
         if $scope.getKeypad().data.leds.READY
           command = _.find (for command, value of $scope.form.commands then if value then command), (cmd)->

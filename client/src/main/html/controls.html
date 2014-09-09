@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row" style="padding-top: 10px">
-        <div class="col-md-12 floorplan alarmBorder" ng-class="alarmBorderClass()">
+        <div class="col-md-12 floorplan">
 
             <img ng-src="{{activeFloor.url}}"></img>
 
@@ -11,9 +11,6 @@
 
                 <div ng:repeat="zone in alarmZones|itemsOnFloor:activeFloor.name">
                     <alarm-zone appliance="zone"></alarm-zone>
-                </div>
-                <div ng:repeat="keypad in alarmKeypads|itemsOnFloor:activeFloor.name">
-                    <alarm-keypad appliance="keypad"></alarm-keypad>
                 </div>
                 <div ng:repeat="camera in cameras|itemsOnFloor:activeFloor.name">
                     <camera appliance="camera"></camera>
@@ -31,6 +28,18 @@
 
         </div>
     </div>
-
-
+</div>
+<div class="footer navbar">
+  <div class="container">
+    <div class="row">
+      <div style="text-align: center;width: 30em;margin-left: auto; margin-right: auto">
+        <div class="pull-left alarmFooterText alarmFooterTextLeft">{{isArmed()}}</div>
+        <div class="pull-left fa-stack fa-3x alarmStatusIcon" ng-class="alarmColorClass()" ng-click="openAlarmModal()">
+          <i class="fa fa-circle-o fa-stack-2x" ></i>
+          <i class="fa fa-lock fa-stack-1x"></i>
+        </div>
+        <div class="pull-left alarmFooterText alarmFooterTextRight">{{alarmStatusMsg()}}</div>
+      </div>
+    </div>
+  </div>
 </div>
