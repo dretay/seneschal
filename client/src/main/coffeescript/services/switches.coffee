@@ -97,7 +97,7 @@ define [
                 type: "floodLight"
                 location:
                   left: 61
-                  top: 2
+                  top: 1
                   rotation: 200
               }
               {
