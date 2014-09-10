@@ -11,7 +11,9 @@ define [
   directives.directive 'alarmKeypad', ->
     restrict: 'E'
     replace: false
-    template: "<span class='fa fa-lock fa-stack-1x' ng-class='getClass()' ng-click='click()'></span>"
+    template: "<span class='fa fa-lock' ng-class='getClass()' ng-click='click()'></span><span style='padding-left: 0.7em;color: black'>{{getLabel()}}</span>"
+    scope:
+      listView: "@"
 
     controller: ($scope, $injector, $timeout, $modal, $log, webStomp, alarmKeypad)->
       $scope.keypad = alarmKeypad.query(null,{isArray:false, scope:$scope})
@@ -24,6 +26,8 @@ define [
         , ->
           $log.info('Modal dismissed at: ' + new Date());
 
+      $scope.getLabel = ->
+        if $scope.listView == "true" then return $scope.keypad.name else return ""
       $scope.isArmed = ->
         leds = $scope.keypad.data.leds
         (leds['ARMED STAY'] || leds['ARMED (ZERO ENTRY DELAY)'] || leds['ARMED AWAY'])
@@ -32,8 +36,8 @@ define [
         if _.isEmpty $scope.keypad
           return ""
         else if $scope.isArmed()
-          return "text-danger"
+          if $scope.listView == "true" then return "fa-2x text-danger" else  return "fa-stack-1x text-danger"
         else
-          return "text-success"
+          if $scope.listView == "true" then return "fa-2x text-success" else  return "fa-stack-1x text-success"
 
       null

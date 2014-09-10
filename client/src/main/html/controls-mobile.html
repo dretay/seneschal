@@ -18,10 +18,9 @@
                     </div>
                 </accordion-group>
                 <accordion-group heading="Alarm">
-                    <div ng:repeat="keypad in alarmKeypads|itemsOnFloor:'mainFloor'" style="height: 3em;width: 100%;border-bottom: 1px solid grey">
-                        <alarm-keypad style="float: left;clear:both" appliance="keypad"></alarm-keypad>
-                        <div style="float: left;height:100%;vertical-align: middle;line-height: 3em" >{{keypad.name}}</div>
-                    </div>
+                  <div style="height: 3em;width: 100%;border-bottom: 1px solid grey">
+                    <alarm-keypad style="float: left;clear:both;padding-left: 1em" list-view="true"></alarm-keypad>
+                  </div>
                     <div ng:repeat="zone in alarmZones" style="height: 3em;width: 100%;border-bottom: 1px solid grey">
                         <alarm-zone style="float: left;clear:both" appliance="zone"></alarm-zone>
                         <div style="float: left;height:100%;vertical-align: middle;line-height: 3em" >{{zone.name}}</div>
