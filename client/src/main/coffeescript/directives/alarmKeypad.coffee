@@ -34,7 +34,7 @@ define [
 
       $scope.getClass = ->
         if _.isEmpty $scope.keypad
-          return ""
+          if $scope.listView == "true" then return "" else return "fa-stack-1x"
         else if $scope.isArmed()
           if $scope.listView == "true" then return "fa-2x text-danger" else  return "fa-stack-1x text-danger"
         else
