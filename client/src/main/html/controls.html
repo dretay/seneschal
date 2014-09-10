@@ -30,12 +30,12 @@
     </div>
   </div>
     <div class="footer">
-      <div style="text-align: center;width: 30em;margin-left: auto; margin-right: auto">
-        <div class="pull-left alarmFooterText alarmFooterTextLeft">{{isArmed()}}</div>
-        <div class="pull-left fa-stack fa-3x alarmStatusIcon" ng-class="alarmColorClass()" ng-click="openAlarmModal()">
-          <i class="fa fa-circle-o fa-stack-2x" ></i>
-          <i class="fa fa-lock fa-stack-1x"></i>
+      <div style="text-align: center;width: 46em;margin-left: auto; margin-right: auto">
+        <div class="pull-left alarmFooterText alarmFooterTextLeft"><alarm-keypad-status></alarm-keypad-status></div>
+        <div class="pull-left fa-stack fa-3x alarmStatusIcon" >
+          <i class="fa fa-circle-o fa-stack-2x" style="color: rgb(31, 31, 31);"></i>
+          <alarm-keypad></alarm-keypad>
         </div>
-        <div class="pull-left alarmFooterText alarmFooterTextRight">{{alarmStatusMsg()}}</div>
+        <div class="pull-left alarmFooterText alarmFooterTextRight"><alarm-zone-status></alarm-zone-status></div>
       </div>
   </div>

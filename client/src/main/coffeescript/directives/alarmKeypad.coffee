@@ -1,43 +1,39 @@
 define [
     'd/directives'
-    'm/applianceMixin'
     'jquery'
     'underscore'
     'modals/AlarmModal'
+    's/alarmKeypad'
   ],
-(directives, applianceMixin, $, _, AlarmModal) ->
+(directives, $, _, AlarmModal) ->
   'use strict'
 
   directives.directive 'alarmKeypad', ->
     restrict: 'E'
     replace: false
-    templateUrl: '/html/directives/appliance.html'
-    scope:
-      appliance: "="
+    template: "<span class='fa fa-lock fa-stack-1x' ng-class='getClass()' ng-click='click()'></span>"
 
-    controller: ($scope, $injector, $timeout, $modal, $log, webStomp)->
+    controller: ($scope, $injector, $timeout, $modal, $log, webStomp, alarmKeypad)->
+      $scope.keypad = alarmKeypad.query(null,{isArray:false, scope:$scope})
 
-#      $scope.innerClassMap =
-#        "fa fa-lock fa-5x" : -> $scope.isArmed()
-#        "fa fa-unlock fa-5x" : -> !$scope.isArmed()
-#      $scope.outerClassMap =
-#        "alarmKeypad-armed": ->
-#          $scope.isArmed()
-#        "alarmKeypad-disarmed": ->
-#          !$scope.isArmed()
-
-      $scope._click = ()->
-        modalInstance = $modal.open AlarmModal $scope.appliance, "sm"
+      $scope.click = ()->
+        modalInstance = $modal.open AlarmModal $scope.keypad, "sm"
 
         modalInstance.result.then (command)->
           webStomp.client.send "/exchange/alarm.cmd", null, command
         , ->
           $log.info('Modal dismissed at: ' + new Date());
 
-      $scope.isArmed = ()->
-        leds = $scope.appliance.data.leds
+      $scope.isArmed = ->
+        leds = $scope.keypad.data.leds
         (leds['ARMED STAY'] || leds['ARMED (ZERO ENTRY DELAY)'] || leds['ARMED AWAY'])
 
+      $scope.getClass = ->
+        if _.isEmpty $scope.keypad
+          return ""
+        else if $scope.isArmed()
+          return "text-danger"
+        else
+          return "text-success"
 
-      #mix in common appliance functions
-      $injector.invoke(applianceMixin, @, {$scope: $scope})
+      null

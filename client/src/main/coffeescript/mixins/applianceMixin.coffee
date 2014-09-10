@@ -35,8 +35,8 @@ define [
         "monitor-on": -> $scope.appliance.status == true
         "monitor-off": -> $scope.appliance.status == false
       keypad: ($scope)->
-        "alarmKeypad-armed": ->$scope.isArmed()
-        "alarmKeypad-disarmed": ->!$scope.isArmed()
+        "fa fa-lock fa-stack-1x text-danger": ->$scope.isArmed()
+        "fa fa-lock fa-stack-1x text-success": ->!$scope.isArmed()
       garageDoor: ($scope)->
         "garagedoor-open": -> $scope.appliance.open && isMobile
         "garagedoor-recent-close": -> $scope.delta.asHours() < 1 && isMobile
@@ -57,14 +57,15 @@ define [
 
     #used to apply class-based decorators to the appliance's wrapper
     $scope.getOuterClass = ->
-      outerClassMap = null
-      if $scope.outerClassMap?
-        outerClassMap = $scope.outerClassMap
-      else if _.isFunction outerClassLookupTable[$scope.appliance.type]
-        outerClassMap = outerClassLookupTable[$scope.appliance.type]($scope)
-      if not _.isNull outerClassMap
-        for value, test of outerClassMap
-          if _.isFunction(test) && test() then return value
+      if $scope.appliance?
+        outerClassMap = null
+        if $scope.outerClassMap?
+          outerClassMap = $scope.outerClassMap
+        else if _.isFunction outerClassLookupTable[$scope.appliance.type]
+          outerClassMap = outerClassLookupTable[$scope.appliance.type]($scope)
+        if not _.isNull outerClassMap
+          for value, test of outerClassMap
+            if _.isFunction(test) && test() then return value
 
       return ""
 
