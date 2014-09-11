@@ -1,10 +1,11 @@
 define [
     'jquery'
     'underscore'
+    'ejs/templates'
   ],
-($, _)->
+($, _, templates)->
   (appliance, size)->
-    templateUrl: '/html/modals/cameraModal.html'
+    template: templates['cameraModal']
     controller: ($scope, $modalInstance, camera)->
       $scope.camera = camera
       $scope.timestamp = new Date().getTime()
@@ -52,7 +53,7 @@ define [
         direction = keyToDirection(event)
         if $scope.camera.inverted then direction = invertDirection(direction)
 
-        unless $scope.isMoving
+        unless $scope.isMoving or not cameraCmds[direction]?
           $scope.cameraCmd(cameraCmds[direction].start)
           $scope.isMoving = !$scope.isMoving
 

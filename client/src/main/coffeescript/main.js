@@ -94,8 +94,10 @@ requirejs.config({
     },
     priority: ["angular"]
 });
+console.debug("SENESCHAL::main Loading application dependencies");
 
-require(['app', 'bootstrap', 'c/main', 'c/daemons', 'c/vmstats', 'c/router', 'c/controls', 'c/thermostat', 'f/doubleEncodeURIComponent'], function (app) {
+require(['app', 'ejs/templates', 'bootstrap', 'c/main', 'c/daemons', 'c/vmstats', 'c/router', 'c/controls', 'c/thermostat', 'f/doubleEncodeURIComponent'], function (app,templates) {
+    console.debug("SENESCHAL::main dependencies loaded, starting configuration");
     //stolen from http://stackoverflow.com/questions/16297238/angularjs-different-views-based-on-desktop-or-mobile
     var isMobile = (function() {
         var check = false;
@@ -107,31 +109,20 @@ require(['app', 'bootstrap', 'c/main', 'c/daemons', 'c/vmstats', 'c/router', 'c/
     routes = function ($routeProvider) {
         return $routeProvider.when('/admin/daemons/:token', {
             reloadOnSearch: false,
-            templateUrl: '/html/daemons.html',
+            template: templates['daemons'],
             controller: 'daemons'
         }).when('/admin/router/:token', {
             reloadOnSearch: false,
-            templateUrl: '/html/router.html',
+            template: templates['router'],
             controller: 'router'
         }).when('/admin/vmstats/:token', {
             reloadOnSearch: false,
-            templateUrl: '/html/vmstats.html',
+            template: templates['vmstats'],
             controller: 'vmstats'
-        }).when('/cameras/:token', {
-            reloadOnSearch: false,
-            templateUrl: '/html/cameras.html',
-            controller: 'cameras'
         }).when('/controls/:floor/:token', {
             reloadOnSearch: false,
-            templateUrl: (function(){if(isMobile){return '/html/controls-mobile.html';}else{return '/html/controls.html';}})(),
+            template: (function(){if(isMobile){return templates['controls-mobile'];}else{return templates['controls'];}})(),
             controller: 'controls'
-        }).when('/thermostat/:token', {
-            reloadOnSearch: false,
-            templateUrl: '/html/thermostat.html',
-            controller: 'thermostat'
-        }).when('/dashboard/:token', {
-            templateUrl: '/html/dashboard.html',
-            controller: 'dashboard'
         }).otherwise({
             redirectTo: '/login'
         });
@@ -142,11 +133,13 @@ require(['app', 'bootstrap', 'c/main', 'c/daemons', 'c/vmstats', 'c/router', 'c/
         webStompProvider.hostname = 'www.drewandtrish.com';
         webStompProvider.logger = function(){};
     });
-    app.run(function($rootScope, $location, $timeout, webStomp) {
+    app.run(function($rootScope, $location, $timeout, webStomp, $log) {
+        $log.debug("App::run registering route change listener");
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
-            //this should be a register not a set
-            //https://docs.angularjs.org/guide/module
-            webStomp.setToken(next.pathParams.token);
+          $log.debug("rootScope::run registering route change listener");
+          //this should be a register not a set
+          //https://docs.angularjs.org/guide/module
+          webStomp.setToken(next.pathParams.token);
         });
     });
 

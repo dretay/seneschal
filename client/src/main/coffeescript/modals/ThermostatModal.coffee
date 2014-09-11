@@ -1,12 +1,13 @@
 define [
     'jquery'
     'underscore'
+    'ejs/templates'
     's/nest'
     'p/webStomp'
   ],
-($, _)->
+($, _, templates)->
   (appliance, size)->
-    templateUrl: '/html/modals/thermostatModal.html'
+    template: templates['thermostatModal']
     controller: ($scope, $modalInstance, nest, webStomp, defaultThermostat, $timeout, $filter)->
 
 #      #TODO: this should be part of some over-arching mechanic...

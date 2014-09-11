@@ -59,7 +59,7 @@ define [
                 floor: "mainFloor"
                 type: "light"
                 location:
-                  left: 29.5
+                  left: 30
                   top: 77
               }
               {

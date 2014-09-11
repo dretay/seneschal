@@ -3,14 +3,15 @@ define [
     'm/applianceMixin'
     'jquery'
     'underscore'
+    'ejs/templates'
   ],
-(directives, applianceMixin, $, _) ->
+(directives, applianceMixin, $, _, templates) ->
   'use strict'
 
   directives.directive 'alarmZone', ->
     restrict: 'E'
     replace: false
-    templateUrl: '/html/directives/appliance.html'
+    template: templates['appliance']
     scope:
       appliance: "="
 

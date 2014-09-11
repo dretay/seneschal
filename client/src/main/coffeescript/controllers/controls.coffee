@@ -27,7 +27,7 @@ define [
                                       'cameras', 'nest', 'garageDoors', 'webStomp', '$modal', '$log',
     ($scope, $timeout, $routeParams, switches, alarmZones, cameras, nest, garageDoors, webStomp, $modal, $log) ->
 
-
+      $log.debug "Controls::controller populating scope"
       $scope.activeFloor = $routeParams.floor
       $scope.switches = switches.query(null,{scope:$scope})
       $scope.alarmZones = alarmZones.query(null,{scope:$scope})

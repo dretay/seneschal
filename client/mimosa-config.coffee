@@ -1,17 +1,18 @@
 exports.config =
   minMimosaVersion:"1.0.1"
   modules: [
-    "server"
-    "require"
-    "require-lint"
-    "minify-js"
-    "minify-css"
     "bower"
-    "jshint"
-    "csslint"
     "coffeescript"
     "copy"
+    "csslint"
+    "jshint"
+    "minify-css"
+    "minify-js"
+    "require"
+    "require-lint"
+    "server"
     "stylus"
+    "underscore"
   ]
   server:
     defaultServer:
@@ -49,8 +50,6 @@ exports.config =
       overrides:
         mainConfigFile: "src/main/coffeescript/main.js"
         optimize: "none"
-
-
   bower:
     exclude: [/.*legacy\/js\/.*/]
     bowerDir:
@@ -63,3 +62,12 @@ exports.config =
         "font-awesome":["fonts/fontawesome-webfont.woff","fonts/fontawesome-webfont.svg","fonts/FontAwesome.otf","fonts/fontawesome-webfont.eot","fonts/fontawesome-webfont.ttf","css/font-awesome.css"]
         "requirejs-domready":["domReady.js"]
         "stomp-websocket":["lib/stomp.js"]
+  template:
+    output: [
+      (
+        folders: ["html"]
+        outputFileName: "coffeescript/ejs/templates"
+      )
+    ]
+  underscore:
+    extensions: [ "html" ]

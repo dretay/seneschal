@@ -11,7 +11,7 @@ define [
   directives.directive 'alarmKeypad', ->
     restrict: 'E'
     replace: false
-    template: "<span class='fa fa-lock' ng-class='getClass()' ng-click='click()'></span><span style='padding-left: 0.7em;color: black'>{{getLabel()}}</span>"
+    template: "<span class='fa' ng-class='getClass()' ng-click='click()'></span><span style='padding-left: 0.7em;color: black'>{{getLabel()}}</span>"
     scope:
       listView: "@"
 
@@ -36,8 +36,8 @@ define [
         if _.isEmpty $scope.keypad
           if $scope.listView == "true" then return "" else return "fa-stack-1x"
         else if $scope.isArmed()
-          if $scope.listView == "true" then return "fa-2x text-danger" else  return "fa-stack-1x text-danger"
+          if $scope.listView == "true" then return "fa-2x text-danger fa-lock" else  return "fa-stack-1x text-danger fa-lock"
         else
-          if $scope.listView == "true" then return "fa-2x text-success" else  return "fa-stack-1x text-success"
+          if $scope.listView == "true" then return "fa-2x text-success fa-unlock" else  return "fa-stack-1x text-success fa-unlock"
 
       null

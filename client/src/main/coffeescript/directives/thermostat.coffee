@@ -4,16 +4,17 @@ define [
     'jquery'
     'underscore'
     'modals/ThermostatModal'
+    'ejs/templates'
     's/nest'
     'p/webStomp'
   ],
-(directives, applianceMixin, $, _, ThermostatModal) ->
+(directives, applianceMixin, $, _, ThermostatModal, templates) ->
   'use strict'
 
   directives.directive 'thermostat', ->
     restrict: 'E'
     replace: false
-    templateUrl: '/html/directives/appliance.html'
+    template: templates['appliance']
     scope:
       appliance: "="
 

@@ -1,13 +1,14 @@
 define [
     'jquery'
     'underscore'
+    'ejs/templates'
     's/alarmKeypad'
     'p/webStomp'
     'd/focusMe'
   ],
-($, _)->
+($, _, templates)->
   (appliance, size)->
-    templateUrl: '/html/modals/keypadModal.html'
+    template: templates['keypadModal']
     controller: ($scope, $modalInstance, alarmKeypad, webStomp, defaultKeypad)->
       this.alarmKeypad = alarmKeypad
 

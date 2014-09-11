@@ -4,14 +4,15 @@ define [
     'modals/CameraModal'
     'jquery'
     'underscore'
+    'ejs/templates'
   ],
-(directives, applianceMixin, CameraModal, $, _) ->
+(directives, applianceMixin, CameraModal, $, _, templates) ->
   'use strict'
 
   directives.directive 'camera', ->
     restrict: 'E'
     replace: false
-    templateUrl: '/html/directives/appliance.html'
+    template: templates['appliance']
     scope:
       appliance: "="
     controller: ($scope, $injector, $timeout, $modal, $log)->
