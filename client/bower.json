@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
       "angular": "1.2.15",
+      "angularAMD": "0.2.x",
       "angular-bootstrap": "0.11.0",
       "angular-resource": "1.2.15",
       "angular-route": "1.2.15",
