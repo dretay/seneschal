@@ -18,4 +18,4 @@ define [
       $scope.zonesStatusMsg = ->
         for zone in $scope.alarmZones
           return "#{zone.name} Open" if zone.open
-        return "All Zones Closed"
+        return "All Doors Closed"

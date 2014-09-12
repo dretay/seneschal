@@ -20,7 +20,7 @@ define [
     'f/oddLengthString'
 
   ],
-(controllers, _, $, AlarmModal) ->
+(controllers, _, $) ->
   'use strict'
 
   controllers.controller 'controls', ['$scope', '$timeout', '$routeParams', 'switches', 'alarmZones',

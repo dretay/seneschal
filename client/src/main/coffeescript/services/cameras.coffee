@@ -9,9 +9,9 @@ define [
   #TODO: this will be pulled from redis but temporarily is being hard-coded
   services.factory 'cameras', ['$routeParams', ($routeParams)->
     mediaViewUrl: ->
-      "#{@proto}#{@videoUrl}?token=#{encodeURIComponent @token}"
+      "#{@proto}#{@videoUrl}?token=#{@token}"
     foscamViewUrl: ->
-      "#{@proto}#{@videoUrl}#{@stream}?token=#{encodeURIComponent @token}&rate=3"
+      "#{@proto}#{@videoUrl}#{@stream}?token=#{@token}&rate=3"
     query: ()->
       [
         {

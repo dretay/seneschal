@@ -57,7 +57,7 @@ define [
               client.unsubscribe subscription.id
 
       setToken: (token)->
-        @token = token
+        @token = decodeURIComponent token
 
       getClient: (token, deferred, reconnect)->
 
@@ -102,7 +102,7 @@ define [
           else if deferred.state() == "pending"
             connectionAttempts +=1
             $log.debug  "WebStomp::getClient connection not ready on attempt #{connectionAttempts}"
-            if connectionAttempts > 20 then location.reload()
+#            if connectionAttempts > 60 then location.reload()
             @getClient token, deferred
 
 

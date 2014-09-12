@@ -6,6 +6,7 @@ exports.config =
     "copy"
     "csslint"
     "jshint"
+    "just-copy"
     "minify-css"
     "minify-js"
     "require"
@@ -23,11 +24,9 @@ exports.config =
       compileWith: 'html'
       extension: 'html'
       path: 'src/main/html'
-  # karma:
-  #   configFile: 'src/test/karma-unit.conf.js'
-  #   externalConfig: true
-  # copy:
-    # extensions: ["csv", "properties", "js","css","png","jpg","jpeg","gif","html","eot","svg","ttf","woff","otf","yaml","kml","ico","htc","htm","json","txt","xml","xsd","map"]
+
+  copy:
+    extensions: ["js","css","png","jpg","jpeg","gif","html","eot","svg","ttf","woff","otf","yaml","kml","ico","htc","htm","json","txt","xml","xsd","map","md","mp4", "manifest"]
   minifyJS:
     exclude:[/\.min\./, "coffeescript/main.js"]
     mangleNames: false
@@ -44,8 +43,8 @@ exports.config =
     vendor: false
   jshint:
     exclude: [/.*legacy\/js\/.*/]
-  require:
 
+  require:
     optimize:
       overrides:
         mainConfigFile: "src/main/coffeescript/main.js"
@@ -71,3 +70,12 @@ exports.config =
     ]
   underscore:
     extensions: [ "html" ]
+  justCopy:
+    paths:[
+      "html/index-optimize.html"
+      "html/index.html"
+      {
+        src: "resources/seneschal.manifest"
+        dest: "seneschal.manifest"
+      }
+    ]

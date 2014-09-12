@@ -14,7 +14,7 @@ define [
     class WebStompResource
 
       constructor: (config = {})->
-        {@get,@save,@delete,@update,@subscribe} = config
+        { @get,@save,@delete,@update,@subscribe} = config
 
       query: (query = {}, opts={})->
 
@@ -78,7 +78,6 @@ define [
             query = unless _.isEmpty query then JSON.stringify query
 
           #setup temporary queue and handler if we're expecting an rpc reply
-          #TODO:  this delete itself when a message comes in
           if @[action].outbound_rpc?
             rpc_uuid = uuid.v4()
             headers =

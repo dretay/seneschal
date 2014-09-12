@@ -7,6 +7,6 @@ define [
 
   filters.filter 'doubleEncodeURIComponent', [->
     (string) ->
-      return encodeURIComponent(encodeURIComponent(string))
+      return string
 
   ]

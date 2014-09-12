@@ -62,7 +62,8 @@ define [
         template: if isMobile then templates['controls-mobile'] else templates['controls']
         controller: 'controls'
       }).otherwise({
-        redirectTo: '/login'
+          controller: -> null
+          template : templates['login']
       })
     webStompProvider.hostname = 'www.drewandtrish.com'
     webStompProvider.logger = -> null
