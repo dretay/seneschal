@@ -1,5 +1,6 @@
 define [
     'c/controllers'
+    'f/doubleEncodeURIComponent'
   ],
 (controllers) ->
   'use strict'
