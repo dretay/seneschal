@@ -9,7 +9,7 @@ define [
 (providers, Stomp, SockJS, $)->
   'use strict'
   providers.provider 'webStomp', ->
-    $get: ($log)->
+    $get: ($log, $http)->
       unless _.isString @hostname then @hostname = 'localhost'
       unless _.isNumber @port then @port = 443
       unless _.isString @username then @username = 'guest'
@@ -31,13 +31,19 @@ define [
 #        client.heartbeat.outgoing = 1
 #        client.heartbeat.incoming = 1
         return client
-      getRabbitCredentials = (token)=>
-        $.ajax
-          type: 'GET'
+      getRabbitCredentials = ()=>
+        $http
+          method: "GET"
           url: "https://#{@hostname}:#{@port}/getRabbitCredentials"
-          dataType: 'json'
-          data:
-            token: token
+          withCredentials: true
+          responseType: "json"
+
+#          type: 'GET'
+#          url: "https://#{@hostname}:#{@port}/getRabbitCredentials"
+#          dataType: 'json'
+#          xhrFields:
+#            withCredentials: true
+
 
       client: null
 
@@ -56,12 +62,8 @@ define [
               $log.info "WebStomp::subscribe Unsubscribing to #{topic} (#{subscription.id})"
               client.unsubscribe subscription.id
 
-      setToken: (token)->
-        @token = decodeURIComponent token
 
-      getClient: (token, deferred, reconnect)->
-
-        token = if @token? then @token else token
+      getClient: (deferred, reconnect)->
         if client == null || reconnect then @client = client = getSocket() else @client = client
         unless deferred? then deferred = $.Deferred()
         username = null
@@ -79,7 +81,7 @@ define [
               $log.error  "WebStomp::getClient Lost connection to broker, attempting to reconnect"
               connectionStatus = 0
               deferred = $.Deferred()
-              @getClient(token,deferred, true)
+              @getClient(deferred, true)
               deferred.then (client)=>
                 for subscription in subscriptions
                   @subscribe subscription.topic, subscription.handler, subscription.scope, true
@@ -89,21 +91,25 @@ define [
               $log.error  "RABBITMQ STOMP ERROR HANDLER CALLED!!!!!!!!!!!!!! #{JSON.stringify arguments}"
               deferred.reject client
           connectionStatus = 1
-          getRabbitCredentials(token).then (data)->
+          getRabbitCredentials().success((data, status, headers, config)->
             connectionStatus = 2
             username = data.username
             password = data.password
             client.connect(username, password, on_connect, on_error, '/')
-
+          ).error((data, status, headers, config)->
+            $log.debug  "WebStomp::getClient can't get client credentials, aborting all connection attempts"
+            deferred.reject()
+            connectionStatus = -1
+          )
         isResolved = =>
           if connectionStatus == 3 and deferred.state() != "resolved"
             $log.debug  "WebStomp::getClient returning established connection"
             deferred.resolve client
-          else if deferred.state() == "pending"
+          else if deferred.state() == "pending" and connectionStatus > 0
             connectionAttempts +=1
             $log.debug  "WebStomp::getClient connection not ready on attempt #{connectionAttempts}"
 #            if connectionAttempts > 60 then location.reload()
-            @getClient token, deferred
+            @getClient deferred
 
 
         setTimeout isResolved, 500

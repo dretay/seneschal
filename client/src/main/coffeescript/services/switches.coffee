@@ -148,7 +148,7 @@ define [
 
       update:
         inbound: "wemo.lights"
-        outbound: "/exchange/lights.cmd"
+        outbound_rpc: "/exchange/lights.cmd"
         outboundTransform: (query, oldEntity)->
           unless oldEntity.status
             operation: 'toggle_on'

@@ -9,9 +9,9 @@ define [
   #TODO: this will be pulled from redis but temporarily is being hard-coded
   services.factory 'cameras', ['$routeParams', ($routeParams)->
     mediaViewUrl: ->
-      "#{@proto}#{@videoUrl}?token=#{@token}"
+      "#{@proto}#{@videoUrl}"
     foscamViewUrl: ->
-      "#{@proto}#{@videoUrl}#{@stream}?token=#{@token}&rate=3"
+      "#{@proto}#{@videoUrl}#{@stream}?rate=3"
     query: ()->
       [
         {
@@ -23,7 +23,6 @@ define [
             top: 43
             rotation: 0
           videoUrl: "www.drewandtrish.com/cameras/192.168.1.28/8081/"
-          token: $routeParams.token
           proto: "https://"
         # inverted: true
           viewUrl: @mediaViewUrl
@@ -40,7 +39,6 @@ define [
             rotation: 0
           videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.2/8080"
           controlUrl: "www.drewandtrish.com/cameras/192.168.1.18/8083"
-          token: $routeParams.token
           proto: "https://"
           inverted: true
           stream: '/porch'
@@ -57,7 +55,6 @@ define [
             rotation: 180
           videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.2/8080"
           controlUrl: "www.drewandtrish.com/cameras/192.168.1.17/8080"
-          token: $routeParams.token
           proto: "https://"
           stream: '/frontdoor'
           control: '/decoder_control.cgi'
@@ -73,7 +70,6 @@ define [
             rotation: 0
           videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.2/8080"
           controlUrl: "www.drewandtrish.com/cameras/192.168.1.16/8082"
-          token: $routeParams.token
           proto: "https://"
           stream: '/livingroom'
           control: '/decoder_control.cgi'
@@ -89,7 +85,6 @@ define [
             rotation: -90
           videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.2/8080"
           controlUrl: "www.drewandtrish.com/cameras/192.168.1.15/8081"
-          token: $routeParams.token
           proto: "https://"
           stream: '/basement'
           control: '/decoder_control.cgi'

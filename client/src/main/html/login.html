@@ -1,30 +1,18 @@
-<html manifest="/seneschal.manifest">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta id="viewport" name="viewport" content ="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <link rel="apple-touch-icon" href="/stylesheets/img/logo.jpg"/>
-  <link rel="icon" type="image/jpg" href="/stylesheets/img/logo.jpg"/>
+<div class="container">
+  <div class="row" style="background: rgba(255, 255, 255, 0.75); margin-top: 3em; border-radius: 30px; padding: 1em;">
+    <div class="col-sm-6 col-md-4 col-md-offset-4">
+      <h1 class="text-center login-title">Sign in to continue</h1>
+      <div class="account-wall">
 
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <!--<meta name="viewport" content="minimal-ui">-->
-
-
-  <title>Seneschal</title>
-
-  <!-- Custom styles for this template -->
-  <link rel="stylesheet" href="/stylesheets/site.css"/>
-  <script src="/coffeescript/main-built.js"></script>
-
-</head>
-
-<body>
-<div class="jumbotron">
-  <h1>Welcome to Drew and Trish's Home Automation Server!</h1>
-  <p>You must present a valid token to login to this application</p>
+        <form class="form-signin" action="https://www.drewandtrish.com/login" method="POST">
+          <input type="text" class="form-control" name="username" placeholder="Username" required autofocus>
+          <input type="password" class="form-control" name="password" placeholder="Password" required>
+          <button class="btn btn-lg btn-primary btn-block" type="submit">
+            Sign in</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 
-</body>
-</html>
+

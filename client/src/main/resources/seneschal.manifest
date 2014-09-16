@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# Offline cache v20
+# Offline cache v44
 
 coffeescript/main-built.js
 coffeescript/mixins/mixins.js
@@ -69,5 +69,6 @@ stylesheets/vendor/unmanaged/MYRIADPRO-SEMIBOLDIT.otf
 NETWORK:
 /rabbitmq
 /proxiedCameras
+/cameras
 /getRabbitCredentials
 /stylesheets/vendor/unmanaged/font-awesome-4.0.3/fonts

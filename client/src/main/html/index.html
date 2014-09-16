@@ -42,37 +42,37 @@
                 <!--<a ng-href="#/dashboard/{{routeParams.token|doubleEncodeURIComponent}}">Dashboard</a>-->
                 <!--</li>-->
                 <li class="dropdown" ng-class="isNavItemActive('controls')">
-                    <a ng-href="#/controls/mainFloor/{{routeParams.token|doubleEncodeURIComponent}}"
+                    <a ng-href="#/controls/mainFloor"
                        class="dropdown-toggle"
                        data-toggle="dropdown">
                         Controls <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li ng-class="isChildNavItemActive('basement')"><a
-                                ng-href="#/controls/basement/{{routeParams.token|doubleEncodeURIComponent}}">Basement</a>
+                                ng-href="#/controls/basement">Basement</a>
                         </li>
                         <li ng-class="isChildNavItemActive('mainFloor')"><a
-                                ng-href="#/controls/mainFloor/{{routeParams.token|doubleEncodeURIComponent}}">Main
+                                ng-href="#/controls/mainFloor">Main
                             Floor</a></li>
                         <li ng-class="isChildNavItemActive('secondFloor')"><a
-                                ng-href="#/controls/secondFloor/{{routeParams.token|doubleEncodeURIComponent}}">Second
+                                ng-href="#/controls/secondFloor">Second
                             Floor</a></li>
                     </ul>
                 </li>
                 <li class="dropdown" ng-class="isNavItemActive('admin')">
-                    <a ng-href="ng-href="#/admin/daemons/{{routeParams.token|doubleEncodeURIComponent}}"
+                    <a ng-href="ng-href="#/admin/daemons"
                     class="dropdown-toggle"
                     data-toggle="dropdown">
                     Admin <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li ng-class="isChildNavItemActive('daemons')"><a
-                                ng-href="#/admin/daemons/{{routeParams.token|doubleEncodeURIComponent}}">Daemons</a>
+                                ng-href="#/admin/daemons">Daemons</a>
                         </li>
                         <li ng-class="isChildNavItemActive('router')"><a
-                                ng-href="#/admin/router/{{routeParams.token|doubleEncodeURIComponent}}">Router</a></li>
+                                ng-href="#/admin/router">Router</a></li>
                         <li ng-class="isChildNavItemActive('vmstats')"><a
-                                ng-href="#/admin/vmstats/{{routeParams.token|doubleEncodeURIComponent}}">Vmstats</a>
+                                ng-href="#/admin/vmstats">Vmstats</a>
                         </li>
                     </ul>
                 </li>

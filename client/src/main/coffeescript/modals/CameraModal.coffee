@@ -66,13 +66,16 @@ define [
           $scope.isMoving = !$scope.isMoving
 
       $scope.cameraCmd = (command)->
-        $.ajax({
+        $.ajax
           url: "#{$scope.camera.proto}#{$scope.camera.controlUrl}#{$scope.camera.control}"
+          type: 'GET'
+          dataType: "text"
           data:
             command: command
-            token: $scope.camera.token
-        }).done ->
-          null
+          xhrFields:
+            withCredentials: true
+
+
 
 
       $scope.close = ->

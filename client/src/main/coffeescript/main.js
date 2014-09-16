@@ -6,14 +6,16 @@ requirejs.config({
     paths: {
         c: "controllers",
         d: "directives",
-        s: "services",
         f: "filters",
-        p: "providers",
+        i: "interceptors",
         m: "mixins",
+        p: "providers",
         r: "resources",
+        s: "services",
 
         //angular
         angular: 'vendor/managed/angular/angular',
+        angularCookies: 'vendor/managed/angular-cookies/angular-cookies',
         angularUi: 'vendor/managed/angular-bootstrap/ui-bootstrap-tpls',
         angularRoute: 'vendor/managed/angular-route/angular-route',
         angularResource: 'vendor/managed/angular-resource/angular-resource',
@@ -53,6 +55,9 @@ requirejs.config({
         },
         'angularAnimate': {
             deps: ['angular']
+        },
+        'angularCookies':{
+          deps: ['angular']
         },
         'angularResource': {
             deps: ['angular']
