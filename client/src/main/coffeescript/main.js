@@ -15,7 +15,6 @@ requirejs.config({
 
         //angular
         angular: 'vendor/managed/angular/angular',
-        angularCookies: 'vendor/managed/angular-cookies/angular-cookies',
         angularUi: 'vendor/managed/angular-bootstrap/ui-bootstrap-tpls',
         angularRoute: 'vendor/managed/angular-route/angular-route',
         angularResource: 'vendor/managed/angular-resource/angular-resource',
@@ -33,6 +32,7 @@ requirejs.config({
         jquery: 'vendor/managed/jquery/jquery',
         jqueryMigrate: 'vendor/unmanaged/jquery-migrate-1.2.1.min',
         jquerySvg: 'vendor/unmanaged/jquery.svg',
+        ngBiscuit: 'vendor/managed/ngWig/ng-biscuit',
         ngTable: 'vendor/managed/ng-table/ng-table',
         smoothie: "vendor/managed/smoothie/smoothie",
         underscore: 'vendor/managed/underscore-amd/underscore',
@@ -56,9 +56,6 @@ requirejs.config({
         'angularAnimate': {
             deps: ['angular']
         },
-        'angularCookies':{
-          deps: ['angular']
-        },
         'angularResource': {
             deps: ['angular']
         },
@@ -79,6 +76,9 @@ requirejs.config({
         },
         'moment': {
             exports: 'moment'
+        },
+        'ngBiscuit': {
+          deps: ['angular']
         },
         'ngTable': {
             deps: ['angular']

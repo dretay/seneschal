@@ -1,12 +1,12 @@
 define [
     'angularAMD'
     'ejs/templates'
-    'angularCookies'
     'angularRoute'
     'angularResource'
     'angularAnimate'
     'angularTouch'
     'angularSanitize'
+    'ngBiscuit'
     'ngTable'
     'angularUi'
     'c/controllers'
@@ -23,13 +23,14 @@ define [
     'c/router'
     'c/vmstats'
     'c/controls'
+    'c/login'
   ],
 (angularAMD, templates) ->
   'use strict'
   app = angular.module 'app', [
     'ngTable'
     'ngAnimate'
-    'ngCookies'
+    'ngBiscuit'
     'ngSanitize'
     'ui.bootstrap'
     'ngResource'
@@ -67,10 +68,10 @@ define [
         controller: 'controls'
       }).otherwise({
           template : templates['login']
-          controller: -> null
+          controller: 'login'
     })
-
-
+#    $httpProvider.defaults.useXDomain = true
+#    delete $httpProvider.defaults.headers.common['X-Requested-With']
     $httpProvider.responseInterceptors.push 'authInterceptor'
 
     webStompProvider.hostname = 'www.drewandtrish.com'

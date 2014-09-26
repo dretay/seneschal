@@ -4,10 +4,10 @@
       <h1 class="text-center login-title">Sign in to continue</h1>
       <div class="account-wall">
 
-        <form class="form-signin" action="https://www.drewandtrish.com/login" method="POST">
-          <input type="text" class="form-control" name="username" placeholder="Username" required autofocus>
-          <input type="password" class="form-control" name="password" placeholder="Password" required>
-          <button class="btn btn-lg btn-primary btn-block" type="submit">
+        <form class="form-signin">
+          <input type="text" class="form-control" name="username" placeholder="Username" ng-model="username" required autofocus>
+          <input type="password" class="form-control" name="password" placeholder="Password" ng-model="password" required>
+          <button class="btn btn-lg btn-primary btn-block" ng-click="login()">
             Sign in</button>
         </form>
       </div>

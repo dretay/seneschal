@@ -65,6 +65,8 @@ define [
 
       getClient: (deferred, reconnect)->
         if client == null || reconnect then @client = client = getSocket() else @client = client
+        if reconnect then connectionStatus = 0
+
         unless deferred? then deferred = $.Deferred()
         username = null
         password = null
@@ -79,7 +81,6 @@ define [
           on_error = (error)=>
             if error == "Whoops! Lost connection to undefined"
               $log.error  "WebStomp::getClient Lost connection to broker, attempting to reconnect"
-              connectionStatus = 0
               deferred = $.Deferred()
               @getClient(deferred, true)
               deferred.then (client)=>
