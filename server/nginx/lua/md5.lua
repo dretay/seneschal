@@ -11,7 +11,7 @@ local error = error
 
 module(...)
 
-_VERSION = '0.08'
+local _VERSION = '0.08'
 
 local mt = { __index = _M }
 
@@ -41,7 +41,7 @@ local buf = ffi_new("char[16]")
 local ctx_ptr_type = ffi.typeof("MD5_CTX[1]")
 
 
-function new(self)
+local function new(self)
     local ctx = ffi_new(ctx_ptr_type)
     if C.MD5_Init(ctx) == 0 then
         return nil
@@ -51,12 +51,12 @@ function new(self)
 end
 
 
-function update(self, s)
+local function update(self, s)
     return C.MD5_Update(self._ctx, s, #s) == 1
 end
 
 
-function final(self)
+local function final(self)
     if C.MD5_Final(buf, self._ctx) == 1 then
         return ffi_str(buf, 16)
     end
@@ -65,7 +65,7 @@ function final(self)
 end
 
 
-function reset(self)
+local function reset(self)
     return C.MD5_Init(self._ctx) == 1
 end
 

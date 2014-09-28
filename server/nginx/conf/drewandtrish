@@ -1,3 +1,13 @@
+lua_package_path "/usr/local/openresty/nginx/lua/?.lua;;";
+# init_by_lua '
+#   AuthManager = require "AuthManager"
+# ';
+client_body_buffer_size 10K;
+client_header_buffer_size 1k;
+client_max_body_size 8m;
+large_client_header_buffers 2 1k;
+keepalive_timeout 65;
+
   server {
 		listen       443;
 		server_name  www.drewandtrish.com;
@@ -13,53 +23,89 @@
 		ssl_session_timeout 10m;
 
 
-		location / {
-			root /home/pi/dev/seneschal/client/build/resources/main;
+		location ~ "/$" {
+      rewrite ^ https://$server_name/html/index-optimize.html#/controls/mainFloor permanent;
+    }
+    location ~ "/seneschal.manifest" {
+      access_log off;
+      add_header 'Content-Type' 'text/plain charset=UTF-8';
+      add_header 'Cache-Control' 'no-cache, no-store, max-age=0, must-revalidate';
+      root /home/pi/dev/seneschal/client/build/resources/main;
 		}
-		location /vmstats {
-			proxy_pass http://192.168.1.2:9090;
-      # WebSocket support (nginx 1.4)
-      proxy_http_version 1.1;
-      proxy_set_header Upgrade $http_upgrade;
-      proxy_set_header Connection "upgrade";
-			access_by_lua '
-          --get request arguments
-          local args = ngx.req.get_uri_args()
-
-          --grab token and remove from args table
-          local token = ngx.decode_base64(args["token"])
-          args["token"] = nil
-
-          --decrypt token and build username / password
-          local aes = require "resty.aes"
-          local str = require "resty.string"
-          local split = require "utils"
-          local aes_256_cbc_sha512x5 = aes:new("AKeyForAES-256-CBC", "145a2f0e39c6d84c58ccba257dd43908", aes.cipher(256,"cbc"), aes.hash.sha512, 1000)
-
-          local decrypted = JSON:decode(aes_256_cbc_sha512x5:decrypt(token))
-          if string.len(decrypted.foscam) > 0 then
-            return
-          else
-            ngx.exit(ngx.HTTP_FORBIDDEN)
-          end
-      ';
-      rewrite ^.* / break;
+    location / {
+      access_log off;
+      add_header 'Cache-Control' 'no-cache, no-store, max-age=0, must-revalidate';
+      root /home/pi/dev/seneschal/client/build/resources/main;
 		}
-#location /generateCredentials {
-#default_type 'text/plain';
-#content_by_lua_file  /opt/nginx/lua/getCredentials.lua;
-#}
+    location /login {
+      set $cors "true";
+      if ($request_method = 'OPTIONS') {
+        add_header 'Access-Control-Allow-Origin' "$http_origin";
+        add_header 'Access-Control-Allow-Credentials' 'true';
+        add_header 'Access-Control-Max-Age' 1728000;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+        add_header 'Access-Control-Allow-Headers' 'Authorization,Content-Type,Accept,Origin,User-Agent,DNT,Cache-Control,X-Mx-ReqToken,Keep-Alive,X-Requested-With,If-Modified-Since';
+        add_header 'Content-Length' 0;
+        add_header 'Content-Type' 'text/plain charset=UTF-8';
+        return 204;
+      }
+      add_header 'Content-Type' 'text/plain charset=UTF-8';
+      rewrite_by_lua "
+        local AuthManager = require 'AuthManager'
+        AuthManager.login()
+      ";
+    }
+    location /cameras {
+      access_log off;
+      proxy_redirect off;
+      rewrite_by_lua "
+        local AuthManager = require 'AuthManager'
+        AuthManager.authByGetRewrite('foscam','user','pwd')
+      ";
+      rewrite ^/cameras/(.+)/(.+)/(.*) /$3 break;
+      proxy_set_header        Accept-Encoding   "";
+      proxy_set_header        Host            $host;
+      proxy_set_header        X-Real-IP       $remote_addr;
+      proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_pass http://$1:$2;
+    }
+    location /proxiedCameras {
+      access_log off;
+      proxy_redirect off;
+      rewrite_by_lua "
+        local AuthManager = require 'AuthManager'
+        AuthManager.authByBasic('foscam','user','pwd')
+      ";
+      rewrite ^/proxiedCameras/(.+)/(.+)/(.*) /$3 break;
+      proxy_set_header        Accept-Encoding   "";
+      proxy_set_header        Host            $host;
+      proxy_set_header        X-Real-IP       $remote_addr;
+      proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_pass http://$1:$2;
+    }
+
+    location /createUser{
+      default_type 'text/plain';
+      content_by_lua "
+        local AuthManager = require 'AuthManager'
+        AuthManager.createUser()
+      ";
+    }
 		location /getRabbitCredentials {
-			add_header Access-Control-Allow-Origin "*";
-			default_type 'text/plain';
-			content_by_lua_file  /usr/local/openresty/nginx/lua/getRabbitCredentials.lua;
+       access_log off;
+       default_type 'application/json';
+       content_by_lua  "
+         local AuthManager = require 'AuthManager'
+         AuthManager.getCreds('rabbitmq')
+       ";
 		}
 		location /rabbitmq{
 			access_log off;
-			proxy_pass http://localhost:55674;
+			proxy_pass http://localhost:15674;
 			proxy_set_header X-Real-IP $remote_addr;
 			proxy_set_header Host $host;
 			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_read_timeout 180s;
 
 			# WebSocket support (nginx 1.4)
 			proxy_http_version 1.1;
@@ -69,27 +115,4 @@
 			rewrite ^/rabbitmq/(.+) /$1 break;
 			proxy_redirect off;
 		}
-		location /cameras {
-			add_header Access-Control-Allow-Origin *;
-      proxy_redirect off;
-      rewrite_by_lua_file  /usr/local/openresty/nginx/lua/foscam.lua;
-      rewrite ^/cameras/(.+)/(.+)/(.*) /$3 break;
-      proxy_set_header        Accept-Encoding   "";
-      proxy_set_header        Host            $host;
-      proxy_set_header        X-Real-IP       $remote_addr;
-      proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_pass http://$1:$2;
-		}
-		location /proxiedCameras {
-			add_header Access-Control-Allow-Origin *;
-      proxy_redirect off;
-      rewrite_by_lua_file  /usr/local/openresty/nginx/lua/proxiedFoscam.lua;
-      rewrite ^/proxiedCameras/(.+)/(.+)/(.*) /$3 break;
-      proxy_set_header        Accept-Encoding   "";
-      proxy_set_header        Host            $host;
-      proxy_set_header        X-Real-IP       $remote_addr;
-      proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_pass http://$1:$2;
-		}
-
 	}

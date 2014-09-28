@@ -16,7 +16,7 @@ module ("urlcode")
 ----------------------------------------------------------------------------
 -- Decode an URL-encoded string (see RFC 2396)
 ----------------------------------------------------------------------------
-function unescape (str)
+local function unescape (str)
         str = string.gsub (str, "+", " ")
         str = string.gsub (str, "%%(%x%x)", function(h) return string.char(tonumber(h,16)) end)
         str = string.gsub (str, "\r\n", "\n")
@@ -26,7 +26,7 @@ end
 ----------------------------------------------------------------------------
 -- URL-encode a string (see RFC 2396)
 ----------------------------------------------------------------------------
-function escape (str)
+local function escape (str)
         str = string.gsub (str, "\n", "\r\n")
         str = string.gsub (str, "([^0-9a-zA-Z ])", -- locale independent
                 function (c) return string.format ("%%%02X", string.byte(c)) end)
@@ -42,7 +42,7 @@ end
 -- Multi-valued names will be represented as tables with numerical indexes
 --      (in the order they came).
 ----------------------------------------------------------------------------
-function insertfield (args, name, value)
+local function insertfield (args, name, value)
         if not args[name] then
                 args[name] = value
         else
@@ -61,14 +61,14 @@ function insertfield (args, name, value)
 end
 
 ----------------------------------------------------------------------------
--- Parse url-encoded request data 
+-- Parse url-encoded request data
 --   (the query part of the script URL or url-encoded post data)
 --
 --  Each decoded (name=value) pair is inserted into table [[args]]
 -- @param query String to be parsed.
 -- @param args Table where to store the pairs.
 ----------------------------------------------------------------------------
-function parsequery (query, args)
+local function parsequery (query, args)
         if type(query) == "string" then
                 local insertfield, unescape = insertfield, unescape
                 string.gsub (query, "([^&=]+)=([^&=]*)&?",
@@ -97,6 +97,6 @@ function encodetable (args)
       strp = strp.."&"..escape(key).."="..escape(val)
     end
   end
-  -- remove first & 
+  -- remove first &
   return string.sub(strp,2)
 end

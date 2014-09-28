@@ -11,7 +11,7 @@ local error = error
 
 module(...)
 
-_VERSION = '0.08'
+local _VERSION = '0.08'
 
 
 ffi.cdef[[
@@ -20,7 +20,7 @@ int RAND_pseudo_bytes(unsigned char *buf, int num);
 ]]
 
 
-function bytes(len, strong)
+local function bytes(len, strong)
     local buf = ffi_new("char[?]", len)
     if strong then
         if C.RAND_bytes(buf, len) == 0 then

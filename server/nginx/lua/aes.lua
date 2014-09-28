@@ -15,7 +15,7 @@ local type = type
 
 module(...)
 
-_VERSION = '0.08'
+local _VERSION = '0.08'
 
 
 local mt = { __index = _M }
@@ -103,7 +103,7 @@ int EVP_BytesToKey(const EVP_CIPHER *type,const EVP_MD *md,
 
 local ctx_ptr_type = ffi.typeof("EVP_CIPHER_CTX[1]")
 
-hash = {
+local hash = {
     md5 = C.EVP_md5(),
     sha1 = C.EVP_sha1(),
     sha224 = C.EVP_sha224(),
@@ -113,7 +113,7 @@ hash = {
 }
 
 
-function cipher(size, _cipher)
+local function cipher(size, _cipher)
     local _size = size or 128
     local _cipher = _cipher or "cbc"
     local func = "EVP_aes_" .. _size .. "_" .. _cipher
@@ -125,7 +125,7 @@ function cipher(size, _cipher)
 end
 
 
-function new(self, key, salt, _cipher, _hash, hash_rounds)
+local function new(self, key, salt, _cipher, _hash, hash_rounds)
     local encrypt_ctx = ffi_new(ctx_ptr_type)
     local decrypt_ctx = ffi_new(ctx_ptr_type)
     local _cipher = _cipher or cipher()
@@ -187,7 +187,7 @@ function new(self, key, salt, _cipher, _hash, hash_rounds)
 end
 
 
-function encrypt(self, s)
+local function encrypt(self, s)
     local s_len = #s
     local max_len = s_len + 16
     local buf = ffi_new("unsigned char[?]", max_len)
@@ -211,7 +211,7 @@ function encrypt(self, s)
 end
 
 
-function decrypt(self, s)
+local function decrypt(self, s)
     local s_len = #s
     local buf = ffi_new("unsigned char[?]", s_len)
     local out_len = ffi_new("int[1]")
