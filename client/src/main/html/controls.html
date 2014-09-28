@@ -24,6 +24,9 @@
                 <div ng:repeat="garageDoor in garageDoors|itemsOnFloor:activeFloor.name">
                     <alarm-zone appliance="garageDoor"></alarm-zone>
                 </div>
+                <div ng:repeat="sensor in mySensors">
+                  <sensor appliance="sensor"></sensor>
+                </div>
             </div>
 
         </div>
