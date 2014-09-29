@@ -31,8 +31,8 @@ define [
               id: 1
               floor: "secondFloor"
               location:
-                left: 20
-                top: 75
+                left: 15
+                top: 78
             }
           ]
 

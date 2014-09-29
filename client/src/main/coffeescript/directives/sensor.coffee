@@ -16,10 +16,14 @@ define [
       appliance: "="
     controller: ($scope, $injector, $timeout)->
       $scope._getDisplayLabel = ->
-        "#{$scope.appliance.data['S_TEMP'].value}°\n #{$scope.appliance.data['S_HUM'].value}%"
+        "#{$scope.appliance.data['S_TEMP'].value}° #{$scope.appliance.data['S_HUM'].value}%"
 
       $scope.innerClassMap =
-        "text-center": ->true
+        "label label-primary": ->true
+
+      $scope._getInnerStyle = ->
+        "border-radius": "5px"
+
 
       #mix in common appliance functions
       $injector.invoke(applianceMixin, @, {$scope: $scope})
