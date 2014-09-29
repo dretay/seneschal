@@ -1,16 +1,16 @@
 CACHE MANIFEST
 
-# Offline cache v59
+# Offline cache v61
 
-coffeescript/main-built.js
-coffeescript/mixins/mixins.js
-coffeescript/vendor/managed/angular-mocks/angular-mocks.js
-coffeescript/vendor/managed/bootstrap/bootstrap.js
-coffeescript/vendor/managed/requirejs/require.js
-coffeescript/vendor/managed/requirejs-domready/domReady.js
-coffeescript/vendor/managed/underscore-amd/underscore.js
-coffeescript/vendor/unmanaged/jquery-migrate-1.2.1.min.js
-coffeescript/vendor/unmanaged/jquery.svg.js
+javascript/main-built.js
+javascript/mixins/mixins.js
+javascript/vendor/managed/angular-mocks/angular-mocks.js
+javascript/vendor/managed/bootstrap/bootstrap.js
+javascript/vendor/managed/requirejs/require.js
+javascript/vendor/managed/requirejs-domready/domReady.js
+javascript/vendor/managed/underscore-amd/underscore.js
+javascript/vendor/unmanaged/jquery-migrate-1.2.1.min.js
+javascript/vendor/unmanaged/jquery.svg.js
 stylesheets/img/2ndfloor_optimized.png
 stylesheets/img/alarm_panel_armed.svg
 stylesheets/img/alarm_panel_disarmed.svg

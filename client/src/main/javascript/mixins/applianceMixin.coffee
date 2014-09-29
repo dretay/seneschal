@@ -79,6 +79,8 @@ define [
           style["top"] = "#{$scope.appliance.location.top}%"
         unless _.isUndefined(_.deep($scope.appliance, 'location.rotation'))
           style["-webkit-transform"] = "rotate(#{$scope.appliance.location.rotation}deg)"
+        unless _.isUndefined(_.deep($scope.appliance, 'location.padding_top'))
+          style["padding-top"] = "#{$scope.appliance.location.padding_top}"
         unless _.isUndefined(_.deep($scope.appliance, 'dimensions.width'))
           style["width"] = "#{$scope.appliance.dimensions.width}"
         unless _.isUndefined(_.deep($scope.appliance, 'dimensions.height'))

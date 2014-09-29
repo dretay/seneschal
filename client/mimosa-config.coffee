@@ -13,6 +13,7 @@ exports.config =
     "require-lint"
     "server"
     "stylus"
+    "sass"
     "underscore"
   ]
   server:
@@ -27,16 +28,17 @@ exports.config =
 
   copy:
     extensions: ["js","css","png","jpg","jpeg","gif","html","eot","svg","ttf","woff","otf","yaml","kml","ico","htc","htm","json","txt","xml","xsd","map","md","mp4", "manifest"]
+
   minifyJS:
-    exclude:[/\.min\./, "coffeescript/main.js"]
+    exclude:[/\.min\./, "javascript/main.js"]
     mangleNames: false
 
   watch:
     sourceDir: 'src/main'
-    javascriptDir: 'coffeescript'
+    javascriptDir: 'javascript'
     compiledDir: 'build/resources/main'
   vendor:
-    javascripts: "coffeescript/vendor"
+    javascripts: "javascript/vendor"
   csslint:
     compiled: false
     copied: false
@@ -47,7 +49,7 @@ exports.config =
   require:
     optimize:
       overrides:
-        mainConfigFile: "src/main/coffeescript/main.js"
+        mainConfigFile: "src/main/javascript/main.js"
         optimize: "none"
   bower:
     exclude: [/.*legacy\/js\/.*/]
@@ -64,12 +66,13 @@ exports.config =
   template:
     output: [
       (
-        folders: ["html"]
-        outputFileName: "coffeescript/ejs/templates"
+        folders: ["javascript/ejs"]
+        outputFileName: "javascript/ejs/templates"
       )
     ]
   underscore:
     extensions: [ "html" ]
+
   justCopy:
     paths:[
       "html/index-optimize.html"

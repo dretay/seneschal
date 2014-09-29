@@ -27,6 +27,7 @@ requirejs.config({
 
         //3rd party libraries
         angularAMD: 'vendor/managed/angularAMD/angularAMD',
+        chartjs: 'vendor/managed/Chart.js/Chart.min',
         chroma: 'vendor/managed/chroma-js/chroma',
         domReady: 'vendor/managed/requirejs-domready/domReady',
         jquery: 'vendor/managed/jquery/jquery',
@@ -34,7 +35,9 @@ requirejs.config({
         jquerySvg: 'vendor/unmanaged/jquery.svg',
         ngBiscuit: 'vendor/managed/ngWig/ng-biscuit',
         ngTable: 'vendor/managed/ng-table/ng-table',
+        nsPopover: 'vendor/managed/nsPopover/nsPopover',
         smoothie: "vendor/managed/smoothie/smoothie",
+        tcAngularChartjs: 'vendor/managed/tc-angular-chartjs/tc-angular-chartjs.min',
         underscore: 'vendor/managed/underscore-amd/underscore',
         uuid: 'vendor/managed/node-uuid/uuid',
 
@@ -80,7 +83,13 @@ requirejs.config({
         'ngBiscuit': {
           deps: ['angular']
         },
+        'tcAngularChartjs': {
+            deps: ['angular','chartjs']
+        },
         'ngTable': {
+            deps: ['angular']
+        },
+        'nsPopover': {
             deps: ['angular']
         },
         'sockjs': {

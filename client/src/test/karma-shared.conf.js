@@ -3,7 +3,7 @@ module.exports = function(config){
     basePath: '../../',
     frameworks: [ 'jasmine', 'mocha', 'requirejs', 'chai'],
     files: [
-      "src/main/coffeescript/vendor/managed/angular/angular.js",
+      "../main/javascript/vendor/managed/angular/angular.js",
       "src/test/mocha.conf.js",
       "src/test/requirejs.conf.js",
       {pattern: 'src/main/coffeescript/**/*.js', included: false},

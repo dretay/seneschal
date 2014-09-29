@@ -33,6 +33,7 @@ define [
               location:
                 left: 15
                 top: 78
+                padding_top: "0.5em"
             }
           ]
 

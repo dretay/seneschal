@@ -1,0 +1,24 @@
+<script type="text/ng-template" id="popover">
+  <div class="triangle"></div>
+  <div class="ns-popover-tooltip" style="margin-bottom: 1em">
+    <button ng-click="hidePopover()">Close</button>
+    <canvas tc-chartjs-doughnut chart-data="myData" chart-options="myOptions" width="350" height="350"></canvas>
+  </div>
+</script>
+<div ng-style="{{getOuterStyle()}}"
+    ng-class="getApplianceClass()">
+    <!--ns-popover-->
+    <!--ns-popover-template="popover"-->
+    <!--ns-popover-trigger="click"-->
+    <!--ns-popover-placement="right"-->
+    <!--ns-popover-theme="ns-popover-tooltip-theme"-->
+    <!--ns-popover-timeout="100"-->
+    <!--ng-click="hidePopover()"-->
+
+  <div
+      ng-class="getOuterClass()"
+      ng-attr-title="{{getTooltip()}}"
+      ng-click="click(appliance)">
+    <i ng-class="getInnerClass()" ng-style="{{getInnerStyle()}}">{{getDisplayLabel()}}</i>
+  </div>
+</div>
