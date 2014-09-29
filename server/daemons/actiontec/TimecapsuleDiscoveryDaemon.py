@@ -62,4 +62,4 @@ class TimecapsuleDiscoveryDaemon(threading.Thread):
 
     while 1:
       self.discoveryQueue.put(dump_client_table(self.timecapsuleIp))
-      time.sleep(2)
+      time.sleep(3)

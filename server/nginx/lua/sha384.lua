@@ -12,7 +12,7 @@ local error = error
 
 module(...)
 
-_VERSION = '0.08'
+local _VERSION = '0.08'
 
 
 local mt = { __index = _M }
@@ -30,7 +30,7 @@ local buf = ffi_new("char[?]", digest_len)
 local ctx_ptr_type = ffi.typeof("SHA512_CTX[1]")
 
 
-function new(self)
+local function new(self)
     local ctx = ffi_new(ctx_ptr_type)
     if C.SHA384_Init(ctx) == 0 then
         return nil
@@ -40,12 +40,12 @@ function new(self)
 end
 
 
-function update(self, s)
+local function update(self, s)
     return C.SHA384_Update(self._ctx, s, #s) == 1
 end
 
 
-function final(self)
+local function final(self)
     if C.SHA384_Final(buf, self._ctx) == 1 then
         return ffi_str(buf, digest_len)
     end
@@ -54,7 +54,7 @@ function final(self)
 end
 
 
-function reset(self)
+local function reset(self)
     return C.SHA384_Init(self._ctx) == 1
 end
 

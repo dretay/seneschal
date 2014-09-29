@@ -6,7 +6,7 @@ local ffi = require "ffi"
 
 module(...)
 
-_VERSION = '0.08'
+local _VERSION = '0.08'
 
 
 ffi.cdef[[
