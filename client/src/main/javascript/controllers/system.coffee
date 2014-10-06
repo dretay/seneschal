@@ -5,7 +5,7 @@ define [
 (controllers) ->
   'use strict'
 
-  controllers.controller 'vmstats', ['$scope', '$interval', '$routeParams', ($scope, $interval, $routeParams) ->
+  controllers.controller 'system', ['$scope', '$interval', '$routeParams', ($scope, $interval, $routeParams) ->
     $scope.series =
       proc:
         'r': 'Number of processes waiting for run time'

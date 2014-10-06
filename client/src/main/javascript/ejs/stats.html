@@ -1,0 +1,98 @@
+<div class="container-fluid" style="padding-top: 1em">
+  <div class="row">
+    <div class="col-xs-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">Available Sensors</div>
+        <div class="panel-body" >
+          <table ng-table="tableParams" class="table ng-table-rowselected" style="background: white">
+            <tr ng-repeat="sensor in sensors">
+              <td width="30" style="text-align: left">
+                <input type="checkbox" ng-model="checkboxes.items[sensor.node+':'+sensor.sensorindex]" />
+              </td>
+              <td header-class="text-left" data-title="'Device'">{{sensor.sketchname}}</td>
+              <td header-class="text-left" data-title="'Sensor'">{{sensor.longname}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">Date Range</div>
+        <div class="panel-body" style="padding: 0 2em 0 2em">
+          <div class="row">
+            <h5>Start</h5>
+            <p class="input-group">
+              <input type="text"
+                     class="form-control"
+                     datepicker-popup="{{format}}"
+                     ng-model="startDate"
+                     is-open="startOpened"
+                     max-date="endDate"
+                     datepicker-options="dateOptions"
+                     close-text="Close" />
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="open($event,'startOpened')"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </p>
+          </div>
+          <div class="row">
+            <h5>End</h5>
+            <p class="input-group">
+              <input type="text"
+                     class="form-control"
+                     datepicker-popup="{{format}}"
+                     ng-model="endDate"
+                     is-open="endOpened"
+                     min-date="startDate"
+                     max-date="maxDate"
+                     datepicker-options="dateOptions"
+                     close-text="Close" />
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="open($event,'endOpened')"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </p>
+          </div>
+          <div class="row" style="padding-bottom: 1em">
+            <h5>Granularity</h5>
+            <div class="text-center">
+              <div class="btn-group">
+                <label class="btn btn-primary" ng-model="binSize" btn-radio="'minute'">Minute</label>
+                <label class="btn btn-primary" ng-model="binSize" btn-radio="'hour'">Hour</label>
+                <label class="btn btn-primary" ng-model="binSize" btn-radio="'day'">Day</label>
+                <label class="btn btn-primary" ng-model="binSize" btn-radio="'month'">Month</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+    </div>
+    <div class="col-xs-9">
+      <div class="panel panel-default">
+        <div class="panel-heading">Data</div>
+        <div class="panel-body" style="padding: 0 2em 0 2em">
+          <div class="row">
+
+            <div ng-switch="dataEmpty()">
+              <div ng-switch-when="false">
+
+                <nvd3-line-chart
+                    xAxisTickFormat="xAxisTickFormat()"
+                    height="600"
+                    data="data"
+                    showXAxis="true"
+                    showYAxis="true"
+                    tooltips="true"
+                    useInteractiveGuideline="true"
+                    showLegend="true">
+                </nvd3-line-chart>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

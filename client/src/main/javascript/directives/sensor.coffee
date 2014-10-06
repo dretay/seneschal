@@ -5,7 +5,7 @@ define [
     'underscore'
     'ejs/templates'
   ],
-(directives, applianceMixin, $, _, templates) ->
+(directives, applianceMixin, $, _, templates, SensorHistoryModal) ->
   'use strict'
 
   directives.directive 'sensor', ->
@@ -14,9 +14,9 @@ define [
     template: templates['sensor']
     scope:
       appliance: "="
-    controller: ($scope, $injector, $timeout, $compile)->
+    controller: ($scope, $injector, $timeout, $compile, $modal)->
       $scope._getDisplayLabel = ->
-        "#{$scope.appliance.data['S_TEMP'].value}° #{$scope.appliance.data['S_HUM'].value}%"
+        "#{$scope.appliance.data['S_TEMP'].real_value}° #{$scope.appliance.data['S_HUM'].real_value}%"
 
       $scope.innerClassMap =
         "label label-primary": ->true
@@ -24,14 +24,6 @@ define [
       $scope._getInnerStyle = ->
         "border-radius": "5px"
         "margin-top": "5em"
-
-      $scope.myData = [
-        { value : 50, color : "#F7464A" },
-        { value : 90, color : "#E2EAE9" },
-        { value : 75, color : "#D4CCC5" },
-        { value : 30, color : "#949FB1"}
-      ]
-
 
 
       #mix in common appliance functions

@@ -11,39 +11,43 @@ define [
   services.factory 'mySensors', ['webStompResource', (Resource)->
     new Resource
       get:
-#        subscription: "/exchange/mysensors.status/fanout"
+        subscription: "/exchange/mysensors.status/fanout"
         outbound_rpc: "/exchange/mysensors.cmd"
         outboundTransform: (rawData)->
-          cmd: "snapshot"
-        inboundTransform: (rawData, oldData)->
-          sensorTypes = [
-            "S_DOOR", "S_MOTION", "S_SMOKE",
-            "S_LIGHT", "S_DIMMER", "S_COVER",
-            "S_TEMP", "S_HUM", "S_BARO",
-            "S_WIND", "S_RAIN", "S_UV",
-            "S_WEIGHT", "S_POWER", "S_HEATER",
-            "S_DISTANCE", "S_LIGHT_LEVEL", "S_ARDUINO_NODE",
-            "S_ARDUINO_RELAY", "S_LOCK", "S_IR",
-            "S_WATER", "S_AIR_QUALITY", "S_CUSTOM",
-            "S_DUST", "S_SCENE_CONTROLLER	"]
-          mysensors= [
-            {
-              id: 1
-              floor: "secondFloor"
-              location:
-                left: 15
-                top: 78
-                padding_top: "0.5em"
-            }
-          ]
+          cmd: "dumpSensorData"
+#          cmd: "querySensor"
+#          node: 1
+#          start: 1412035388
+        inboundTransform: (readings, oldData)->
 
-          for sensor in mysensors
-            sensor.data =  _.reduceRight rawData[sensor.id], (result,datum,sensor)->
-                result[sensorTypes[sensor]] =
-                  timestamp: datum.timestamp
-                  value: datum.value
-                return result
-              ,{}
-          return mysensors
+          #subscription update
+          if not _.isArray readings
+            oldReading = _.findWhere(oldData, {id:readings.node})
+            oldSensor = _.findWhere(oldReading.data, {sensorindex:readings.sensorindex})
+            oldSensor.real_value = readings.real_value
+
+            return oldData
+          else
+            mysensors= [
+              {
+                id: 1
+                floor: "secondFloor"
+                name: "Unused Bedroom"
+                data:{}
+                location:
+                  left: 15
+                  top: 78
+                  padding_top: "0.5em"
+              }
+            ]
+
+            for sensor in mysensors
+              for reading in readings
+                if reading.id == sensor.id
+                  sensor.data[reading.shortname] =
+                    real_value: reading.real_value
+                    created: reading.created
+                    sensorindex: reading.sensorindex
+            return mysensors
 
   ]

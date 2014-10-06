@@ -27,7 +27,9 @@ requirejs.config({
 
         //3rd party libraries
         angularAMD: 'vendor/managed/angularAMD/angularAMD',
-        chartjs: 'vendor/managed/Chart.js/Chart.min',
+        angularNvd3Directives: 'vendor/managed/angularjs-nvd3-directives/angularjs-nvd3-directives',
+        nvd3: 'vendor/managed/nvd3/nv.d3',
+        d3: 'vendor/managed/d3/d3',
         chroma: 'vendor/managed/chroma-js/chroma',
         domReady: 'vendor/managed/requirejs-domready/domReady',
         jquery: 'vendor/managed/jquery/jquery',
@@ -35,9 +37,7 @@ requirejs.config({
         jquerySvg: 'vendor/unmanaged/jquery.svg',
         ngBiscuit: 'vendor/managed/ngWig/ng-biscuit',
         ngTable: 'vendor/managed/ng-table/ng-table',
-        nsPopover: 'vendor/managed/nsPopover/nsPopover',
         smoothie: "vendor/managed/smoothie/smoothie",
-        tcAngularChartjs: 'vendor/managed/tc-angular-chartjs/tc-angular-chartjs.min',
         underscore: 'vendor/managed/underscore-amd/underscore',
         uuid: 'vendor/managed/node-uuid/uuid',
 
@@ -83,13 +83,13 @@ requirejs.config({
         'ngBiscuit': {
           deps: ['angular']
         },
-        'tcAngularChartjs': {
-            deps: ['angular','chartjs']
+        'angularNvd3Directives': {
+            deps: ['angular', 'nvd3']
+        },
+        'nvd3':{
+          deps: ['d3']
         },
         'ngTable': {
-            deps: ['angular']
-        },
-        'nsPopover': {
             deps: ['angular']
         },
         'sockjs': {

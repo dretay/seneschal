@@ -8,8 +8,7 @@ define [
     'angularSanitize'
     'ngBiscuit'
     'ngTable'
-    'nsPopover'
-    'tcAngularChartjs'
+    'angularNvd3Directives'
     'angularUi'
     'c/controllers'
     'd/directives'
@@ -23,9 +22,10 @@ define [
     'c/main'
     'c/daemons'
     'c/router'
-    'c/vmstats'
+    'c/system'
     'c/controls'
     'c/login'
+    'c/stats'
   ],
 (angularAMD, templates) ->
   'use strict'
@@ -33,13 +33,12 @@ define [
     'ngTable'
     'ngAnimate'
     'ngBiscuit'
-    'tc.chartjs'
+    'nvd3ChartDirectives'
     'ngSanitize'
     'ui.bootstrap'
     'ngResource'
     'ngRoute'
     'ngTouch'
-    'nsPopover'
     'controllers'
     'directives'
     'filters'
@@ -62,14 +61,18 @@ define [
         reloadOnSearch: false,
         template: templates['router'],
         controller: 'router'
-      }).when('/admin/vmstats', {
+      }).when('/admin/system', {
         reloadOnSearch: false,
-        template: templates['vmstats'],
-        controller: 'vmstats'
+        template: templates['system'],
+        controller: 'system'
       }).when('/controls/:floor', {
         reloadOnSearch: false,
         template: if isMobile then templates['controls-mobile'] else templates['controls']
         controller: 'controls'
+      }).when('/admin/stats', {
+        reloadOnSearch: false,
+        template: templates['stats']
+        controller: 'stats'
       }).otherwise({
           template : templates['login']
           controller: 'login'

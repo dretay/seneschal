@@ -1,0 +1,115 @@
+<div class=".container-fluid" style="padding-top: 2em">
+  <div class="panel panel-default">
+    <div class="panel-heading">System Performance</div>
+    <div class="panel-body" style="padding: 2em 2em 0 2em">
+      <div class="row">
+          <div class="col-xs-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">Processes</div>
+              <div class="panel-body" style="padding: 0 2em 0 2em">
+                <div class="row">
+                  <ng-smoothie
+                      listen-to="/exchange/system.status.processes/fanout"
+                      height="80"
+                      width="600"
+                      stroke-style="#ff0000"
+                      fill-style="rgba(255, 0, 0, 0.4)"
+                      series="series.proc">
+                  </ng-smoothie>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">Memory</div>
+              <div class="panel-body" style="padding: 0 2em 0 2em">
+                <div class="row">
+                  <ng-smoothie
+                      listen-to="/exchange/system.status.memory/fanout"
+                      height="80"
+                      width="600"
+                      stroke-style="#ff0000"
+                      fill-style="rgba(255, 0, 0, 0.4)"
+                      series="series.mem">
+                  </ng-smoothie>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">Swap</div>
+            <div class="panel-body" style="padding: 0 2em 0 2em">
+              <div class="row">
+                <ng-smoothie
+                    listen-to="/exchange/system.status.swap/fanout"
+                    height="80"
+                    width="600"
+                    stroke-style="#ff0000"
+                    fill-style="rgba(255, 0, 0, 0.4)"
+                    series="series.swap">
+                </ng-smoothie>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">IO</div>
+            <div class="panel-body" style="padding: 0 2em 0 2em">
+              <div class="row">
+                <ng-smoothie
+                    listen-to="/exchange/system.status.io/fanout"
+                    height="80"
+                    width="600"
+                    stroke-style="#ff0000"
+                    fill-style="rgba(255, 0, 0, 0.4)"
+                    series="series.io">
+                </ng-smoothie>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">System</div>
+            <div class="panel-body" style="padding: 0 2em 0 2em">
+              <div class="row">
+                <ng-smoothie
+                    listen-to="/exchange/system.status.system/fanout"
+                    height="80"
+                    width="600"
+                    stroke-style="#ff0000"
+                    fill-style="rgba(255, 0, 0, 0.4)"
+                    series="series.sys">
+                </ng-smoothie>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">CPU</div>
+            <div class="panel-body" style="padding: 0 2em 0 2em">
+              <div class="row">
+                <ng-smoothie
+                    listen-to="/exchange/system.status.cpu/fanout"
+                    height="80"
+                    width="600"
+                    stroke-style="#ff0000"
+                    fill-style="rgba(255, 0, 0, 0.4)"
+                    series="series.cpu">
+                </ng-smoothie>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

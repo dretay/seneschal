@@ -1,44 +1,42 @@
-<div class=".container-fluid alarm">
-    <div class="row">
-        <div class="col-md-12">
-            <h1 class="page-header">Configured Daemons</h1>
-            <accordion close-others="oneAtATime">
-                <accordion-group heading="Daemons" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
-                    <table ng-table="tableParams" class="table ng-table-rowselected">
-                        <tr ng-repeat="task in processes"
-                            ng-click="selectTask(task)"
-                            ng-class="{'active': selectedTask == task}">
-                            <td ng-click="get_log(task)" header-class="text-left" data-title="'Name'">{{task.name}}</td>
-                            <td ng-click="get_log(task)" header-class="text-left" data-title="'State'">
-                                {{task.statename}}
-                            </td>
-                            <td ng-click="get_log(task)" header-class="text-left" data-title="'Description'">
-                                {{task.description}}
-                            </td>
-                            <td data-title="'Controls'" header-class="text-right">
-                                <div class="pull-right">
-                                    <button ng-click="start_task(task)" type="button" class="btn btn-success">Start
-                                    </button>
-                                    <button ng-click="restart_task(task)" type="button" class="btn btn-warning">
-                                        Restart
-                                    </button>
-                                    <button ng-click="stop_task(task)" type="button" class="btn btn-danger">Stop
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </accordion-group>
+<div class=".container-fluid" style="padding-top: 2em">
+  <div class="panel panel-default">
+    <div class="panel-heading">Configured Daemons</div>
+    <div class="panel-body" style="padding: 2em 2em 0 2em">
+      <accordion close-others="oneAtATime">
+        <accordion-group heading="Daemons" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+          <table ng-table="tableParams" class="table ng-table-rowselected">
+            <tr ng-repeat="task in processes"
+                ng-click="selectTask(task)"
+                ng-class="{'active': selectedTask == task}">
+              <td ng-click="get_log(task)" header-class="text-left" data-title="'Name'">{{task.name}}</td>
+              <td ng-click="get_log(task)" header-class="text-left" data-title="'State'">
+                {{task.statename}}
+              </td>
+              <td ng-click="get_log(task)" header-class="text-left" data-title="'Description'">
+                {{task.description}}
+              </td>
+              <td data-title="'Controls'" header-class="text-right">
+                <div class="pull-right">
+                  <button ng-click="start_task(task)" type="button" class="btn btn-success">Start
+                  </button>
+                  <button ng-click="restart_task(task)" type="button" class="btn btn-warning">
+                    Restart
+                  </button>
+                  <button ng-click="stop_task(task)" type="button" class="btn btn-danger">Stop
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </accordion-group>
 
-                <accordion-group heading="Log File Contents" is-open="status.open">
-                    <div ng-repeat="line in log.contents|splitOnNewline track by $index">
-                        <div>{{line}}</div>
-                    </div>
-                </accordion-group>
+        <accordion-group heading="Log File Contents" is-open="status.open">
+          <div ng-repeat="line in log.contents|splitOnNewline track by $index">
+            <div>{{line}}</div>
+          </div>
+        </accordion-group>
 
-            </accordion>
-
-
-        </div>
+      </accordion>
     </div>
+  </div>
 </div>
