@@ -1,5 +1,7 @@
 var _ = require("underscore");
 var log = require("winston");
+var mysensors_db = require("./mysensors_db");
+var async = require('async');
 
 const fwSketches          = [ ];
 const fwDefaultType         = 0xFFFF; // index of hex file from array above (0xFFFF
@@ -107,6 +109,9 @@ const P_ULONG32           = 5;
 const P_CUSTOM            = 6;
 
 var appendedString="";
+var writeQueue = async.queue(function (params, callback) {
+    rfReceived(params.appendedString.trim(), params.config, callback);
+}, 1);
 
 function encode(destination, sensor, command, acknowledge, type, payload) {
   var msg = destination.toString(10) + ";" + sensor.toString(10) + ";" + command.toString(10) + ";" + acknowledge.toString(10) + ";" + type.toString(10) + ";";
@@ -123,51 +128,17 @@ function encode(destination, sensor, command, acknowledge, type, payload) {
   return msg.toString();
 }
 
-function saveProtocol(sender, payload, db) {
-  db.collection('node', function(err, c) {
-    c.update({
-      'id': sender
-    }, {
-      $set: {
-        'protocol': payload
-      }
-    }, {
-      upsert: true
-    }, function(err, result) {
-      if (err)
-        log.error("Error writing protocol to database");
-    });
-  });
+function saveProtocol(sender, payload) {
+  mysensors_db.saveProtocol(sender,payload);
 }
 
-function saveSensor(sender, sensor, type, db) {
-  db.collection('node', function(err, c) {
-    c.update({
-      'id': sender
-    }, {
-      $addToSet: {
-        sensor: type
-      }
-    }, function(err, result) {
-      if (err)
-        log.error("Error writing sensor to database");
-    });
-  });
+function saveSensor(sender, sensor, type) {
+  mysensors_db.saveSensor(sender, sensor, type);
 }
 
 function saveValue(sender, sensor, type, payload, config) {
-  var cn = "Value-" + sender.toString() + "-" + sensor.toString();
-  config.db.createCollection(cn, function(err, c) {
-    payload = {
-      'timestamp': new Date().getTime(),
-      'type': type,
-      'value': payload
-    };
-    c.save(payload, function(err, result) {
-      if (err)
-        log.error("Error writing value to database");
-    });
-
+  mysensors_db.saveValue(sender, sensor, type, payload, function(){
+    log.info("publishing updated sensor value"+ config.fanoutExchange);
     config.fanoutExchange.publish("", _.extend({
       sender: sender.toString(),
       sensor: sensor.toString()
@@ -175,47 +146,16 @@ function saveValue(sender, sensor, type, payload, config) {
   });
 }
 
-function saveBatteryLevel(sender, payload, db) {
-  var cn = "BatteryLevel-" + sender.toString();
-  db.createCollection(cn, function(err, c) {
-    c.save({
-      'timestamp': new Date().getTime(),
-      'value': payload
-    }, function(err, result) {
-      if (err)
-        log.error("Error writing battery level to database");
-    });
-  });
+function saveBatteryLevel(sender, payload) {
+  mysensors_db.saveBatteryLevel(sender, payload);
 }
 
-function saveSketchName(sender, payload, db) {
-  db.collection('node', function(err, c) {
-    c.update({
-      'id': sender
-    }, {
-      $set: {
-        'sketchName': payload
-      }
-    }, function(err, result) {
-      if (err)
-        log.error("Error writing sketch name to database");
-    });
-  });
+function saveSketchName(sender, payload) {
+  mysensors_db.saveSketchName(sender, payload);
 }
 
-function saveSketchVersion(sender, payload, db) {
-  db.collection('node', function(err, c) {
-    c.update({
-      'id': sender
-    }, {
-      $set: {
-        'sketchVersion': payload
-      }
-    }, function(err, result) {
-      if (err)
-        log.error("Error writing sketch version to database");
-    });
-  });
+function saveSketchVersion(sender, payload) {
+  mysensors_db.saveSketchVersion(sender, payload);
 }
 
 function sendTime(destination, sensor, gw) {
@@ -228,40 +168,18 @@ function sendTime(destination, sensor, gw) {
   gw.write(td);
 }
 
-function sendNextAvailableSensorId(db, gw) {
-  db.collection('node', function(err, c) {
-    c.find({
-      $query: { },
-      $orderby: {
-        'id': 1
-      }
-    }).toArray(function(err, results) {
-      if (err)
-        log.error('Error finding nodes');
-      var id = 1;
-      for (var i = 0; i < results.length; i++)
-        if (results[i].id > i + 1) {
-          id = i + 1;
-          break;
-        }
-      if (id < 255) {
-        c.save({
-          'id': id
-        }, function(err, result) {
-          if (err)
-            log.error('Error writing node to database');
-          var destination = BROADCAST_ADDRESS;
-          var sensor = NODE_SENSOR_ID;
-          var command = C_INTERNAL;
-          var acknowledge = 0; // no ack
-          var type = I_ID_RESPONSE;
-          var payload = id;
-          var td = encode(destination, sensor, command, acknowledge, type, payload);
-          log.info('-> ' + td.toString());
-          gw.write(td);
-        });
-      }
-    });
+function sendNextAvailableSensorId(gw) {
+  mysensors_db.sendNextAvailableSensorId().then(function(ids){
+    var id  = ids[0];
+    var destination = BROADCAST_ADDRESS;
+    var sensor = NODE_SENSOR_ID;
+    var command = C_INTERNAL;
+    var acknowledge = 0; // no ack
+    var type = I_ID_RESPONSE;
+    var payload = id;
+    var td = encode(destination, sensor, command, acknowledge, type, payload);
+    log.info('-> ' + td.toString());
+    gw.write(td);
   });
 }
 
@@ -278,32 +196,12 @@ function sendConfig(destination, gw) {
 
 
 
-function saveRebootRequest(destination, db) {
-  db.collection('node', function(err, c) {
-    c.update({
-      'id': destination
-    }, {
-      $set: {
-        'reboot': 1
-      }
-    }, function(err, result) {
-      if (err)
-        log.error("Error writing reboot request to database");
-    });
-  });
+function saveRebootRequest(destination) {
+  mysensors_db.saveRebootRequest(destination, db);
 }
 
 function checkRebootRequest(destination, db, gw) {
-  db.collection('node', function(err, c) {
-    c.find({
-      'id': destination
-    }, function(err, item) {
-      if (err)
-        log.error('Error checking reboot request');
-      else if (item.reboot == 1)
-        sendRebootMessage(destination, gw);
-    });
-  });
+  mysensors_db.checkRebootRequest(destination, db, gw);
 }
 
 function sendRebootMessage(destination, gw) {
@@ -325,7 +223,11 @@ function appendData(str, config) {
         pos++;
     }
     if (str.charAt(pos) == '\n') {
-        rfReceived(appendedString.trim(), config);
+        writeQueue.push({appendedString: appendedString, config: config}, function (err) {
+          if(err){
+            log.error("Encountered error when processing gateway queue: "+err);
+          }
+        });
         appendedString="";
     }
     if (pos < str.length) {
@@ -333,8 +235,7 @@ function appendData(str, config) {
     }
 }
 
-function rfReceived(data, config) {
-  db = config.db
+function rfReceived(data, config, callback) {
   gw = config.gw
   if ((data != null) && (data != "")) {
     log.info('<- ' + data);
@@ -357,61 +258,80 @@ function rfReceived(data, config) {
     } else {
       payload = rawpayload;
     }
+    log.info("Executing "+command+" in rfReceived"+typeof callback);
     // decision on appropriate response
     switch (command) {
     case C_PRESENTATION:
       if (sensor == NODE_SENSOR_ID)
-        saveProtocol(sender, payload, db);
-      saveSensor(sender, sensor, type, db);
+        mysensors_db.saveProtocol(sender, payload, function(){
+          mysensors_db.saveSensor(sender, sensor, type, callback);
+        });
+      else{
+        mysensors_db.saveSensor(sender, sensor, type, callback);
+      }
       break;
     case C_SET:
-      saveValue(sender, sensor, type, payload, config);
+      mysensors_db.saveValue(sender, sensor, type, payload, function(record){
+        config.fanoutExchange.publish("", record);
+        callback(null);
+      });
+
       break;
     case C_REQ:
       break;
     case C_INTERNAL:
       switch (type) {
       case I_BATTERY_LEVEL:
-        saveBatteryLevel(sender, payload, db);
+        mysensors_db.saveBatteryLevel(sender, payload, callback);
         break;
       case I_TIME:
         sendTime(sender, sensor, gw);
+        callback(null);
         break;
       case I_VERSION:
+        callback(null);
         break;
       case I_ID_REQUEST:
-        sendNextAvailableSensorId(db, gw);
+        mysensors_db.sendNextAvailableSensorId(gw, callback);
         break;
       case I_ID_RESPONSE:
+        callback(null);
         break;
       case I_INCLUSION_MODE:
+        callback(null);
         break;
       case I_CONFIG:
         sendConfig(sender, gw);
+        callback(null);
         break;
       case I_PING:
+        callback(null);
         break;
       case I_PING_ACK:
+        callback(null);
         break;
       case I_LOG_MESSAGE:
+        callback(null);
         break;
       case I_CHILDREN:
+        callback(null);
         break;
       case I_SKETCH_NAME:
-        saveSketchName(sender, payload, db);
+        mysensors_db.saveSketchName(sender, payload, callback);
         break;
       case I_SKETCH_VERSION:
-        saveSketchVersion(sender, payload, db);
+        mysensors_db.saveSketchVersion(sender, payload, callback);
         break;
       case I_REBOOT:
+        callback(null);
         break;
       }
       break;
     case C_STREAM:
-
+      callback(null);
       break;
     }
-    checkRebootRequest(sender, db, gw);
+    // checkRebootRequest(sender, db, gw);
   }
 }
 function connectToGateway(config, callback){

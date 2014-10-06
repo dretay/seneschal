@@ -7,6 +7,10 @@
     "amqp": "0.2.x",
     "inireader": "0.3.x",
     "async": "0.9.x",
-    "underscore": "1.7.0"
+    "underscore": "1.7.0",
+    "serialport": "^1.4.5",
+    "winston": "0.8.0",
+    "pg":"3.5.x",
+    "knex": "0.7.3"
   }
 }
