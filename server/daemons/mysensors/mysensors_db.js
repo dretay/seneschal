@@ -20,7 +20,9 @@ function createNodeIfMissing(id,callback){
   })
 }
 function saveProtocol(sender, payload, callback) {
-
+  if(isNaN(parseFloat(sender))){
+    callback("protocol is nan, can't save");
+  } else{
   createNodeIfMissing(sender,function(){
     var q = Knex('nodes');
     q.where('id','=',sender);
@@ -33,6 +35,7 @@ function saveProtocol(sender, payload, callback) {
       callback(err);
     });
   });
+  }
 }
 
 function saveSensor(sender, sensor, type,callback) {
@@ -169,7 +172,7 @@ function sendNextAvailableSensorId(callback) {
   q.then(function(ids){
     var id  = ids[0];
     log.info("Created new sensor with id"+id);
-    callback(null);
+    callback(id);
   },function(err){
     log.error("Failed to create new sensor: "+err);
     callback(err);
@@ -189,10 +192,14 @@ function getAllSensors(callback){
 
 }
 function getNewestReadings(callback){
-  var q = Knex('readings as R1');
-  q.select('nodes.id','sensortypes.shortname','R1.real_value','R1.created','R1.sensorindex');
+  var q = Knex();
+  q.select('nodes.id','nodes.sketchname','sensortypes.shortname','R1.real_value','R1.created','R1.sensorindex');
+  q.from('readings as R1')
   q.innerJoin('nodes','R1.node','nodes.id');
-  q.innerJoin('sensors','R1.sensorindex','sensors.sensorindex');
+  q.innerJoin('sensors', function () {
+    this.on('R1.sensorindex', '=', 'sensors.sensorindex')
+        .andOn('R1.node', '=', 'sensors.node');
+  });
   q.innerJoin('sensortypes','sensors.sensortype','sensortypes.id');
   q.whereRaw('"R1".created = (select max(created) from readings where node="R1".node and sensorindex="R1".sensorindex)');
   q.then(function(readings){

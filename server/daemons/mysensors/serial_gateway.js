@@ -168,9 +168,9 @@ function sendTime(destination, sensor, gw) {
   gw.write(td);
 }
 
-function sendNextAvailableSensorId(gw) {
-  mysensors_db.sendNextAvailableSensorId().then(function(ids){
-    var id  = ids[0];
+function sendNextAvailableSensorId(gw,callback) {
+  mysensors_db.sendNextAvailableSensorId(function(id){
+    console.log("sending back id "+id);
     var destination = BROADCAST_ADDRESS;
     var sensor = NODE_SENSOR_ID;
     var command = C_INTERNAL;
@@ -180,11 +180,12 @@ function sendNextAvailableSensorId(gw) {
     var td = encode(destination, sensor, command, acknowledge, type, payload);
     log.info('-> ' + td.toString());
     gw.write(td);
+    callback(null);
   });
 }
 
 function sendConfig(destination, gw) {
-  var payload = "M";
+  var payload = "I";
   var sensor = NODE_SENSOR_ID;
   var command = C_INTERNAL;
   var acknowledge = 0; // no ack
@@ -292,7 +293,7 @@ function rfReceived(data, config, callback) {
         callback(null);
         break;
       case I_ID_REQUEST:
-        mysensors_db.sendNextAvailableSensorId(gw, callback);
+        sendNextAvailableSensorId(gw, callback);
         break;
       case I_ID_RESPONSE:
         callback(null);
