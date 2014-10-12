@@ -79,16 +79,25 @@ define [
     })
 #    $httpProvider.defaults.useXDomain = true
 #    delete $httpProvider.defaults.headers.common['X-Requested-With']
-    $httpProvider.responseInterceptors.push 'authInterceptor'
+#    $httpProvider.responseInterceptors.push 'authInterceptor'
 
     webStompProvider.hostname = 'www.drewandtrish.com'
     webStompProvider.logger = -> null
 
-  app.run ($rootScope, $location, $timeout, webStomp, $log)->
+  app.run ($rootScope, $location, $timeout, webStomp, $log, cookieStore)->
     $log.debug "App::run registering route change listener"
 
     $rootScope.$on "$routeChangeStart", (event, next, current)->
       $log.debug("rootScope::run the route has changed")
+
+      if _.isEmpty(cookieStore.get("authentication"))
+        if next.controller == "login"
+          # already going to #login, no redirect needed
+        else
+          #not going to #login, we should redirect now
+          $location.path("/login")
+      else if next.controller == "login"
+        $location.path("/controls/mainFloor")
 
     $rootScope.$on "$routeChangeError", (event, current, previous, rejection)->
       $log.debug "rootScope::run failed to change the route: #{rejection}"
