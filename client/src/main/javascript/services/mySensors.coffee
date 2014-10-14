@@ -48,12 +48,30 @@ define [
                   padding_top: "0.5em"
               }
               {
+                floor: "secondFloor"
+                name: "Master Bedroom"
+                data:{}
+                location:
+                  left: 59
+                  top: 18
+                  padding_top: "0.5em"
+              }
+              {
                 floor: "mainFloor"
                 name: "Living Room"
                 data:{}
                 location:
                   left: 16
                   top: 56
+                  padding_top: "0.5em"
+              }
+              {
+                floor: "mainFloor"
+                name: "Family Room"
+                data:{}
+                location:
+                  left: 75
+                  top: 20
                   padding_top: "0.5em"
               }
               {
@@ -72,6 +90,15 @@ define [
                 location:
                   left: 38
                   top: 64
+                  padding_top: "0.5em"
+              }
+              {
+                floor: "basement"
+                name: "Guest Bedroom"
+                data:{}
+                location:
+                  left: 15
+                  top: 30
                   padding_top: "0.5em"
               }
             ]

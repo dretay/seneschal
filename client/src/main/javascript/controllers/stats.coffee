@@ -69,6 +69,13 @@ define [
         if nodes.length > 0
           $scope.data = mySensorsNode.query({binUnit: $scope.binSize, nodes: nodes, startDate: $scope.startDate, endDate: $scope.endDate},{scope:$scope})
 
+    $scope.$watch 'checkboxes.checked', (value)->
+      angular.forEach $scope.sensors, (item)->
+        if angular.isDefined(item.node)
+          $scope.checkboxes.items["#{item.node}:#{item.sensorindex}"] = value
+      redrawChart()
+
+
     $scope.$watch ->
       binSize: $scope.binSize
       checkboxItems: $scope.checkboxes.items
