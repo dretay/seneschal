@@ -40,7 +40,7 @@ define [
               }
               {
                 floor: "secondFloor"
-                name: "Drew's  Office"
+                name: "Drew's Office"
                 data:{}
                 location:
                   left: 13
@@ -70,8 +70,8 @@ define [
                 name: "Family Room"
                 data:{}
                 location:
-                  left: 75
-                  top: 20
+                  left: 82
+                  top: 28
                   padding_top: "0.5em"
               }
               {

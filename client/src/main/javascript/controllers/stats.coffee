@@ -38,10 +38,15 @@ define [
 
     $scope.xAxisTickFormat = ->
       (d)->
-        if $scope.binSize == "hour" or $scope.binSize == "minute"
-          d3.time.format('%X')(new Date(d))
+#        return d
+        if $scope.binSize == "minute"
+          moment.utc(d).format('h:mA')
+        else if $scope.binSize == "hour"
+          moment.utc(d).format('hA')
+        else if $scope.binSize == "day"
+          moment.utc(d).format('ddd')
         else
-          d3.time.format('%x')(new Date(d))
+          moment.utc(d).format('MMM')
 
 
 

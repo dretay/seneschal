@@ -50,7 +50,7 @@ define [
                 floor: "mainFloor"
                 type: "fan"
                 location:
-                  left: 77
+                  left: 74
                   top: 28
               }
               {
@@ -106,7 +106,7 @@ define [
                 floor: "mainFloor"
                 type: "light"
                 location:
-                  left: 72
+                  left: 68
                   top: 28
               }
               {
