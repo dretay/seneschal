@@ -1,50 +1,53 @@
 Seneschal(n):
 =====
 1. An official in a medieval noble household in charge of domestic arrangements and the administration of servants; a steward
-2. A home automation server built entirely on IP-based technologies.
+2. Yet another home automation server running on a Raspberry PI.
 
 #Overview
-Seneschal is a polyglot colletion of python daemons, lua scripts, and javascript that  presents a unified way of interracting with different IP-based home automation technologies. The aim is build a [Responsive UI] that can be used across many devices (mobile, desktop, tablet...).
-
-One interesting design feature of Seneschal is that you do not need to log into the system per se. When you visit the front end you do so with a URL that looks something like this https://www.myhomeautomationserver.com/html/index-optimize.html#/home/Z2%252Fih%252Fsqp1eQeV6CpF%252Z2%252B/lights. That crazy looking string of characters in the middle of the URL is actually an AES256 encrypted list of all the usernames and passwords for the devices on your network. Seneschal will transparently decrypt that url when you access a resoruce (such as a web cam), extract the appropriate credentials, and apply them to the connection. That means that you can have "persistent" bookmarks to pages without worrying about remembering all your usernames and passwords.
+Seneschal is a polyglot collection of Python and NodeJS daemons that communicate with each other over RabbitMQ. The front end is an AngularJS-based web page hosted on an OpenResty server that interacts with the back-end daemons over Web STOMP.
 
 ##Screenshots
-In case you are curious what this all looks like, I'll try to keep these screens as up-to-date as possible. The basic idea is that you can access all the devices in your home such as your  [Lights], [Alarm panel], [Cameras], and [Thermostat]. You can also control some backend aspects of the server such as the [router], [daemons], and [vmstats].
+In case you are curious what this all looks like, I'll try to keep these screens as up-to-date as possible. The basic idea is that you can access all the devices on in your home through a bird's eye [floorplan] of your house. You can also ask interesting questions by querying [historical data] that is stored and indexed by the server.  You can even check on the server itself through real time [system stats] and a page that allows you to [toggle daemons].
 
-##Compatibility
+##Supported Devices
 - [Belkin WEMO Switches]
 - [EnvisaLink 3 IP Security Interface Module]
 - [Foscam Cameras]
 - [Nest Thermostat]
+- [MySensors-based Devices]
 
 #Architecture
-When building my home automation server I encountered some major deficiencies with the products I was buying:
+I decided to build my own home automation server because I encountered some major deficiencies with the products I was buying:
 
-1. Nothing supports SSL out of the box. That means that any time you access a resource over the internet you are sending your credentials unencrypted for anyone to see. Even if they did support SSL, buying and renewing a new cert for every device would be prohibitively expensive.
-2. There is no capability to perform a single sign on. You must create and maintain an account for every device you install in your network.
-3. There is no common wire format all the technologies use to communicate. Some use TCP sockets, some present a REST interface, and others use SOAP.
+1. Nothing supported self-hosted SSL. That meant that I had to choose between sending my credentials unencrypted for anyone to see or allowing the manufacturer to store all of my data.
+2. There was no capability to perform a single sign on; I had to create and maintain an account for every device I installed in my network.
+3. There was no common wire format all the technologies use to communicate. Some use TCP sockets, some present a REST interface, and others use SOAP.
 
-To solve the above problems I decided on the architecture below:
-![architecture diagram](https://raw.github.com/dretay/seneschal/master/imgs/seneschal_architecture.png)
-At a high level what is happening is that a client will connect to the NGINX proxy and then be routed to the appropriate back-end service. In the case of streaming resources like cameras they will be routed directly to the requested resource. All other requests are funneled through a local RabbitMQ broker. This allows me to customize how clients interact with resources (since I can choose the appropriate topology for the use case).
 
-When a user connects to a resource one of the things that it presents is a "token" for authentication. This token is a URL-encoded, AES256 encrypted, JSON string representing resource, username, password tuples. Using this awesome [LUA runtime] plugin NGINX has been extended to decrypt the token and dynamically rewrite the URL so that it contains the appropriate credentials. Since only the server is ever aware of the passphrase for the token, it is cryptographically secure. If the token is ever compromised all you need to do is revoke the token by changing the passhprase NGINX uses to decrypt the token. An attacker would not be able to decrypt the token, so it become effectively useless.
+To solve these above problems I decided to build a system that is structured like this:
+![architecture ](https://raw.github.com/dretay/seneschal/master/imgs/architecture.png)
 
-#Scalability
-I think this solution should be [horizontally scalable] to accomidate high ammounts of load. You can easily add additinal NGINX proxies or RabbitMQ brokers as necessary. You should also be able to implement policies within RabbitMQ as necessary to funnel traffic. Since everything is stateless and messaging based there is no single point of failure within the architecture, which should allow for several 9's of uptime.
+The basic idea is that when a user logs into the webpage they are authenticated through a LUA-based authentication module in OpenResty and then connected directly to the RabbitMQ broker over Web Stomp. The browser will then subscribe to the appropriate queues and exchanges to query the daemons and issue commands.
 
-[Alarm panel]:https://raw.github.com/dretay/seneschal/master/imgs/alarm.png
-[cameras]:https://raw.github.com/dretay/seneschal/master/imgs/cameras.png
-[lights]:https://raw.github.com/dretay/seneschal/master/imgs/lights.png
-[menu system]:https://raw.github.com/dretay/seneschal/master/imgs/menu.png
-[thermostat]:https://raw.github.com/dretay/seneschal/master/imgs/thermostat.png
-[router]:https://raw.github.com/dretay/seneschal/master/imgs/router.png
-[daemons]:https://raw.github.com/dretay/seneschal/master/imgs/daemons.png
-[vmstats]:https://raw.github.com/dretay/seneschal/master/imgs/vmstats.png
+Notably there is no real application server in this diagram. Static web resources are served up through Nginx / Openresty and everything else is handled within AngularJS itself. I did this intentionally because this runs on a Raspberry PI, which does not have the resources to run a responsive application server along with all the back-end daemons.
+
+#Todo
+There are several projects currently conflated into this repository. Major pieces of functionality should probably be broken out into separate projects, resulting in this repository serving more as an umbrella that integrates plugins. Major pieces of functionality to export include:
+
+- The adapter for doing CRUD in AngularJS over WebStomp
+- The LUA module for authentication management
+- The daemons themselves that abstract interacting with the raw devices (specifically the Envisalink stuff)
+
+
+[floorplan]:https://raw.github.com/dretay/seneschal/master/imgs/main_floor_controls.png
+[historical data]:https://raw.github.com/dretay/seneschal/master/imgs/sensor_history.png
+[system stats]:https://raw.github.com/dretay/seneschal/master/imgs/system_stats.png
+[toggle daemons]:https://raw.github.com/dretay/seneschal/master/imgs/supervisord_control.png
 [Belkin WEMO Switches]:http://www.belkin.com/us/Products/home-automation/c/wemo-home-automation/
 [EnvisaLink 3 IP Security Interface Module]:http://www.eyezon.com/
 [Foscam Cameras]:http://foscam.us/
 [Nest Thermostat]:https://nest.com/
+[MySensors-based Devices]:http://mysensors.org
 [Responsive UI]:http://en.wikipedia.org/wiki/Responsive_web_design
 [LUA runtime]:https://github.com/chaoslawful/lua-nginx-module
 [horizontally scalable]:http://en.wikipedia.org/wiki/Scalability

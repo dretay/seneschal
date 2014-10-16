@@ -18,12 +18,13 @@ define [
       $scope._getDisplayLabel = ->
         "#{$scope.appliance.data['S_TEMP'].real_value}° #{$scope.appliance.data['S_HUM'].real_value}%"
 
-      $scope.innerClassMap =
-        "label label-primary": ->true
+#      $scope.innerClassMap =
+#        "label label-primary": ->true
 
       $scope._getInnerStyle = ->
         "border-radius": "5px"
         "margin-top": "5em"
+        "color": "white"
 
 
       #mix in common appliance functions

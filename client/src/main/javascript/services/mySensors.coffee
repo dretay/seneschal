@@ -40,11 +40,20 @@ define [
               }
               {
                 floor: "secondFloor"
-                name: "Drew's  Office"
+                name: "Drew's Office"
                 data:{}
                 location:
                   left: 13
                   top: 42
+                  padding_top: "0.5em"
+              }
+              {
+                floor: "secondFloor"
+                name: "Master Bedroom"
+                data:{}
+                location:
+                  left: 59
+                  top: 18
                   padding_top: "0.5em"
               }
               {
@@ -54,6 +63,15 @@ define [
                 location:
                   left: 16
                   top: 56
+                  padding_top: "0.5em"
+              }
+              {
+                floor: "mainFloor"
+                name: "Family Room"
+                data:{}
+                location:
+                  left: 82
+                  top: 28
                   padding_top: "0.5em"
               }
               {
@@ -72,6 +90,15 @@ define [
                 location:
                   left: 38
                   top: 64
+                  padding_top: "0.5em"
+              }
+              {
+                floor: "basement"
+                name: "Guest Bedroom"
+                data:{}
+                location:
+                  left: 15
+                  top: 30
                   padding_top: "0.5em"
               }
             ]

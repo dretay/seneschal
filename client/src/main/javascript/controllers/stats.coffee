@@ -38,10 +38,15 @@ define [
 
     $scope.xAxisTickFormat = ->
       (d)->
-        if $scope.binSize == "hour" or $scope.binSize == "minute"
-          d3.time.format('%X')(new Date(d))
+#        return d
+        if $scope.binSize == "minute"
+          moment.utc(d).format('h:mA')
+        else if $scope.binSize == "hour"
+          moment.utc(d).format('hA')
+        else if $scope.binSize == "day"
+          moment.utc(d).format('ddd')
         else
-          d3.time.format('%x')(new Date(d))
+          moment.utc(d).format('MMM')
 
 
 
@@ -68,6 +73,13 @@ define [
           if value then nodes.push "#{key}"
         if nodes.length > 0
           $scope.data = mySensorsNode.query({binUnit: $scope.binSize, nodes: nodes, startDate: $scope.startDate, endDate: $scope.endDate},{scope:$scope})
+
+    $scope.$watch 'checkboxes.checked', (value)->
+      angular.forEach $scope.sensors, (item)->
+        if angular.isDefined(item.node)
+          $scope.checkboxes.items["#{item.node}:#{item.sensorindex}"] = value
+      redrawChart()
+
 
     $scope.$watch ->
       binSize: $scope.binSize
