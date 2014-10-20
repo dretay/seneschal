@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS readings;
 DROP TABLE IF EXISTS sensors;
 DROP TABLE IF EXISTS sensortypes;
 DROP TABLE IF EXISTS nodes;
+DROP TABLE IF EXISTS rules;
 
 CREATE TABLE sensortypes (
      id            SERIAL PRIMARY KEY,
@@ -61,3 +62,12 @@ CREATE TABLE readings (
      CONSTRAINT node_readings_fk FOREIGN KEY (node) REFERENCES nodes(id) ON DELETE CASCADE
 );
 CREATE INDEX readings_created_idx on readings using btree(created);
+
+CREATE TABLE rules (
+     id            SERIAL PRIMARY KEY,
+     name          TEXT,
+     active        BOOLEAN DEFAULT TRUE,
+     created       TIMESTAMP DEFAULT current_timestamp,
+     data_xml      TEXT,
+     data_json     TEXT
+);

@@ -71,7 +71,7 @@ define [
                 data:{}
                 location:
                   left: 82
-                  top: 28
+                  top: 30
                   padding_top: "0.5em"
               }
               {
@@ -89,7 +89,7 @@ define [
                 data:{}
                 location:
                   left: 38
-                  top: 64
+                  top: 67
                   padding_top: "0.5em"
               }
               {
@@ -98,7 +98,7 @@ define [
                 data:{}
                 location:
                   left: 15
-                  top: 30
+                  top: 27
                   padding_top: "0.5em"
               }
             ]

@@ -26,10 +26,13 @@ define [
     'c/controls'
     'c/login'
     'c/stats'
+    'c/rules'
+    'angularBootstrapSwitch'
   ],
 (angularAMD, templates) ->
   'use strict'
   app = angular.module 'app', [
+    'frapontillo.bootstrap-switch'
     'ngTable'
     'ngAnimate'
     'ngBiscuit'
@@ -57,11 +60,11 @@ define [
         reloadOnSearch: false,
         template: templates['daemons'],
         controller: 'daemons'
-      }).when('/admin/router', {
+      }).when('/data/router', {
         reloadOnSearch: false,
         template: templates['router'],
         controller: 'router'
-      }).when('/admin/system', {
+      }).when('/data/system', {
         reloadOnSearch: false,
         template: templates['system'],
         controller: 'system'
@@ -69,10 +72,14 @@ define [
         reloadOnSearch: false,
         template: if isMobile then templates['controls-mobile'] else templates['controls']
         controller: 'controls'
-      }).when('/admin/stats', {
+      }).when('/data/stats', {
         reloadOnSearch: false,
         template: templates['stats']
         controller: 'stats'
+      }).when('/admin/rules', {
+        reloadOnSearch: false,
+        template: templates['rules']
+        controller: 'rules'
       }).otherwise({
           template : templates['login']
           controller: 'login'

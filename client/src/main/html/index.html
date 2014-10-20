@@ -60,6 +60,23 @@
                             Floor</a></li>
                     </ul>
                 </li>
+                <li class="dropdown" ng-class="isNavItemActive('data')">
+                  <a ng-href="ng-href="#/admin/router"
+                  class="dropdown-toggle"
+                  data-toggle="dropdown">
+                  Data <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li ng-class="isChildNavItemActive('router')"><a
+                        ng-href="#/data/router">Router</a></li>
+                    <li ng-class="isChildNavItemActive('system')"><a
+                        ng-href="#/data/system">Sys Perf</a>
+                    </li>
+                    <li ng-class="isChildNavItemActive('stats')"><a
+                        ng-href="#/data/stats">Sensor Stats</a>
+                    </li>
+                  </ul>
+                </li>
                 <li class="dropdown" ng-class="isNavItemActive('admin')">
                     <a ng-href="ng-href="#/admin/daemons"
                     class="dropdown-toggle"
@@ -70,13 +87,8 @@
                         <li ng-class="isChildNavItemActive('daemons')"><a
                                 ng-href="#/admin/daemons">Daemons</a>
                         </li>
-                        <li ng-class="isChildNavItemActive('router')"><a
-                                ng-href="#/admin/router">Router</a></li>
-                        <li ng-class="isChildNavItemActive('system')"><a
-                                ng-href="#/admin/system">Sys Perf</a>
-                        </li>
-                        <li ng-class="isChildNavItemActive('stats')"><a
-                          ng-href="#/admin/stats">Sensor Stats</a>
+                        <li ng-class="isChildNavItemActive('rules')"><a
+                          ng-href="#/admin/rules">Rules</a>
                         </li>
                     </ul>
                 </li>

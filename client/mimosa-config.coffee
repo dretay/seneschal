@@ -29,7 +29,7 @@ exports.config =
       path: 'src/main/html'
 
   copy:
-    extensions: ["js","css","png","jpg","jpeg","gif","html","eot","svg","ttf","woff","otf","yaml","kml","ico","htc","htm","json","txt","xml","xsd","map","md","mp4", "manifest"]
+    extensions: ["cur", "mp3", "ogg", "wav", "js","css","png","jpg","jpeg","gif","html","eot","svg","ttf","woff","otf","yaml","kml","ico","htc","htm","json","txt","xml","xsd","map","md","mp4", "manifest"]
 
   minifyJS:
     exclude:[/\.min\./, "javascript/main.js"]
@@ -120,5 +120,9 @@ exports.config =
       {
         src: "stylesheets/vendor/managed/font-awesome/fontawesome-webfont.woff"
         dest: "fonts/fontawesome-webfont.woff"
+      }
+      {
+        src: "stylesheets/vendor/unmanaged/media"
+        dest: "media"
       }
     ]

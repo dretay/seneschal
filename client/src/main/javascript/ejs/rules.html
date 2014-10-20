@@ -1,0 +1,47 @@
+<script>
+  function blocklyLoaded(blockly) {
+    // Called once Blockly is fully loaded.
+    window.Blockly = blockly;
+  }
+</script>
+<div class="container rulesEditor" style="padding-top:2em">
+  <div class="panel panel-default">
+    <div class="panel-heading">Automation Rules <a ng:click="newRule()" class="pull-right">New Rule</a></div>
+    <div class="panel-body" style="padding: 2em 2em 0 2em">
+      <table ng-table="tableParams" class="rulesTable table ng-table-rowselected">
+        <tr ng-repeat="rule in rules">
+          <td header-class="text-left" data-title="'Name'" width="300">
+            <span ng-if="!currentlyEditing(rule.id,'name')">
+              {{rule.name}}
+              <i class="text-primary fa fa-pencil" ng:click="setEditingField(rule.id,'name', rule.name)"></i>
+            </span>
+            <div ng-if="currentlyEditing(rule.id,'name')">
+
+                <div class="input-group">
+                  <input class="form-control" type="text" ng-model="rule.name" >
+                  <div ng:click="saveName(rule)" class="input-group-addon btn btn-success"><i class="fa fa-floppy-o"></i></div>
+                  <div ng:click="cancelEditing($index, 'name')" class="input-group-addon btn btn-danger"><i class="fa fa-trash"></i></div>
+                </div>
+
+            </div>
+            </td>
+          <td header-class="text-left" data-title="'Created'">{{rule.created|plaintextAge}}</td>
+          <td header-class="text-left" data-title="'Active'">
+            <span ng:click="toggleActive(rule)">
+              <input
+                  bs-switch
+                  ng-model="rule.active"
+                  type="checkbox"
+                  ng-true-value="true"
+                  ng-false-value="false">
+            </span>
+          </td>
+          <td header-class="text-left" data-title="'Controls'">
+            <a ng:click="editRule(rule.name, rule.id)" class="btn btn-primary" role="button">Edit</a>
+            <a ng:click="deleteRule($index, rule)" class="btn btn-danger" role="button">Delete</a>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
