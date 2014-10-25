@@ -35,10 +35,10 @@ define [
                 floor: "mainFloor"
                 type: "doorZone"
                 location:
-                  left: 35
-                  top: 75
+                  left: 34
+                  top: 76
                 dimensions:
-                  width: "4.5%"
+                  width: "5.5%"
                   height: "1.5%"
               }
               {
@@ -49,7 +49,7 @@ define [
                 type: "doorZone"
                 location:
                   left: 49
-                  top: 41.5
+                  top: 42.5
                 dimensions:
                   width: "1%"
                   height: "6.5%"
@@ -64,7 +64,7 @@ define [
                 type: "doorZone"
                 location:
                   left: 52.5
-                  top: 7.1
+                  top: 8
                 dimensions:
                   width: "11%"
                   height: "2%"
@@ -76,8 +76,8 @@ define [
                 floor: "basement"
                 type: "doorZone"
                 location:
-                  left: 37
-                  top: 7.5
+                  left: 34
+                  top: 3
                 dimensions:
                   width: "6%"
                   height: "2%"

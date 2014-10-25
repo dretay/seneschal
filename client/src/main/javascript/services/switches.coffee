@@ -51,7 +51,7 @@ define [
                 type: "fan"
                 location:
                   left: 74
-                  top: 28
+                  top: 30
               }
               {
                 name: "Front Porch"
@@ -59,8 +59,8 @@ define [
                 floor: "mainFloor"
                 type: "light"
                 location:
-                  left: 30
-                  top: 77
+                  left: 29
+                  top: 78
               }
               {
                 name: "Front Porch"
@@ -96,8 +96,8 @@ define [
                 floor: "mainFloor"
                 type: "floodLight"
                 location:
-                  left: 61
-                  top: 1
+                  left: 62
+                  top: 2
                   rotation: 200
               }
               {
@@ -107,7 +107,7 @@ define [
                 type: "light"
                 location:
                   left: 68
-                  top: 28
+                  top: 30
               }
               {
                 name: "Drews Office"

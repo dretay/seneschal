@@ -1,110 +1,110 @@
 window.loggingLevel = 'error';
-window.debug = null
+window.debug = null;
 
 
 requirejs.config({
     paths: {
-        c: "controllers",
-        d: "directives",
-        f: "filters",
-        i: "interceptors",
-        m: "mixins",
-        p: "providers",
-        r: "resources",
-        s: "services",
-
-        //angular
-        angular: 'vendor/managed/angular/angular',
-        angularUi: 'vendor/managed/angular-bootstrap/ui-bootstrap-tpls',
-        angularRoute: 'vendor/managed/angular-route/angular-route',
-        angularResource: 'vendor/managed/angular-resource/angular-resource',
-        angularAnimate: 'vendor/managed/angular-animate/angular-animate',
-        angularTouch: 'vendor/managed/angular-touch/angular-touch',
-        angularSanitize: 'vendor/managed/angular-sanitize/angular-sanitize',
-
-        //bootstrap
-        twitterBootstrap: 'vendor/managed/bootstrap/bootstrap',
-
-        //3rd party libraries
-        angularAMD: 'vendor/managed/angularAMD/angularAMD',
-        angularNvd3Directives: 'vendor/managed/angularjs-nvd3-directives/angularjs-nvd3-directives',
-        nvd3: 'vendor/managed/nvd3/nv.d3',
-        d3: 'vendor/managed/d3/d3',
-        chroma: 'vendor/managed/chroma-js/chroma',
-        domReady: 'vendor/managed/requirejs-domready/domReady',
-        jquery: 'vendor/managed/jquery/jquery',
-        jqueryMigrate: 'vendor/unmanaged/jquery-migrate-1.2.1.min',
-        jquerySvg: 'vendor/unmanaged/jquery.svg',
-        ngBiscuit: 'vendor/managed/ngWig/ng-biscuit',
-        ngTable: 'vendor/managed/ng-table/ng-table',
-        smoothie: "vendor/managed/smoothie/smoothie",
-        underscore: 'vendor/managed/underscore-amd/underscore',
-        uuid: 'vendor/managed/node-uuid/uuid',
-
-        //utils
-        stomp: 'vendor/managed/stomp-websocket/stomp',
-        sockjs: 'vendor/managed/sockjs/sockjs',
-        moment: 'vendor/managed/moment/moment'
+      c: "controllers",
+      d: "directives",
+      f: "filters",
+      i: "interceptors",
+      m: "mixins",
+      p: "providers",
+      r: "resources",
+      s: "services",
 
 
+      angular: 'vendor/managed/angular/angular',
+      angularAMD: 'vendor/managed/angularAMD/angularAMD',
+      angularAnimate: 'vendor/managed/angular-animate/angular-animate',
+      angularBootstrapSwitch: 'vendor/managed/angular-bootstrap-switch/angular-bootstrap-switch',
+      angularNvd3Directives: 'vendor/managed/angularjs-nvd3-directives/angularjs-nvd3-directives',
+      angularResource: 'vendor/managed/angular-resource/angular-resource',
+      angularRoute: 'vendor/managed/angular-route/angular-route',
+      angularSanitize: 'vendor/managed/angular-sanitize/angular-sanitize',
+      angularTouch: 'vendor/managed/angular-touch/angular-touch',
+      angularUi: 'vendor/managed/angular-bootstrap/ui-bootstrap-tpls',
+      bootstrapSwitch: 'vendor/managed/bootstrap-switch/bootstrap-switch',
+      chroma: 'vendor/managed/chroma-js/chroma',
+      d3: 'vendor/managed/d3/d3',
+      domReady: 'vendor/managed/requirejs-domready/domReady',
+      jquery: 'vendor/managed/jquery/jquery',
+      jqueryMigrate: 'vendor/unmanaged/jquery-migrate-1.2.1.min',
+      jquerySvg: 'vendor/unmanaged/jquery.svg',
+      moment: 'vendor/managed/moment/moment',
+      ngBiscuit: 'vendor/managed/ngWig/ng-biscuit',
+      ngTable: 'vendor/managed/ng-table/ng-table',
+      nvd3: 'vendor/managed/nvd3/nv.d3',
+      smoothie: "vendor/managed/smoothie/smoothie",
+      sockjs: 'vendor/managed/sockjs/sockjs',
+      stomp: 'vendor/managed/stomp-websocket/stomp',
+      twitterBootstrap: 'vendor/managed/bootstrap/bootstrap',
+      underscore: 'vendor/managed/underscore-amd/underscore',
+      uuid: 'vendor/managed/node-uuid/uuid'
     },
     shim: {
-        'angular': {
-            exports: 'angular',
-            deps: ['jquery']
-        },
-        'angularAMD':{
-          deps: ['angular']
-        },
-        'angularAnimate': {
-            deps: ['angular']
-        },
-        'angularResource': {
-            deps: ['angular']
-        },
-        'angularRoute': {
-            deps: ['angular']
-        },
-        'angularSanitize': {
-            deps: ['angular']
-        },
-        'angularTouch': {
-            deps: ['angular']
-        },
-        'angularUi': {
-            deps: ['angular']
-        },
-        'jquerySvg': {
-            deps: ['jquery', 'jqueryMigrate']
-        },
-        'moment': {
-            exports: 'moment'
-        },
-        'ngBiscuit': {
-          deps: ['angular']
-        },
-        'angularNvd3Directives': {
-            deps: ['angular', 'nvd3']
-        },
-        'nvd3':{
-          deps: ['d3']
-        },
-        'ngTable': {
-            deps: ['angular']
-        },
-        'sockjs': {
-            exports: 'SockJS'
-        },
-        'stomp': {
-            exports: 'Stomp',
-            deps: ['sockjs']
-        },
-        'twitterBootstrap': {
-            deps: ['jquery']
-        },
-        'uuid': {
-          exports: 'uuid'
-        }
+      'angular': {
+        exports: 'angular',
+        deps: ['jquery']
+      },
+      'angularAMD':{
+        deps: ['angular']
+      },
+      'angularAnimate': {
+        deps: ['angular']
+      },
+      'angularBootstrapSwitch':{
+        deps: ['angular', 'bootstrapSwitch']
+      },
+      'angularResource': {
+        deps: ['angular']
+      },
+      'angularRoute': {
+        deps: ['angular']
+      },
+      'angularSanitize': {
+        deps: ['angular']
+      },
+      'angularTouch': {
+        deps: ['angular']
+      },
+      'angularUi': {
+        deps: ['angular']
+      },
+      'bootstrapSwitch':{
+        deps: ['jquery']
+      },
+      'jquerySvg': {
+        deps: ['jquery', 'jqueryMigrate']
+      },
+      'moment': {
+        exports: 'moment'
+      },
+      'ngBiscuit': {
+        deps: ['angular']
+      },
+      'angularNvd3Directives': {
+        deps: ['angular', 'nvd3']
+      },
+      'nvd3':{
+        deps: ['d3']
+      },
+      'ngTable': {
+        deps: ['angular']
+      },
+      'sockjs': {
+        exports: 'SockJS'
+      },
+      'stomp': {
+        exports: 'Stomp',
+        deps: ['sockjs']
+      },
+      'twitterBootstrap': {
+        deps: ['jquery']
+      },
+      'uuid': {
+        exports: 'uuid'
+      }
     },
     deps: ["app"]
 });
