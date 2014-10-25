@@ -1,0 +1,15 @@
+{
+  "name": "WemoController",
+  "version": "0.0.1",
+  "description": "MySensors Controller based on Node JS",
+  "dependencies": {
+    "amqp": "0.2.x",
+    "async": "0.9.x",
+    "coffee-script": "1.8.0",
+    "inireader": "0.3.x",
+    "underscore": "1.7.0",
+    "upnp-controlpoint": "0.0.2",
+    "winston": "0.8.0"
+
+  }
+}

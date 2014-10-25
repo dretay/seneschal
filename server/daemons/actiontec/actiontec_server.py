@@ -1,5 +1,5 @@
 import threading, Queue, time, sys
-from ActiontecDiscoveryDaemon import ActiontecDiscoveryDaemon
+# from ActiontecDiscoveryDaemon import ActiontecDiscoveryDaemon
 from RabbitmqDaemon import RabbitmqDaemon
 from TimecapsuleDiscoveryDaemon import TimecapsuleDiscoveryDaemon
 
@@ -11,24 +11,23 @@ from TimecapsuleDiscoveryDaemon import TimecapsuleDiscoveryDaemon
 if __name__ == '__main__':
   rlock = threading.RLock()
 
-  actiontecQueue = Queue.Queue()
   timecapsuleQueue = Queue.Queue()
 
   entries = []
 
-  actiontecDiscoveryDaemon = ActiontecDiscoveryDaemon(actiontecQueue)
-  actiontecDiscoveryDaemon.setDaemon(True)
-  actiontecDiscoveryDaemon.start()
+  # actiontecDiscoveryDaemon = ActiontecDiscoveryDaemon(actiontecQueue)
+  # actiontecDiscoveryDaemon.setDaemon(True)
+  # actiontecDiscoveryDaemon.start()
 
   timecapsuleDiscoveryDaemon = TimecapsuleDiscoveryDaemon(timecapsuleQueue)
   timecapsuleDiscoveryDaemon.setDaemon(True)
   timecapsuleDiscoveryDaemon.start()
 
-  rabbitmqDaemon = RabbitmqDaemon(actiontecQueue, timecapsuleQueue)
+  rabbitmqDaemon = RabbitmqDaemon(timecapsuleQueue)
   rabbitmqDaemon.setDaemon(True)
   rabbitmqDaemon.start()
 
   while threading.active_count() > 0:
     time.sleep(0.1)
-    if actiontecDiscoveryDaemon.isAlive() is not True or rabbitmqDaemon.isAlive() is not True or timecapsuleDiscoveryDaemon.isAlive() is not True:
+    if rabbitmqDaemon.isAlive() is not True or timecapsuleDiscoveryDaemon.isAlive() is not True:
       sys.exit()
