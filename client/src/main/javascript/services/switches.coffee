@@ -18,7 +18,7 @@ define [
             filteredLights = _.filter oldData, (light)->
               rawData.name == light.name
             for light in filteredLights
-              light.status = if rawData.status == "on" then true else false
+              light.status = if rawData.status == "0" then false else true
 
             #hum... something to look into... if you don't strip out all the messaging shit it explodes
             return _.map oldData, (record)->
@@ -139,16 +139,17 @@ define [
             ]
 
             for result in rawData
-              filteredLights = _.filter lights, (light)->
-                result.name == light.name
-              for light in filteredLights
-                light.status = Boolean(result.status)
+              switchInstances = _.where(lights, {name: result.name})
+              unless _.isArray switchInstances then switchInstances = [switchInstances]
+              for switchInstance in switchInstances
+                switchInstance.status = if result.status == "0" then false else true
+
 
             return lights
 
       update:
         inbound: "wemo.lights"
-        outbound_rpc: "/exchange/lights.cmd"
+        outbound: "/exchange/lights.cmd"
         outboundTransform: (query, oldEntity)->
           unless oldEntity.status
             operation: 'toggle_on'
