@@ -17,7 +17,12 @@ define [
       $scope.$watch 'rule', (rule)->
         unless _.isEmpty rule
           if _.isString(rule.data_xml) and rule.data_xml.length > 0
-            Blockly.Xml.domToWorkspace(Blockly.mainWorkspace,Blockly.Xml.textToDom(rule.data_xml))
+            loadData = ->
+              if Blockly?
+                Blockly.Xml.domToWorkspace(Blockly.mainWorkspace,Blockly.Xml.textToDom(rule.data_xml))
+              else
+                setTimeout loadData, 100
+            setTimeout loadData, 100
       , true
 
       $scope.save = ->
