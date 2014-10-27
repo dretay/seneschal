@@ -26,6 +26,8 @@ define [
             oldData.push rawData
             return oldData
           else
+            if _.isString(rawData.data) and rawData.data.length > 0
+              rawData.data = JSON.parse rawData.data
             return rawData
 
       save:
@@ -51,7 +53,6 @@ define [
           else
             cmd: 'update_rule_data'
             ruleId: params.ruleId
-            json: params.json
-            xml: params.xml
+            data: params.data
 
   ]

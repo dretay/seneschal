@@ -68,6 +68,5 @@ CREATE TABLE rules (
      name          TEXT,
      active        BOOLEAN DEFAULT TRUE,
      created       TIMESTAMP DEFAULT current_timestamp,
-     data_xml      TEXT,
-     data_json     TEXT
+     data          TEXT
 );

@@ -2,7 +2,14 @@
   {{ruleName}}
 </div>
 <div class="modal-body">
-  <iframe style="height: calc(100vh - 25em);width: 100%"src="/html/blockly_frame.html"></iframe>
+  <div style="height: calc(100vh - 20em)"
+       ui-ace="{
+          mode: 'coffee',
+          theme:'twilight',
+          onLoad: aceLoaded,
+          onChange: aceChanged
+        }" ng-model="rule.data">
+  </div>
 </div>
 <div class="modal-footer">
   <button class="btn btn-warning" ng-click="cancel()">Cancel</button>

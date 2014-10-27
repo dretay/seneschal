@@ -14,23 +14,29 @@ define [
 
       $scope.rule = rules.query({ruleId: ruleId},{isArray:false, scope:$scope})
 
-      $scope.$watch 'rule', (rule)->
-        unless _.isEmpty rule
-          if _.isString(rule.data_xml) and rule.data_xml.length > 0
-            loadData = ->
-              if Blockly?
-                Blockly.Xml.domToWorkspace(Blockly.mainWorkspace,Blockly.Xml.textToDom(rule.data_xml))
-              else
-                setTimeout loadData, 100
-            setTimeout loadData, 100
-      , true
+      $scope.aceLoaded = (_editor)->
+#        $scope.aceModel = "one" #$scope.rule.data
+
+      $scope.aceChanged = (e)->
+
+      $scope.aceModel = "beep"
+
+#      $scope.$watch 'rule', (rule)->
+#        unless _.isEmpty rule
+#          if _.isString(rule.data_xml) and rule.data_xml.length > 0
+#            loadData = ->
+#              if Blockly?
+#                Blockly.Xml.domToWorkspace(Blockly.mainWorkspace,Blockly.Xml.textToDom(rule.data_xml))
+#              else
+#                setTimeout loadData, 100
+#            setTimeout loadData, 100
+#      , true
 
       $scope.save = ->
 
         $scope.rule.update
           ruleId: $scope.ruleId
-          json: JSON.stringify Blockly.JavaScript.workspaceToCode()
-          xml: Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace))
+          data: JSON.stringify $scope.rule.data
         $modalInstance.close()
 
       $scope.cancel = ->

@@ -142,7 +142,7 @@ define [
               switchInstances = _.where(lights, {name: result.name})
               unless _.isArray switchInstances then switchInstances = [switchInstances]
               for switchInstance in switchInstances
-                switchInstance.status = if result.status == "0" then false else true
+                switchInstance.status = result.status
 
 
             return lights

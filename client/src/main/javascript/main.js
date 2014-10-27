@@ -13,7 +13,7 @@ requirejs.config({
       r: "resources",
       s: "services",
 
-
+      ace: 'vendor/managed/ace-builds/ace',
       angular: 'vendor/managed/angular/angular',
       angularAMD: 'vendor/managed/angularAMD/angularAMD',
       angularAnimate: 'vendor/managed/angular-animate/angular-animate',
@@ -24,6 +24,7 @@ requirejs.config({
       angularSanitize: 'vendor/managed/angular-sanitize/angular-sanitize',
       angularTouch: 'vendor/managed/angular-touch/angular-touch',
       angularUi: 'vendor/managed/angular-bootstrap/ui-bootstrap-tpls',
+      angularUiAce: 'vendor/managed/angular-ui-ace/ui-ace',
       bootstrapSwitch: 'vendor/managed/bootstrap-switch/bootstrap-switch',
       chroma: 'vendor/managed/chroma-js/chroma',
       d3: 'vendor/managed/d3/d3',
@@ -70,6 +71,9 @@ requirejs.config({
       },
       'angularUi': {
         deps: ['angular']
+      },
+      'angularUiAce':{
+        deps: ['angular','ace']
       },
       'bootstrapSwitch':{
         deps: ['jquery']
