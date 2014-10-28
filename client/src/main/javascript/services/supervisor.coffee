@@ -27,7 +27,7 @@ define [
 
       update:
         inbound: "supervisor.cmd"
-        outbound: "/exchange/system.cmd"
+        outbound_rpc: "/exchange/system.cmd"
         outboundTransform: (rawData, entity)->
           operation: rawData.operation
           processname: entity.name

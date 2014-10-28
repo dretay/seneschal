@@ -22,7 +22,7 @@ define [
         modalInstance = $modal.open AlarmModal $scope.keypad, "sm"
 
         modalInstance.result.then (command)->
-          webStomp.client.send "/exchange/alarm.cmd", null, command
+          webStomp.client.send "/exchange/eyezon.cmd", null, command
         , ->
           $log.info('Modal dismissed at: ' + new Date());
 

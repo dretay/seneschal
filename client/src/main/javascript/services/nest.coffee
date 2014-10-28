@@ -11,8 +11,8 @@ define [
   services.factory 'nest', ['webStompResource', (Resource)->
     new Resource
       get:
-        subscription: "/exchange/thermostat.status/fanout"
-        outbound_rpc: "/exchange/thermostat.cmd"
+        subscription: "/exchange/nest.status/fanout"
+        outbound_rpc: "/exchange/nest.cmd"
         outboundTransform: (rawData)->
           cmd: "snapshot"
         inboundTransform: (rawData, oldData)->

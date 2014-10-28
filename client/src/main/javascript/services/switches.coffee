@@ -9,8 +9,8 @@ define [
   services.factory 'switches', ['webStompResource', (Resource)->
     new Resource
       get:
-        outbound_rpc: "/exchange/lights.cmd"
-        subscription: "/exchange/lights.status/fanout"
+        outbound_rpc: "/exchange/wemo.cmd"
+        subscription: "/exchange/wemo.status/fanout"
         outboundTransform: (rawData)->
           operation: 'list_switches'
         inboundTransform: (rawData, oldData)->
@@ -149,7 +149,7 @@ define [
 
       update:
         inbound: "wemo.lights"
-        outbound: "/exchange/lights.cmd"
+        outbound: "/exchange/wemo.cmd"
         outboundTransform: (query, oldEntity)->
           unless oldEntity.status
             operation: 'toggle_on'

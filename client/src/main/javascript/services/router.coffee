@@ -11,8 +11,8 @@ define [
   services.factory 'router', ['webStompResource', (Resource)->
     new Resource
       get:
-        subscription: "/exchange/router.status/fanout"
-        outbound: "/exchange/router.cmd"
+        subscription: "/exchange/actiontec.status/fanout"
+        outbound_rpc: "/exchange/actiontec.cmd"
         outboundTransform: ->
           operation: "list_mac_addresses"
         inboundTransform: (data)->
