@@ -10,7 +10,7 @@ class RabbitmqDaemon(threading.Thread):
     self.rabbitmqPassword = self.settings.get('rabbitmq', 'password')
     self.rabbitmqHost = self.settings.get('rabbitmq', 'host')
     self.rmqConn = Connection('amqp://'+self.rabbitmqUsername+':'+self.rabbitmqPassword+'@'+self.rabbitmqHost+':5672//')
-    self.statusProducer = Producer(self.rmqConn.channel(), exchange = Exchange('router.status', type='fanout'), serializer="json")
+    self.statusProducer = Producer(self.rmqConn.channel(), exchange = Exchange('actiontec.status', type='fanout'), serializer="json")
     self.timecapsuleEntries = {}
     self.discoveredHosts = {}
     self.timecapsuleQueue = timecapsuleQueue
@@ -39,7 +39,7 @@ class RabbitmqDaemon(threading.Thread):
 
     queue = kombu.Queue(
       name="actiontec.cmd",
-      exchange=Exchange('router.cmd'),
+      exchange=Exchange('actiontec.cmd'),
       channel=self.rmqConn.channel(),
       durable=False,
       exclusive=False,

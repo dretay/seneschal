@@ -23,7 +23,7 @@ connection.on('error', function (exception) {
   });
 
 connection.addListener('ready', function () {
-  connection.exchange("thermostat.status",{type: "fanout", durable: true, autoDelete: false}, function(fanoutExchange){
+  connection.exchange("nest.status",{type: "fanout", durable: true, autoDelete: false}, function(fanoutExchange){
     ref.on('value', function(newSnapshot) {
       snapshot = newSnapshot;
       fanoutExchange.publish("", newSnapshot.val());
@@ -32,7 +32,7 @@ connection.addListener('ready', function () {
   });
 
   connection.queue('nest.cmd', function (q) {
-    connection.exchange("thermostat.cmd",{type: "direct", durable: true, autoDelete: false}, function(directExchange){
+    connection.exchange("nest.cmd",{type: "direct", durable: true, autoDelete: false}, function(directExchange){
       q.bind(directExchange, '', function(){
         q.subscribe(function (message, headers, deliveryInfo, messageObject) {
           message = JSON.parse(message.data.toString());

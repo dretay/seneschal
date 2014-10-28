@@ -65,7 +65,7 @@ if __name__ == '__main__':
       }
     ])
     rpcReply(result, args)
-    list_processes()
+    list_processes(args=args)
 
   def read_log(message=None, args=None):
     processname = message['processname']

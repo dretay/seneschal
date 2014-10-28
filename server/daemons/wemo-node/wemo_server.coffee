@@ -13,7 +13,10 @@ class WemoControlleePlus extends wemo.WemoControllee
   getBinaryState: -> @binaryState
   storeBinaryState: (binaryState)->
     log.info "Storing new binary state for #{@device.friendlyName}: #{binaryState}"
-    @binaryState = binaryState
+    if binaryState == "1" or binaryState == 1 or binaryState == true
+      @binaryState = true
+    else
+      @binaryState = false
   retrieveBinaryState: (callback)->
     @eventService.callAction "GetBinaryState", {}, (err, result)->
       if err
@@ -37,9 +40,9 @@ connectToBroker = (switches, callback)->
     url: "amqp://"+rabbitmqUsername+":"+rabbitmqPassword+"@"+rabbitmqHost+":5672"
   connection.addListener 'ready', ->
     log.info("successfully connected to amqp broker")
-    connection.exchange "lights.status",{type: "fanout", durable: true, autoDelete: false}, (fanoutExchange)->
+    connection.exchange "wemo.status",{type: "fanout", durable: true, autoDelete: false}, (fanoutExchange)->
       connection.queue 'wemo.cmd',  (q)->
-        connection.exchange "lights.cmd",{type: "direct", durable: true, autoDelete: false}, (directExchange)->
+        connection.exchange "wemo.cmd",{type: "direct", durable: true, autoDelete: false}, (directExchange)->
             q.bind directExchange, '', ->
               log.info("amqp connections established")
               #setup AMQP listeners

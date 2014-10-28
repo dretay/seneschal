@@ -10,7 +10,7 @@ class RabbitmqDaemon(threading.Thread):
     self.rabbitmqPassword = self.settings.get('rabbitmq', 'password')
     self.rabbitmqHost = self.settings.get('rabbitmq', 'host')
     self.conn = Connection('amqp://'+self.rabbitmqUsername+':'+self.rabbitmqPassword+'@'+self.rabbitmqHost+':5672//')
-    self.producer = Producer(self.conn.channel(), exchange = Exchange('alarm.status', type='fanout'), serializer="json")
+    self.producer = Producer(self.conn.channel(), exchange = Exchange('eyezon.status', type='fanout'), serializer="json")
     self.rpcProducer= Producer(self.conn.channel(), serializer="json")
 
     self.cmd_q = cmd_q or Queue.Queue()
@@ -18,7 +18,7 @@ class RabbitmqDaemon(threading.Thread):
 
     queue = kombu.Queue(
         name="eyezon.cmd",
-        exchange=Exchange('alarm.cmd'),
+        exchange=Exchange('eyezon.cmd'),
         channel=self.conn.channel(),
         durable=False,
         exclusive=False,
@@ -64,7 +64,7 @@ class RabbitmqDaemon(threading.Thread):
       self.alarmCache["realtimeCIDEvent"] = event
     elif event['name'] == "Zone Timer Dump":
       self.alarmCache["zoneTimerDump"] = event
-    self.producer.publish(exchange = 'alarm.status', routing_key = "", body = event)
+    self.producer.publish(exchange = 'eyezon.status', routing_key = "", body = event)
 
   def run(self):
     while 1:
