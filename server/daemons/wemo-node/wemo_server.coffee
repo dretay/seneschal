@@ -82,7 +82,7 @@ setupUpnpControlPoint = (switches, deviceListener, callback)->
   cp = new UpnpControlPoint()
   cp.on "device", (device)->
     if device.deviceType == wemo.WemoControllee.deviceType || device.deviceType == "urn:Belkin:device:lightswitch:1"
-      log.info "Found "+device.friendlyName
+      log.info "Discovered switch "+device.friendlyName
       wemoSwitch = new WemoControlleePlus(device)
       wemoSwitch.retrieveBinaryState (err, binaryState)->
         if not err
@@ -96,11 +96,17 @@ setupUpnpControlPoint = (switches, deviceListener, callback)->
     else
       console.log("Ignoring discovered device "+device.friendlyName)
   cp.search()
+  setInterval ->
+    console.log "Searching for any new devices"
+    cp.search()
+  , 60000
 
-  #wait 10 seconds then continue startup
+  #wait 5 seconds then continue startup
   setTimeout (->
     log.info("upnp control point discovery finished")
-    callback null, switches), 10000
+    log.info "\tcurrently watching #{switches.length} switches"
+    _.each switches, (wemoSwitch)-> log.info wemoSwitch.device.friendlyName
+    callback null, switches), 5000
 
 async.waterfall [injectParams, connectToBroker,setupUpnpControlPoint], (err,config)->
   if err

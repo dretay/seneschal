@@ -3,6 +3,7 @@ amqp = require 'amqp'
 rules_db = require "./rules_db"
 log = require "winston"
 async = require 'async'
+rulesEngine = require "./engine"
 
 
 #connect to the amqp broker
@@ -14,21 +15,11 @@ connectToBroker= (callback)->
   rabbitmqHost = parser.param 'rabbitmq.host'
   connection = amqp.createConnection
     url: "amqp://#{rabbitmqUsername}:#{rabbitmqPassword}@#{rabbitmqHost}:5672"
-  connection.addListener 'ready', ->
+  connection.on 'ready', ->
     log.info "successfully connected to amqp broker"
-    async.waterfall [
-      (callback)->
-        callback null, connection
-      setupBindings
-      setupSubscriptions
-    ],(err,bindings)->
-      if err
-        log.error err
-      else
-        log.info "completed binding and subscribing to broker"
-        callback null,bindings
+    callback null, connection
 
-setupSubscriptions = (bindings, callback)->
+setupCommandQueue = (connection, bindings, callback)->
   bindings['rules']['commandQueue'].subscribe (message, headers, deliveryInfo, messageObject)->
     message = JSON.parse message.data.toString()
     if message.cmd
@@ -38,53 +29,57 @@ setupSubscriptions = (bindings, callback)->
         if err
           console.error "Unable to retrieve rules: #{err}"
         else
-          bindings['connection'].publish deliveryInfo.replyTo, rules
+          connection.publish deliveryInfo.replyTo, rules
 
     else if message.cmd == "get_rule"
       rules_db.getRule message.ruleId, (err, rule)->
         if err
           log.error "Unable to retrieve rules: #{err}"
         else
-          bindings['connection'].publish deliveryInfo.replyTo, rule
+          connection.publish deliveryInfo.replyTo, rule
 
     else if message.cmd == "delete_rule"
       rules_db.deleteRule message.ruleId, (err, rule)->
         if err
           log.error "Unable to delete rule: #{err}"
         else
-          bindings['connection'].publish deliveryInfo.replyTo,{}
+          connection.publish deliveryInfo.replyTo,{}
 
     else if message.cmd == "create_rule"
       rules_db.createRule (err, newRule)->
         if err
           log.error "Unable to create new rule: #{err}"
         else
-          fanoutExchange.publish "", newRule
-          bindings['connection'].publish deliveryInfo.replyTo, {}
+          bindings['rules']['statusExchange'].publish "", newRule
+          connection.publish deliveryInfo.replyTo, {}
 
     else if message.cmd == "update_rule_name"
       rules_db.updateRuleName message.ruleId, message.name, (err, rule)->
         if err
           log.error "Unable to update rule name: #{err}"
         else
-          bindings['connection'].publish deliveryInfo.replyTo, {}
+          connection.publish deliveryInfo.replyTo, {}
 
-    else if message.cmd == "update_rule_active"
-      rules_db.updateRuleActive message.ruleId, message.active, (err, rule)->
+    else if message.cmd == "toggle_rule_active"
+      rules_db.toggleRuleActive message.ruleId, (err, rule)->
         if err
           log.error "Unable to update rule active/inactive: #{err}"
         else
-          bindings['connection'].publish deliveryInfo.replyTo, {}
+          rulesEngine.reloadRules (err)->
+            if err
+              log.error "Unable to reload rules"
+            else
+              connection.publish deliveryInfo.replyTo, {}
 
     else if message.cmd == "update_rule_data"
       rules_db.updateRuleData message.ruleId, message.data, (err, rule)->
         if err
           log.error "Unable to update rule data: #{err}"
         else
-          bindings['connection'].publish deliveryInfo.replyTo, {}
+          connection.publish deliveryInfo.replyTo, {}
     else
       log.info "Unrecognized message: #{message}"
-  callback null, bindings
+  callback null, connection, bindings
 
 setupBinding = (connection, name, bindCmdQueue, bindings, callback)->
   async.waterfall [
@@ -95,6 +90,12 @@ setupBinding = (connection, name, bindCmdQueue, bindings, callback)->
         log.info "bound to exchange #{name}.status successfully"
         bindings[name]= {statusExchange: fanoutExchange}
         callback null, bindings
+    (bindings, callback)->
+      connection.queue '', (q)->
+        q.bind bindings[name]['statusExchange'], '', ->
+          log.info "registered status queue and bound to exchange #{name}.status successfully"
+          bindings[name]['statusQueue']= q
+          callback null, bindings
     (bindings, callback)->
       if bindCmdQueue
         connection.queue "#{name}.cmd", (q)->
@@ -122,20 +123,23 @@ setupBinding = (connection, name, bindCmdQueue, bindings, callback)->
       callback null, bindings
 
 setupBindings = (connection, callback)->
+  bindings = {}
   async.waterfall [
     (callback)->
-      callback null, {connection: connection}
+      callback null, bindings: {}
     _.bind setupBinding, @, connection, "rules", true
-    _.bind setupBinding, @, connection, "mysensors", false
-    _.bind setupBinding, @, connection, "wemo", false
-    _.bind setupBinding, @, connection, "nest", false
-    _.bind setupBinding, @, connection, "garage", false
     _.bind setupBinding, @, connection, "actiontec", false
     _.bind setupBinding, @, connection, "eyezon", false
+    _.bind setupBinding, @, connection, "garage", false
+    _.bind setupBinding, @, connection, "mysensors", false
+    _.bind setupBinding, @, connection, "nest", false
+    _.bind setupBinding, @, connection, "wemo", false
   ],(err,bindings)->
     if err
       callback err
     else
-      callback null, bindings
+      callback null, connection, bindings
 
 exports.connectToBroker = connectToBroker
+exports.setupBindings = setupBindings
+exports.setupCommandQueue = setupCommandQueue

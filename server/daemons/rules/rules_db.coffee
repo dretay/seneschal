@@ -28,15 +28,12 @@ deleteRule = (id, callback)->
     log.error "Failed to delete rule #{id}: #{err}"
     callback err
 
-updateRuleActive = (id, active, callback)->
-  q = Knex 'rules'
-  q.where 'id', '=', id
-  q.update
-    active: active
+toggleRuleActive = (id, callback)->
+  q = Knex.raw("update rules SET active = NOT active where id = ?", id)
   q.then ->
     callback null
   , (err)->
-    log.error "Failed to update rule #{id}'s active / inactive: #{err}"
+    log.error "Failed to toggle rule #{id}'s active / inactive: #{err}"
     callback err
 
 updateRuleName = (id, name, callback)->
@@ -95,7 +92,7 @@ getAllActiveRuleData = (callback)->
 
 exports.createRule = createRule
 exports.deleteRule = deleteRule
-exports.updateRuleActive = updateRuleActive
+exports.toggleRuleActive = toggleRuleActive
 exports.updateRuleName = updateRuleName
 exports.updateRuleData = updateRuleData
 exports.getAllActiveRuleData = getAllActiveRuleData

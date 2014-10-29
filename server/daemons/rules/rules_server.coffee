@@ -6,6 +6,8 @@ log = require "winston"
 
 async.waterfall [
   rabbitmq.connectToBroker
-  engine.compileRules
+  rabbitmq.setupBindings
+  rabbitmq.setupCommandQueue
+  engine.executeActiveRules
   ],(err,config)->
   if err then log.error err else log.info "server startup complete"
