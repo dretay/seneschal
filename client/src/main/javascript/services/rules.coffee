@@ -47,9 +47,8 @@ define [
             name: rule.name
             ruleId: rule.id
           else if _.isString(params) and params == "active"
-            cmd: 'update_rule_active'
+            cmd: 'toggle_rule_active'
             ruleId: rule.id
-            active: !rule.active
           else
             cmd: 'update_rule_data'
             ruleId: params.ruleId
