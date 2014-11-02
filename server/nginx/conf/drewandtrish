@@ -34,7 +34,7 @@ keepalive_timeout 65;
 		}
     location / {
       access_log off;
-      add_header 'Cache-Control' 'no-cache, no-store, max-age=0, must-revalidate';
+      #add_header 'Cache-Control' 'no-cache, no-store, max-age=0, must-revalidate';
       root /home/pi/dev/seneschal/client/build/resources/main;
 		}
     location /login {

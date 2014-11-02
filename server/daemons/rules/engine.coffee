@@ -5,8 +5,11 @@ coffee = require 'coffee-script'
 rabbitmq = require "./rabbitmq"
 async = require 'async'
 
-subscriptions = []
-executeActiveRules = (amqpConnection, bindings, callback)->
+amqpConnection = null
+bindings = null
+executeActiveRules = (amqpConnectionIn, bindingsIn, callback)->
+  amqpConnection = amqpConnectionIn
+  bindings = bindingsIn
   log.info "Starting dynamic rule execution"
   rules_db.getAllActiveRuleData (err, rules)->
     if err
@@ -21,20 +24,16 @@ executeActiveRules = (amqpConnection, bindings, callback)->
           ruleList.push _.bind (new Function "context", "callback", ruleJavascript), @,
             amqpConnection: amqpConnection
             bindings: bindings
+            _: _
         else
           log.info "Skipping rule #{rule.name}"
         async.parallel ruleList, (err,results)->
-          for result in results
-            if _.isArray result
-              subscriptions.concat result
-            else if _.isObject result
-              subscriptions.push result
           callback null, null
 
 reloadRules = (callback)->
-  for subscription in subscriptions
-    subscription.queue.unsubscribe subscription.id
-  executeActiveRules null,null, callback
+
+  bindings.handlers[key] = [] for key,value of bindings.handlers
+  executeActiveRules amqpConnection, bindings, callback
 
 exports.executeActiveRules = executeActiveRules
 exports.reloadRules = reloadRules
