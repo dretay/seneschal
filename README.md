@@ -7,7 +7,12 @@ Seneschal(n):
 Seneschal is a polyglot collection of Python and NodeJS daemons that communicate with each other over RabbitMQ. The front end is an AngularJS-based web page hosted on an OpenResty server that interacts with the back-end daemons over Web STOMP.
 
 ##Screenshots
-In case you are curious what this all looks like, I'll try to keep these screens as up-to-date as possible. The basic idea is that you can access all the devices on in your home through a bird's eye [floorplan] of your house. You can also ask interesting questions by querying [historical data] that is stored and indexed by the server.  You can even check on the server itself through real time [system stats] and a page that allows you to [toggle daemons].
+In case you are curious what this all looks like, I'll try to keep these screens as up-to-date as possible.
+The basic idea is that you can access all the devices on in your home through a bird's eye [floorplan] of your house.
+You can click on things like [cameras] or [thermostats] to bring up a control dialog.
+You can also ask interesting questions by querying [historical data] that is stored and indexed by the server.
+You can even check on the server itself through real time [system stats] and a page that allows you to [toggle daemons].
+Finally because everything is driven over RabbitMQ you can write your own [rules] in Coffeescript to react to events occuring in the house.
 
 ##Supported Devices
 - [Belkin WEMO Switches]
@@ -41,6 +46,9 @@ There are several projects currently conflated into this repository. Major piece
 
 [floorplan]:https://raw.github.com/dretay/seneschal/master/imgs/main_floor_controls.png
 [historical data]:https://raw.github.com/dretay/seneschal/master/imgs/sensor_history.png
+[thermostats]:https://raw.github.com/dretay/seneschal/master/imgs/thermostat.png
+[cameras]:https://raw.github.com/dretay/seneschal/master/imgs/camera.png
+[rules]:https://raw.github.com/dretay/seneschal/master/imgs/rules_example.png
 [system stats]:https://raw.github.com/dretay/seneschal/master/imgs/system_stats.png
 [toggle daemons]:https://raw.github.com/dretay/seneschal/master/imgs/supervisord_control.png
 [Belkin WEMO Switches]:http://www.belkin.com/us/Products/home-automation/c/wemo-home-automation/
