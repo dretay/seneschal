@@ -33,7 +33,7 @@ large_client_header_buffers 2 1k;
 		}
     location / {
       access_log off;
-      add_header 'Cache-Control' 'no-cache, no-store, max-age=0, must-revalidate';
+      #add_header 'Cache-Control' 'no-cache, no-store, max-age=0, must-revalidate';
       root /home/pi/dev/seneschal/client/build/resources/main;
 		}
     location /login {

@@ -47,8 +47,8 @@ connectToBroker = (switches, callback)->
               log.info("amqp connections established")
               #setup AMQP listeners
               q.subscribe (message, headers, deliveryInfo, messageObject)->
+                log.info("received amqp command: #{message.data.toString()}")
                 message = JSON.parse(message.data.toString())
-                log.info("received amqp command: #{message.operation}")
                 if message.operation == "list_switches"
                   results = _.map switches, (wemoSwitch)->
                     name: wemoSwitch.device.friendlyName
@@ -99,6 +99,12 @@ setupUpnpControlPoint = (switches, deviceListener, callback)->
   setInterval ->
     console.log "Searching for any new devices"
     cp.search()
+    #wait 5 seconds then continue startup
+    setTimeout (->
+      log.info("upnp control point discovery finished")
+      log.info "\tcurrently watching #{switches.length} switches"
+      _.each switches, (wemoSwitch)-> log.info wemoSwitch.device.friendlyName
+      callback null, switches), 5000
   , 60000
 
   #wait 5 seconds then continue startup

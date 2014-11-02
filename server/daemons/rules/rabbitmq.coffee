@@ -18,6 +18,9 @@ connectToBroker= (callback)->
   connection.on 'ready', ->
     log.info "successfully connected to amqp broker"
     callback null, connection
+  connection.on 'error', (exception)->
+    log.error "AMQP connection error: #{exception.message}"
+
 
 setupCommandQueue = (connection, bindings, callback)->
   bindings['rules']['commandQueue'].subscribe (message, headers, deliveryInfo, messageObject)->
@@ -74,9 +77,13 @@ setupCommandQueue = (connection, bindings, callback)->
     else if message.cmd == "update_rule_data"
       rules_db.updateRuleData message.ruleId, message.data, (err, rule)->
         if err
-          log.error "Unable to update rule data: #{err}"
+          log.error "Unable to update rule active/inactive: #{err}"
         else
-          connection.publish deliveryInfo.replyTo, {}
+          rulesEngine.reloadRules (err)->
+            if err
+              log.error "Unable to update rule data: #{err}"
+            else
+              connection.publish deliveryInfo.replyTo, {}
     else
       log.info "Unrecognized message: #{message}"
   callback null, connection, bindings
@@ -93,6 +100,10 @@ setupBinding = (connection, name, bindCmdQueue, bindings, callback)->
     (bindings, callback)->
       connection.queue '', (q)->
         q.bind bindings[name]['statusExchange'], '', ->
+          bindings['handlers'][name] = []
+          q.subscribe (message, headers, deliveryInfo, messageObject)->
+            for handler in bindings['handlers'][name]
+              handler(message, headers, deliveryInfo, messageObject)
           log.info "registered status queue and bound to exchange #{name}.status successfully"
           bindings[name]['statusQueue']= q
           callback null, bindings
@@ -123,10 +134,9 @@ setupBinding = (connection, name, bindCmdQueue, bindings, callback)->
       callback null, bindings
 
 setupBindings = (connection, callback)->
-  bindings = {}
   async.waterfall [
     (callback)->
-      callback null, bindings: {}
+      callback null, {handlers: {}}
     _.bind setupBinding, @, connection, "rules", true
     _.bind setupBinding, @, connection, "actiontec", false
     _.bind setupBinding, @, connection, "eyezon", false
