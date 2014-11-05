@@ -1,6 +1,7 @@
-from dns import resolver,reversename
-from python_actiontec.actiontec.actiontec import Actiontec
-import threading, json, time, ConfigParser, datetime, sys,os,netsnmp, re
+from actiontec.connection import ActionTec
+from actiontec.cmd import cmd_conf
+import actiontec.confparser as confparser
+import threading, time, ConfigParser, re
 
 class ActiontecDiscoveryDaemon(threading.Thread):
   def __init__(self, discoveryQueue):
@@ -10,31 +11,23 @@ class ActiontecDiscoveryDaemon(threading.Thread):
     self.actiontecPassword = self.settings.get('actiontec', 'password')
     self.entries = []
     self.discoveryQueue = discoveryQueue
-    self.routerConn = Actiontec(password=self.actiontecPassword)
+    self.routerConn = ActionTec('192.168.1.1', 'admin', 'peanut')
+    self.routerConn.connect()
 
 
   def run(self):
     def dump_mac_addresses():
-      result = self.routerConn.run('firewall mac_cache_dump')
-      pattern = "@\d+\s+ip:\s+(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\s+mac:\s(\w+:\w+:\w+:\w+:\w+:\w+)\s+valid for:\s+(-?\d+)\ssec"
-
-      regex = re.compile(pattern)
+      res,out = at.run("conf print dev/br0/dhcps/lease")
+      parser = confparser.Parser()
+      foo = parser.parse(out)
       entries = {}
-      for match in regex.finditer(result):
-        hostname = "Unknown"
-        ip = match.group(1)
-        mac = match.group(2)
-        secs  = match.group(3)
-        try:
-          addr=reversename.from_address(ip)
-          hostname = str(resolver.query(addr,"PTR")[0])
-        except resolver.NXDOMAIN:
-          None
-        entries[mac.upper()] = {
-          "hostname": hostname,
-          "ip": ip,
-          "secs": secs
-        }
+      for property,value in foo['lease'].iteritems():
+        if value.has_key('hardware_mac'):
+          entries[value['hardware_mac']] = {
+            "hostname": value['hostname'],
+            "ip": value['ip'],
+          }
+
       print "Actiontec discovery finished; discovered",len(entries),"hosts"
       sys.stdout.flush()
       return entries

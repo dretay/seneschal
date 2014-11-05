@@ -1,5 +1,5 @@
 import threading, Queue, time, sys
-# from ActiontecDiscoveryDaemon import ActiontecDiscoveryDaemon
+from ActiontecDiscoveryDaemon import ActiontecDiscoveryDaemon
 from RabbitmqDaemon import RabbitmqDaemon
 from TimecapsuleDiscoveryDaemon import TimecapsuleDiscoveryDaemon
 
@@ -15,15 +15,15 @@ if __name__ == '__main__':
 
   entries = []
 
-  # actiontecDiscoveryDaemon = ActiontecDiscoveryDaemon(actiontecQueue)
-  # actiontecDiscoveryDaemon.setDaemon(True)
-  # actiontecDiscoveryDaemon.start()
+  actiontecDiscoveryDaemon = ActiontecDiscoveryDaemon(actiontecQueue)
+  actiontecDiscoveryDaemon.setDaemon(True)
+  actiontecDiscoveryDaemon.start()
 
   timecapsuleDiscoveryDaemon = TimecapsuleDiscoveryDaemon(timecapsuleQueue)
   timecapsuleDiscoveryDaemon.setDaemon(True)
   timecapsuleDiscoveryDaemon.start()
 
-  rabbitmqDaemon = RabbitmqDaemon(timecapsuleQueue)
+  rabbitmqDaemon = RabbitmqDaemon(actiontecQueue, timecapsuleQueue)
   rabbitmqDaemon.setDaemon(True)
   rabbitmqDaemon.start()
 

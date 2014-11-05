@@ -193,15 +193,16 @@ function getAllSensors(callback){
 }
 function getNewestReadings(callback){
   var q = Knex();
-  q.select('nodes.id','nodes.sketchname','sensortypes.shortname','R1.real_value','R1.created','R1.sensorindex');
-  q.from('readings as R1')
-  q.innerJoin('nodes','R1.node','nodes.id');
+  q.select('nodes.id', 'nodes.sketchname', 'sensortypes.shortname', 'readings.real_value', 'readings.created', 'readings.sensorindex');
+  q.from('readings')
+  q.innerJoin('nodes','readings.node','nodes.id');
   q.innerJoin('sensors', function () {
-    this.on('R1.sensorindex', '=', 'sensors.sensorindex')
-        .andOn('R1.node', '=', 'sensors.node');
+    this.on('readings.sensorindex', '=', 'sensors.sensorindex')
+        .andOn('readings.node', '=', 'sensors.node');
   });
   q.innerJoin('sensortypes','sensors.sensortype','sensortypes.id');
-  q.whereRaw('"R1".created = (select max(created) from readings where node="R1".node and sensorindex="R1".sensorindex)');
+  q.joinRaw('inner join (select node, sensorindex, MAX(created) as created from readings group by node,sensorindex) latest on readings.node = latest.node and readings.sensorindex = latest.sensorindex and readings.created = latest.created');
+  console.log(q.toSQL());
   q.then(function(readings){
     callback(null,readings);
   },function(err){

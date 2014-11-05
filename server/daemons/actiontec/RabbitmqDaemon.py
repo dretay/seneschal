@@ -2,7 +2,7 @@ from kombu import Connection, Producer, Exchange, Consumer, common as kombucommo
 import threading, json, time,  sys, ConfigParser, re, socket, Queue, kombu, socket, datetime, dhcpd
 
 class RabbitmqDaemon(threading.Thread):
-  def __init__(self, timecapsuleQueue):
+  def __init__(self, actiontecQueue, timecapsuleQueue):
     threading.Thread.__init__(self)
     self.settings = ConfigParser.ConfigParser()
     self.settings.read('../config/site.ini')
@@ -14,6 +14,7 @@ class RabbitmqDaemon(threading.Thread):
     self.timecapsuleEntries = {}
     self.discoveredHosts = {}
     self.timecapsuleQueue = timecapsuleQueue
+    self.actiontecQueue = actiontecQueue
 
   def run(self):
     def list_mac_addresses(message=None, args=None):
@@ -50,6 +51,9 @@ class RabbitmqDaemon(threading.Thread):
     while 1:
 
       try:
+        self.actiontecEntries = self.actiontecQueue.get(True, 0.1)
+        print "Actiontec cache now contains",len(self.actiontecEntries),"entries"
+      except Queue.Empty as e:
         self.timecapsuleEntries = self.timecapsuleQueue.get(True, 0.1)
         # newEntries = self.arpQueue.get(True, 0.1)
         # for entry in newEntries:
@@ -66,9 +70,9 @@ class RabbitmqDaemon(threading.Thread):
           txerr = 0
           rxerr = 0
 
-          # if mac in self.actiontecEntries:
-          #   hostname = self.actiontecEntries[mac]["hostname"]
-          #   ip = self.actiontecEntries[mac]["ip"]
+          if mac in self.actiontecEntries:
+            hostname = self.actiontecEntries[mac]["hostname"]
+            ip = self.actiontecEntries[mac]["ip"]
 
           if mac in oldDiscoveredHosts:
             now = time.mktime((datetime.datetime.now()).timetuple())
