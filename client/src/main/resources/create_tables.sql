@@ -70,3 +70,53 @@ CREATE TABLE rules (
      created       TIMESTAMP DEFAULT current_timestamp,
      data          TEXT
 );
+
+-- drop function readings     _partition_creation();
+CREATE OR REPLACE FUNCTION readings_partition_creation( DATE, DATE )
+returns void AS $$
+DECLARE
+	create_query text;
+	index_query text;
+BEGIN
+	FOR create_query, index_query IN SELECT
+			'create table readings_'
+			|| TO_CHAR( d, 'YYYY_MM' )
+			|| ' ( check( created >= date '''
+			|| TO_CHAR( d, 'YYYY-MM-DD' )
+			|| ''' and created < date '''
+			|| TO_CHAR( d + INTERVAL '1 month', 'YYYY-MM-DD' )
+			|| ''' ) ) inherits ( readings );',
+			'create index readings_'
+			|| TO_CHAR( d, 'YYYY_MM' )
+			|| '_created on readings_'
+			|| TO_CHAR( d, 'YYYY_MM' )
+			|| ' ( created );'
+		FROM generate_series( $1, $2, '1 month' ) AS d
+	LOOP
+		EXECUTE create_query;
+		EXECUTE index_query;
+	END LOOP;
+END;
+$$
+language plpgsql;
+
+SELECT readings_partition_creation( '2014-09-01', '2015-09-01' ) ;
+
+-- drop function readings_partition_function();
+CREATE OR REPLACE FUNCTION readings_partition_function()
+returns TRIGGER AS $$
+begin
+	execute 'insert into readings_'
+		|| to_char( NEW.created, 'YYYY_MM' )
+		|| ' values ( $1, $2, $3, $4, $5 )' USING NEW.id, NEW.node, NEW.sensorindex, NEW.real_value, NEW.created ;
+	RETURN NULL;
+end;
+$$
+LANGUAGE plpgsql;
+
+-- drop trigger readings_partition_trigger;
+CREATE TRIGGER readings_partition_trigger
+	before INSERT
+	ON readings
+	FOR each row
+	execute procedure readings_partition_function() ;

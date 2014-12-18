@@ -8,7 +8,7 @@ define [
     's/cameras'
     's/nest'
     's/garageDoors'
-    's/mySensors'
+    's/tempAndHum'
     'p/webStomp'
     'd/switch'
     'd/alarmZone'
@@ -26,8 +26,8 @@ define [
   'use strict'
 
   controllers.controller 'controls', ['$scope', '$timeout', '$routeParams', 'switches', 'alarmZones',
-                                      'cameras', 'nest', 'garageDoors', 'mySensors', 'webStomp', '$modal', '$log',
-    ($scope, $timeout, $routeParams, switches, alarmZones, cameras, nest, garageDoors, mySensors, webStomp, $modal, $log) ->
+                                      'cameras', 'nest', 'garageDoors', 'tempAndHum', 'webStomp', '$modal', '$log',
+    ($scope, $timeout, $routeParams, switches, alarmZones, cameras, nest, garageDoors, tempAndHum, webStomp, $modal, $log) ->
 
       $log.debug "Controls::controller populating scope"
       $scope.activeFloor = $routeParams.floor
@@ -36,7 +36,7 @@ define [
       $scope.cameras = cameras.query()
       $scope.nest = nest.query(null,{isArray:false, scope:$scope})
       $scope.garageDoors = garageDoors.query(null,{scope:$scope})
-      $scope.mySensors = mySensors.query(null,{scope:$scope})
+      $scope.tempAndHum = tempAndHum.query(null,{scope:$scope})
       $scope.loading = true
       $scope._ = _
 

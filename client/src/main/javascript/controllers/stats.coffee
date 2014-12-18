@@ -2,7 +2,6 @@ define [
     'c/controllers'
     's/services'
     'd/sensor'
-    's/mySensors'
     's/mySensorsNode'
   ],
 (controllers, services) ->

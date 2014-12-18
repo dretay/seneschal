@@ -22,6 +22,14 @@ define [
         "applianceLoading": -> $scope.pending
         "floodLight-on": -> $scope.appliance.status == true
         "floodLight-off": -> $scope.appliance.status == false
+      "threedprinter": ($scope)->
+        "applianceLoading": -> $scope.pending
+        "threedprinter-on": -> $scope.appliance.status == true
+        "threedprinter-off": -> $scope.appliance.status == false
+      christmastree: ($scope)->
+        "applianceLoading": -> $scope.pending
+        "christmastree-on": -> $scope.appliance.status == true
+        "christmastree-off": -> $scope.appliance.status == false
       fan: ($scope)->
         "applianceLoading": -> $scope.pending
         "fan fa fa-spin": -> $scope.appliance.status == true
@@ -37,13 +45,6 @@ define [
       keypad: ($scope)->
         "fa fa-lock fa-stack-1x text-danger": ->$scope.isArmed()
         "fa fa-lock fa-stack-1x text-success": ->!$scope.isArmed()
-      garageDoor: ($scope)->
-        "garagedoor-open": -> $scope.appliance.open && isMobile
-        "garagedoor-recent-close": -> $scope.delta.asHours() < 1 && isMobile
-        "garagedoor-closed": -> isMobile
-        "progress-bar progress-bar-danger alarmZone": -> $scope.appliance.open
-        "progress-bar progress-bar-success alarmZone": -> $scope.delta.asHours() > 1
-        "progress-bar progress-bar-warning alarmZone": -> true
       doorZone: ($scope)->
         "door-open": -> $scope.appliance.open && isMobile
         "door-recent-close": -> $scope.delta.asHours() < 1 && isMobile

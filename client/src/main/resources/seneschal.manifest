@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# Offline cache v82
+# Offline cache v95
 
 javascript/main-built.js
 javascript/mixins/mixins.js
@@ -11,6 +11,7 @@ javascript/vendor/managed/requirejs-domready/domReady.js
 javascript/vendor/managed/underscore-amd/underscore.js
 javascript/vendor/unmanaged/jquery-migrate-1.2.1.min.js
 javascript/vendor/unmanaged/jquery.svg.js
+
 stylesheets/img/2ndfloor_optimized.png
 stylesheets/img/alarm_panel_armed.svg
 stylesheets/img/alarm_panel_disarmed.svg
@@ -22,6 +23,12 @@ stylesheets/img/door-closed.svg
 stylesheets/img/door-open.svg
 stylesheets/img/door-recent-close.svg
 stylesheets/img/fan.png
+
+stylesheets/img/3dprinter-off.svg
+stylesheets/img/3dprinter-on.svg
+stylesheets/img/christmastree-off.svg
+stylesheets/img/christmastree-on.svg
+
 stylesheets/img/floodlight-off.svg
 stylesheets/img/floodlight-on.svg
 stylesheets/img/garagedoor-closed.svg
@@ -42,19 +49,9 @@ stylesheets/img/thermostat-hot.svg
 stylesheets/site.css
 stylesheets/vendor/managed/angular-motion/angular-motion.css
 stylesheets/vendor/managed/bootstrap/bootstrap.css
-stylesheets/vendor/managed/bootstrap/glyphicons-halflings-regular.eot
-stylesheets/vendor/managed/bootstrap/glyphicons-halflings-regular.svg
-stylesheets/vendor/managed/bootstrap/glyphicons-halflings-regular.ttf
 stylesheets/vendor/managed/bootstrap/glyphicons-halflings-regular.woff
 stylesheets/vendor/managed/ng-table/ng-table.css
 stylesheets/vendor/unmanaged/digital-7_mono.ttf
-stylesheets/vendor/unmanaged/font-awesome-4.0.3/css/font-awesome.css
-stylesheets/vendor/unmanaged/font-awesome-4.0.3/css/font-awesome.min.css
-stylesheets/vendor/unmanaged/font-awesome-4.0.3/fonts/fontawesome-webfont.eot
-stylesheets/vendor/unmanaged/font-awesome-4.0.3/fonts/fontawesome-webfont.svg
-stylesheets/vendor/unmanaged/font-awesome-4.0.3/fonts/fontawesome-webfont.ttf
-stylesheets/vendor/unmanaged/font-awesome-4.0.3/fonts/fontawesome-webfont.woff
-stylesheets/vendor/unmanaged/font-awesome-4.0.3/fonts/FontAwesome.otf
 stylesheets/vendor/unmanaged/MYRIADPRO-BOLD.otf
 stylesheets/vendor/unmanaged/MYRIADPRO-BOLDCOND.otf
 stylesheets/vendor/unmanaged/MYRIADPRO-BOLDCONDIT.otf
@@ -65,10 +62,20 @@ stylesheets/vendor/unmanaged/MYRIADPRO-REGULAR.otf
 stylesheets/vendor/unmanaged/MYRIADPRO-SEMIBOLD.otf
 stylesheets/vendor/unmanaged/MYRIADPRO-SEMIBOLDIT.otf
 
+fonts/FontAwesome.otf
+fonts/fontawesome-webfont.eot
+fonts/fontawesome-webfont.svg
+fonts/fontawesome-webfont.ttf
+fonts/fontawesome-webfont.woff
+fonts/glyphicons-halflings-regular.eot
+fonts/glyphicons-halflings-regular.svg
+fonts/glyphicons-halflings-regular.ttf
+
 
 NETWORK:
 /rabbitmq
 /proxiedCameras
 /cameras
 /getRabbitCredentials
-/stylesheets/vendor/unmanaged/font-awesome-4.0.3/fonts
+/fonts/fontawesome-webfont.woff /fonts/fontawesome-webfont.woff
+/fonts/fontawesome-webfont.ttf /fonts/fontawesome-webfont.ttf

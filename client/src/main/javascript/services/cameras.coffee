@@ -14,20 +14,20 @@ define [
       "#{@proto}#{@videoUrl}#{@stream}?rate=3"
     query: ()->
       [
-        {
-          name: "Garage"
-          status: false
-          floor: "mainFloor"
-          location:
-            left: 68.5
-            top: 41
-            rotation: 0
-          videoUrl: "www.drewandtrish.com/cameras/192.168.1.28/8081/"
-          proto: "https://"
-        # inverted: true
-          viewUrl: @mediaViewUrl
-
-        }
+#        {
+#          name: "Garage"
+#          status: false
+#          floor: "mainFloor"
+#          location:
+#            left: 68.5
+#            top: 41
+#            rotation: 0
+#          videoUrl: "www.drewandtrish.com/cameras/192.168.1.6/8081/"
+#          proto: "https://"
+#        # inverted: true
+#          viewUrl: @mediaViewUrl
+#
+#        }
 
         {
           name: "Porch"
@@ -37,7 +37,7 @@ define [
             left: 39
             top: 76.5
             rotation: 0
-          videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.2/8080"
+          videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.20/8080"
           controlUrl: "www.drewandtrish.com/cameras/192.168.1.18/8083"
           proto: "https://"
           inverted: true
@@ -53,7 +53,7 @@ define [
             left: 28
             top: 71
             rotation: 180
-          videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.2/8080"
+          videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.20/8080"
           controlUrl: "www.drewandtrish.com/cameras/192.168.1.17/8080"
           proto: "https://"
           stream: '/frontdoor'
@@ -68,7 +68,7 @@ define [
             left: 47
             top: 8.5
             rotation: 0
-          videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.2/8080"
+          videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.20/8080"
           controlUrl: "www.drewandtrish.com/cameras/192.168.1.16/8082"
           proto: "https://"
           stream: '/livingroom'
@@ -83,7 +83,7 @@ define [
             left: 29
             top: 9
             rotation: -90
-          videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.2/8080"
+          videoUrl: "www.drewandtrish.com/proxiedCameras/192.168.1.20/8080"
           controlUrl: "www.drewandtrish.com/cameras/192.168.1.15/8081"
           proto: "https://"
           stream: '/basement'

@@ -35,14 +35,13 @@ define [
 
             lights = [
               {
-                name: "Basement Dehumidifier"
+                name: "Christmas Tree"
                 status: false
-                floor: "basement"
-                type: "dehumidifier"
+                floor: "mainFloor"
+                type: "christmastree"
                 location:
-                  left: 47
-                  top: 11
-                  rotation: 90
+                  left: 22
+                  top: 80
               }
               {
                 name: "Family Room Fan"
@@ -110,13 +109,31 @@ define [
                   top: 30
               }
               {
+                name: "3d Printer"
+                status: false
+                floor: "secondFloor"
+                type: "threedprinter"
+                location:
+                  left: 21
+                  top: 32
+              }
+              {
                 name: "Drews Office"
                 status: false
                 floor: "secondFloor"
-                type: "monitor"
+                type: "light"
                 location:
-                  left: 14
-                  top: 30
+                  left: 7
+                  top: 41.5
+              }
+              {
+                name: "Trishs Office"
+                status: false
+                floor: "secondFloor"
+                type: "light"
+                location:
+                  left: 60
+                  top: 59
               }
               {
                 name: "Master Bedroom"
