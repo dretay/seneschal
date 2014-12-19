@@ -1,7 +1,0 @@
-./rabbitmqctl add_user drew Elg6Ac6E1Orv6in4
-./rabbitmqctl set_user_tags drew administrator
-./rabbitmqctl set_permissions -p / drew ".*" ".*" ".*"
-./rabbitmqctl add_user backendclient WwTMfbtzxGNGhte0kxao
-./rabbitmqctl set_permissions -p / backendclient ".*" ".*" ".*"
-./rabbitmqctl add_user webclient WwTMfbtzxGNGhte0kxao
-./rabbitmqctl set_permissions -p / webclient ".*" ".*" ".*"
