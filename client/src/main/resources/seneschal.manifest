@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# Offline cache v95
+# Offline cache v98
 
 javascript/main-built.js
 javascript/mixins/mixins.js
@@ -9,6 +9,9 @@ javascript/vendor/managed/bootstrap/bootstrap.js
 javascript/vendor/managed/requirejs/require.js
 javascript/vendor/managed/requirejs-domready/domReady.js
 javascript/vendor/managed/underscore-amd/underscore.js
+javascript/vendor/managed/ace-builds/theme-twilight.js
+javascript/vendor/managed/ace-builds/mode-coffee.js
+javascript/vendor/managed/ace-builds/worker-coffee.js
 javascript/vendor/unmanaged/jquery-migrate-1.2.1.min.js
 javascript/vendor/unmanaged/jquery.svg.js
 

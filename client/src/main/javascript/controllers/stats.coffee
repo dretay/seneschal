@@ -39,13 +39,13 @@ define [
       (d)->
 #        return d
         if $scope.binSize == "minute"
-          moment.utc(d).format('h:mA')
+          moment(d).format('h:mA')
         else if $scope.binSize == "hour"
-          moment.utc(d).format('hA')
+          moment(d).format('hA')
         else if $scope.binSize == "day"
-          moment.utc(d).format('ddd')
+          moment(d).format('ddd')
         else
-          moment.utc(d).format('MMM')
+          moment(d).format('MMM')
 
 
 
@@ -71,7 +71,12 @@ define [
         _.each $scope.checkboxes.items, (value, key, list)->
           if value then nodes.push "#{key}"
         if nodes.length > 0
-          $scope.data = mySensorsNode.query({binUnit: $scope.binSize, nodes: nodes, startDate: $scope.startDate, endDate: $scope.endDate},{scope:$scope})
+          $scope.data = mySensorsNode.query
+            binUnit: $scope.binSize
+            nodes: nodes
+            startDate: moment($scope.startDate).utc().format()
+            endDate: moment($scope.endDate).utc().format()
+          ,scope:$scope
 
     $scope.$watch 'checkboxes.checked', (value)->
       angular.forEach $scope.sensors, (item)->

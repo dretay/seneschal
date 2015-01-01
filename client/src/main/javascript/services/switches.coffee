@@ -34,15 +34,15 @@ define [
             #todo: this needs to be in something like redis or the service... i shouldn't be storing it...
 
             lights = [
-              {
-                name: "Christmas Tree"
-                status: false
-                floor: "mainFloor"
-                type: "christmastree"
-                location:
-                  left: 22
-                  top: 80
-              }
+#              {
+#                name: "Christmas Tree"
+#                status: false
+#                floor: "mainFloor"
+#                type: "christmastree"
+#                location:
+#                  left: 22
+#                  top: 80
+#              }
               {
                 name: "Family Room Fan"
                 status: false
