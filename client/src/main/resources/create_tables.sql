@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS readings;
+DROP TABLE IF EXISTS readings CASCADE;
 DROP TABLE IF EXISTS sensors;
 DROP TABLE IF EXISTS sensortypes;
 DROP TABLE IF EXISTS nodes;
@@ -9,6 +9,7 @@ CREATE TABLE sensortypes (
      shortname     text NOT NULL,
      longname      text NOT NULL
 );
+
 insert into sensortypes(id,shortname,longname) values(0,'S_DOOR','Door and window');
 insert into sensortypes(id,shortname,longname) values(1,'S_MOTION','Motion');
 insert into sensortypes(id,shortname,longname) values(2,'S_SMOKE','Smoke');
@@ -41,32 +42,77 @@ CREATE TABLE nodes (
      protocol      TEXT,
      sketchName    TEXT,
      sketchVersion TEXT,
-     created       TIMESTAMP DEFAULT current_timestamp
+     created       timestamp with time zone DEFAULT current_timestamp
 );
+
 CREATE TABLE sensors (
      id            SERIAL PRIMARY KEY,
      node	         INT NOT NULL REFERENCES nodes (id),
      sensortype    INT NOT NULL REFERENCES sensortypes (id),
      sensorindex   INT NOT NULL,
-     created       TIMESTAMP DEFAULT current_timestamp,
+     created       timestamp with time zone DEFAULT current_timestamp,
      CONSTRAINT node_sensors_fk FOREIGN KEY (node) REFERENCES nodes(id) ON DELETE CASCADE,
      UNIQUE (node,sensorindex)
 );
+
 
 CREATE TABLE readings (
      id            SERIAL PRIMARY KEY,
      node	         INT NOT NULL REFERENCES nodes (id),
      sensorindex   INT NOT NULL,
      real_value	   REAL,
-     created       TIMESTAMP DEFAULT current_timestamp,
+     created 			 timestamp with time zone DEFAULT now(),
      CONSTRAINT node_readings_fk FOREIGN KEY (node) REFERENCES nodes(id) ON DELETE CASCADE
 );
-CREATE INDEX readings_created_idx on readings using btree(created);
 
 CREATE TABLE rules (
      id            SERIAL PRIMARY KEY,
      name          TEXT,
      active        BOOLEAN DEFAULT TRUE,
-     created       TIMESTAMP DEFAULT current_timestamp,
+     created       timestamp with time zone DEFAULT current_timestamp,
      data          TEXT
 );
+
+CREATE OR REPLACE FUNCTION readings_partition_creation( DATE, DATE )
+RETURNS VOID AS $$
+DECLARE
+    tablename text;
+    d date;
+BEGIN
+    FOR d IN SELECT *
+        FROM generate_series( $1, $2, '1 month' ) AS d
+    LOOP
+        tablename := 'readings_' || TO_CHAR(d, 'YYYY_MM');
+        EXECUTE 'CREATE TABLE ' || tablename || ' (
+                CHECK(created >= '''
+                || TO_CHAR(d, 'YYYY-MM-DD')
+                || '''::timestamp with time zone AND created < '''
+                || TO_CHAR(d + INTERVAL '1 month', 'YYYY-MM-DD')
+                || '''::timestamp with time zone)'
+            || ') INHERITS (readings)';
+        EXECUTE format('CREATE INDEX readings_%s_created ON %s(created DESC)', tablename, tablename);
+    END LOOP;
+END;
+$$
+language plpgsql;
+
+SELECT readings_partition_creation( '2015-01-01', '2015-12-01' ) ;
+
+-- drop function readings_partition_function();
+CREATE OR REPLACE FUNCTION readings_partition_function()
+returns TRIGGER AS $$
+begin
+	execute 'insert into readings_'
+		|| to_char( NEW.created, 'YYYY_MM' )
+		|| ' values ( $1, $2, $3, $4, $5 )' USING NEW.id, NEW.node, NEW.sensorindex, NEW.real_value, NEW.created ;
+	RETURN NULL;
+end;
+$$
+LANGUAGE plpgsql;
+
+-- drop trigger readings_partition_trigger;
+CREATE TRIGGER readings_partition_trigger
+	before INSERT
+	ON readings
+	FOR each row
+	execute procedure readings_partition_function() ;

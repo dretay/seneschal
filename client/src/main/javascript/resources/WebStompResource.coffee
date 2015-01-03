@@ -96,7 +96,9 @@ define [
           if @[action].subscription? and not subscription?
             if _.isNull(scope)
               $log.error("WebStompResource::query Subscription #{@[action].subscription} defined without scope - subscriptions will not be cleaned up!")
-            webStomp.subscribe(@[action].subscription, handleResponse, scope)
+            unless _.isArray @[action].subscription then @[action].subscription = [@[action].subscription]
+            for subscription in @[action].subscription
+              webStomp.subscribe(subscription, handleResponse, scope)
 
 
         #if we're 'getting' return a placeholder that can be copied over, else return a deferred

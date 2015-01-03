@@ -16,7 +16,10 @@ define [
       appliance: "="
     controller: ($scope, $injector, $timeout, $compile, $modal)->
       $scope._getDisplayLabel = ->
-        "#{$scope.appliance.data['S_TEMP'].real_value}° #{$scope.appliance.data['S_HUM'].real_value}%"
+        if $scope.appliance.data['S_TEMP']? and $scope.appliance.data['S_HUM']?
+          "#{$scope.appliance.data['S_TEMP'].real_value}° #{$scope.appliance.data['S_HUM'].real_value}%"
+        else if $scope.appliance.data['S_TEMP']?
+          "#{$scope.appliance.data['S_TEMP'].real_value}°"
 
 #      $scope.innerClassMap =
 #        "label label-primary": ->true

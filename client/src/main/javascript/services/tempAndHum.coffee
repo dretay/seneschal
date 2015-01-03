@@ -3,18 +3,30 @@ define [
     's/services'
     'moment'
     'underscore'
+    'util/MySensorsTypes'
     'r/WebStompResource'
+
   ],
-(angular, services, moment, _) ->
+(angular, services, moment, _, MySensorsTypes) ->
   'use strict'
 
-  services.factory 'mySensors', ['webStompResource', (Resource)->
+
+  services.factory 'tempAndHum', ['webStompResource', (Resource)->
     new Resource
+      update:
+        update:
+          outbound: "/exchange/mysensors.cmd"
+          outboundTransform: (rawData)->
+            cmd: "toggleSensor"
       get:
-        subscription: "/exchange/mysensors.status/fanout"
+        subscription: [
+          "/exchange/mysensors.status/#{MySensorsTypes.V_TEMP}",
+          "/exchange/mysensors.status/#{MySensorsTypes.V_HUM}"
+        ]
         outbound_rpc: "/exchange/mysensors.cmd"
         outboundTransform: (rawData)->
-          cmd: "dumpSensorData"
+          cmd: "getCurrentReadings"
+          types: [MySensorsTypes.S_TEMP, MySensorsTypes.S_HUM]
 #          cmd: "querySensor"
 #          node: 1
 #          start: 1412035388
@@ -63,6 +75,15 @@ define [
                 location:
                   left: 16
                   top: 56
+                  padding_top: "0.5em"
+              }
+              {
+                floor: "mainFloor"
+                name: "Garage Door"
+                data:{}
+                location:
+                  left: 71
+                  top: 46
                   padding_top: "0.5em"
               }
               {

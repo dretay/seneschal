@@ -34,16 +34,15 @@ define [
             #todo: this needs to be in something like redis or the service... i shouldn't be storing it...
 
             lights = [
-              {
-                name: "Basement Dehumidifier"
-                status: false
-                floor: "basement"
-                type: "dehumidifier"
-                location:
-                  left: 47
-                  top: 11
-                  rotation: 90
-              }
+#              {
+#                name: "Christmas Tree"
+#                status: false
+#                floor: "mainFloor"
+#                type: "christmastree"
+#                location:
+#                  left: 22
+#                  top: 80
+#              }
               {
                 name: "Family Room Fan"
                 status: false
@@ -110,13 +109,31 @@ define [
                   top: 30
               }
               {
+                name: "3d Printer"
+                status: false
+                floor: "secondFloor"
+                type: "threedprinter"
+                location:
+                  left: 21
+                  top: 32
+              }
+              {
                 name: "Drews Office"
                 status: false
                 floor: "secondFloor"
-                type: "monitor"
+                type: "light"
                 location:
-                  left: 14
-                  top: 30
+                  left: 7
+                  top: 41.5
+              }
+              {
+                name: "Trishs Office"
+                status: false
+                floor: "secondFloor"
+                type: "light"
+                location:
+                  left: 60
+                  top: 59
               }
               {
                 name: "Master Bedroom"
