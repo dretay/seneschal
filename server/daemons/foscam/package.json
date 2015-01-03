@@ -1,0 +1,11 @@
+{
+  "name": "MySensorsController",
+  "version": "0.0.1",
+  "description": "MySensors Controller based on Node JS",
+  "dependencies": {
+	"express":"4.5.1",
+	"http-auth":"2.1.8",
+	"inireader":"0.3.3",
+	"mjpeg-proxy":"0.0.3"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "NestController",
+  "version": "0.0.1",
+  "description": "Nest Controller based on Node JS",
+  "dependencies": {
+    "amqp": "0.2.x",
+    "inireader": "0.3.x",
+    "firebase": "1.0.17"
+  }
+}

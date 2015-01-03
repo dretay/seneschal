@@ -8,7 +8,7 @@
     "coffee-script": "1.8.0",
     "inireader": "0.3.x",
     "underscore": "1.7.0",
-    "upnp-controlpoint": "0.0.2",
+    "upnp-controlpoint": "https://github.com/stormboy/node-upnp-controlpoint/tarball/446dd1bfda5e40db90f692d0f041f83dcbf47e29",
     "winston": "0.8.0"
 
   }

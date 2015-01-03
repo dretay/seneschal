@@ -1,5 +1,3 @@
-from dns import resolver,reversename
-from python_actiontec.actiontec.actiontec import Actiontec
 import threading, json, time, ConfigParser, datetime, sys,os,netsnmp, re
 
 class TimecapsuleDiscoveryDaemon(threading.Thread):

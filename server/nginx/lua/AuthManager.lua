@@ -41,7 +41,7 @@ local function getParams()
 end
 
 local function init()
-  local conf = ini.read("/home/pi/dev/seneschal/server/daemons/config/site.ini")
+  local conf = ini.read("/home/root/seneschal/server/daemons/config/site.ini")
   local secret = conf['openresty']['secret']
 
   --configure cookie library

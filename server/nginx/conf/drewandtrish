@@ -1,4 +1,4 @@
-lua_package_path "/usr/local/openresty/nginx/lua/?.lua;;";
+lua_package_path "/home/root/seneschal/server/nginx/lua/?.lua;;";
 # init_by_lua '
 #   AuthManager = require "AuthManager"
 # ';
@@ -25,16 +25,10 @@ large_client_header_buffers 2 1k;
 		location ~ "/$" {
       rewrite ^ https://$server_name/html/index-optimize.html#/controls/mainFloor permanent;
     }
-    location ~ "/seneschal.manifest" {
-      access_log off;
-      add_header 'Content-Type' 'text/plain charset=UTF-8';
-      add_header 'Cache-Control' 'no-cache, no-store, max-age=0, must-revalidate';
-      root /home/pi/dev/seneschal/client/build/resources/main;
-		}
     location / {
       access_log off;
       #add_header 'Cache-Control' 'no-cache, no-store, max-age=0, must-revalidate';
-      root /home/pi/dev/seneschal/client/build/resources/main;
+      root /home/local/ngx_openresty-1.7.2.1/nginx/html/seneschal;
 		}
     location /login {
       set $cors "true";

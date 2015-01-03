@@ -20,7 +20,7 @@ class WemoControlleePlus extends wemo.WemoControllee
   retrieveBinaryState: (callback)->
     @eventService.callAction "GetBinaryState", {}, (err, result)->
       if err
-        log.error "got err when performing action: #{err} => #{buf}"
+        log.error "got err when performing action: #{err}"
       else
         if result.match /<BinaryState>(\d)<\/BinaryState>/
           callback null, RegExp.$1
@@ -97,14 +97,14 @@ setupUpnpControlPoint = (switches, deviceListener, callback)->
       console.log("Ignoring discovered device "+device.friendlyName)
   cp.search()
   setInterval ->
-    console.log "Searching for any new devices"
+    # console.log "Searching for any new devices"
     cp.search()
     #wait 5 seconds then continue startup
-    setTimeout (->
-      log.info("upnp control point discovery finished")
-      log.info "\tcurrently watching #{switches.length} switches"
-      _.each switches, (wemoSwitch)-> log.info wemoSwitch.device.friendlyName
-      callback null, switches), 5000
+    # setTimeout (->
+      # log.info("upnp control point discovery finished")
+      # log.info "\tcurrently watching #{switches.length} switches"
+      # _.each switches, (wemoSwitch)-> log.info wemoSwitch.device.friendlyName
+      # callback null, switches), 5000
   , 60000
 
   #wait 5 seconds then continue startup
@@ -117,5 +117,3 @@ setupUpnpControlPoint = (switches, deviceListener, callback)->
 async.waterfall [injectParams, connectToBroker,setupUpnpControlPoint], (err,config)->
   if err
     console.log(err)
-  else
-    log.info("wemo server startup complete")

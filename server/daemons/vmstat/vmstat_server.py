@@ -1,5 +1,5 @@
 from kombu import Connection, Producer, Exchange, Queue, Consumer, common as kombucommon
-import json, sys, ConfigParser, re, socket, subprocess, time
+import json, sys, ConfigParser, re, socket, subprocess32 as subprocess, time
 
 #
 # Executes if the program is started normally, not if imported

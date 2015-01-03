@@ -3,7 +3,7 @@ import socket, struct, threading, Queue, datetime, time, sys, ConfigParser
 class EyezonDaemon(threading.Thread):
   def __init__(self, host=None, port=None, cmd_q=None, reply_q=None):
     threading.Thread.__init__(self)
-    self.host = host or "192.168.1.10"
+    self.host = host or "192.168.1.3"
     self.port = port or 4025
 
     self.cmd_q = cmd_q or Queue.Queue()

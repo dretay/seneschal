@@ -8,7 +8,7 @@ if __name__ == "__main__":
   commandQueue = Queue.Queue()
   replyQueue = Queue.Queue()
 
-  eyezonDaemon = EyezonDaemon("192.168.1.10", 4025, commandQueue, replyQueue)
+  eyezonDaemon = EyezonDaemon("192.168.1.3", 4025, commandQueue, replyQueue)
   eyezonDaemon.setDaemon(True)
   eyezonDaemon.start()
 
