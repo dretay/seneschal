@@ -25,7 +25,7 @@
 
             </div>
             </td>
-          <td header-class="text-left" data-title="'Created'">{{rule.created|plaintextAge}}</td>
+          <td header-class="text-left" data-title="'Created'">{{rule.created|humanizedDuration}}</td>
           <td header-class="text-left" data-title="'Active'">
             <span ng:click="toggleActive(rule)">
               <input

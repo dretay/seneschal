@@ -20,8 +20,8 @@ define [
             cmd: "toggleSensor"
       get:
         subscription: [
-          "/exchange/mysensors.status/#{MySensorsTypes.V_TEMP}",
-          "/exchange/mysensors.status/#{MySensorsTypes.V_HUM}"
+          "/exchange/mysensors.status/C_SET:#{MySensorsTypes.V_TEMP}",
+          "/exchange/mysensors.status/C_SET:#{MySensorsTypes.V_HUM}"
         ]
         outbound_rpc: "/exchange/mysensors.cmd"
         outboundTransform: (rawData)->

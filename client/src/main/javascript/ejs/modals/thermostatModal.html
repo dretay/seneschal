@@ -8,7 +8,7 @@
                 <div class="text-readout">
                     <i class="fa fa-angle-up fa-3 thermostatControlTop" ng-click="changeTemperature(1)"></i>
 
-                    <div class="hvacInfo" ng-show="!isAway()">{{getThermostat().data.hvac_mode}} set to</div>
+                    <div class="hvacInfo" ><span ng-show="!isAway()">{{getThermostat().data.hvac_mode}} set to</span></div>
                     <div class="degree">
                         <span ng-show="!isAway()">
                             {{targetTemperature}}&deg;

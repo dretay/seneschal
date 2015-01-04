@@ -2,7 +2,7 @@ define [
     'c/controllers'
     'modals/RuleModal'
     's/rules'
-    'f/plaintextAge'
+    'f/humanizedDuration'
   ],
 (controllers, RuleModal) ->
   'use strict'

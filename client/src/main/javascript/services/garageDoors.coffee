@@ -12,7 +12,7 @@ define [
     new Resource
       get:
         subscription: [
-          "/exchange/mysensors.status/#{MySensorsTypes.V_LOCK_STATUS}"
+          "/exchange/mysensors.status/C_SET:#{MySensorsTypes.V_LOCK_STATUS}"
         ]
         outbound_rpc: "/exchange/mysensors.cmd"
         outboundTransform: (rawData)->
