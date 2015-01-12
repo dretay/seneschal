@@ -35,7 +35,7 @@ define [
                 type: "doorZone"
                 location:
                   left: 75
-                  top: 84
+                  top: 77
                 dimensions:
                   width: "15%"
                   height: "2%"
@@ -48,7 +48,7 @@ define [
                 type: "doorZone"
                 location:
                   left: 53
-                  top: 84
+                  top: 77
                 dimensions:
                   width: "15%"
                   height: "2%"

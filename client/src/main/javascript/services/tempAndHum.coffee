@@ -56,7 +56,7 @@ define [
                 data:{}
                 location:
                   left: 13
-                  top: 42
+                  top: 44
                   padding_top: "0.5em"
               }
               {
@@ -92,7 +92,7 @@ define [
                 data:{}
                 location:
                   left: 82
-                  top: 30
+                  top: 27
                   padding_top: "0.5em"
               }
               {
@@ -109,8 +109,8 @@ define [
                 name: "Theatre"
                 data:{}
                 location:
-                  left: 38
-                  top: 67
+                  left: 14
+                  top: 73
                   padding_top: "0.5em"
               }
               {

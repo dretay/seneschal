@@ -46,15 +46,15 @@ define [
       $scope.floors =
         basement:
           name: "basement"
-          url: '/stylesheets/img/basement_optimized.png'
+          url: '/stylesheets/img/basement.png'
 
         mainFloor:
           name: "mainFloor"
-          url: '/stylesheets/img/mainfloor_optimized.png'
+          url: '/stylesheets/img/mainfloor.png'
 
         secondFloor:
           name: "secondFloor"
-          url: '/stylesheets/img/2ndfloor_optimized.png'
+          url: '/stylesheets/img/2ndfloor.png'
 
       $scope.activeFloor = $scope.floors[$routeParams.floor]
 

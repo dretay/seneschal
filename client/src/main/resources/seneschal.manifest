@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# Offline cache v101
+# Offline cache v104
 
 javascript/main-built.js
 javascript/mixins/mixins.js
@@ -15,10 +15,10 @@ javascript/vendor/managed/ace-builds/worker-coffee.js
 javascript/vendor/unmanaged/jquery-migrate-1.2.1.min.js
 javascript/vendor/unmanaged/jquery.svg.js
 
-stylesheets/img/2ndfloor_optimized.png
+stylesheets/img/2ndfloor.png
 stylesheets/img/alarm_panel_armed.svg
 stylesheets/img/alarm_panel_disarmed.svg
-stylesheets/img/basement_optimized.png
+stylesheets/img/basement.png
 stylesheets/img/circle.png
 stylesheets/img/dehumidifier-off.svg
 stylesheets/img/dehumidifier-on.svg
@@ -42,7 +42,7 @@ stylesheets/img/lightbulb-off.svg
 stylesheets/img/lightbulb-on.svg
 stylesheets/img/loading.svg
 stylesheets/img/logo.jpg
-stylesheets/img/mainfloor_optimized.png
+stylesheets/img/mainfloor.png
 stylesheets/img/monitor-off.svg
 stylesheets/img/monitor-on.svg
 stylesheets/img/security_camera.svg
