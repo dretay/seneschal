@@ -88,12 +88,12 @@ setupCommandQueue = (connection, bindings, callback)->
       log.info "Unrecognized message: #{message}"
   callback null, connection, bindings
 
-setupBinding = (connection, name, bindCmdQueue, bindings, callback)->
+setupBinding = (connection, name, bindCmdQueue, statusExchangeType, bindings, callback)->
   async.waterfall [
     (callback)->
       callback null, bindings
     (bindings, callback)->
-      connection.exchange "#{name}.status", {type: "fanout", durable: true, autoDelete: false}, (fanoutExchange)->
+      connection.exchange "#{name}.status", {type: statusExchangeType, durable: true, autoDelete: false}, (fanoutExchange)->
         log.info "bound to exchange #{name}.status successfully"
         bindings[name]= {statusExchange: fanoutExchange}
         callback null, bindings
@@ -137,13 +137,14 @@ setupBindings = (connection, callback)->
   async.waterfall [
     (callback)->
       callback null, {handlers: {}}
-    _.bind setupBinding, @, connection, "rules", true
-    _.bind setupBinding, @, connection, "actiontec", false
-    _.bind setupBinding, @, connection, "eyezon", false
-    _.bind setupBinding, @, connection, "garage", false
-    _.bind setupBinding, @, connection, "mysensors", false
-    _.bind setupBinding, @, connection, "nest", false
-    _.bind setupBinding, @, connection, "wemo", false
+    _.bind setupBinding, @, connection, "mysensors", true, "topic"
+    _.bind setupBinding, @, connection, "rules", true, "fanout"
+    _.bind setupBinding, @, connection, "actiontec", false, "fanout"
+    _.bind setupBinding, @, connection, "eyezon", false, "fanout"
+    _.bind setupBinding, @, connection, "garage", false, "fanout"
+    _.bind setupBinding, @, connection, "nest", false, "fanout"
+    _.bind setupBinding, @, connection, "wemo", false, "fanout"
+
   ],(err,bindings)->
     if err
       callback err

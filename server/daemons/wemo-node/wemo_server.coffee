@@ -4,6 +4,8 @@ _ = require("underscore")
 log = require("winston")
 amqp = require('amqp')
 async = require('async')
+mysensors_db = require "../mysensors/mysensors_db"
+mysensors_constants = require "../mysensors/mysensors_constants"
 
 injectParams = (callback)->
   switches = []
@@ -38,6 +40,8 @@ connectToBroker = (switches, callback)->
   rabbitmqHost = parser.param('rabbitmq.host')
   connection = amqp.createConnection
     url: "amqp://"+rabbitmqUsername+":"+rabbitmqPassword+"@"+rabbitmqHost+":5672"
+  connection.on 'error', (exception)->
+    log.error "AMQP connection error: #{exception.message}"
   connection.addListener 'ready', ->
     log.info("successfully connected to amqp broker")
     connection.exchange "wemo.status",{type: "fanout", durable: true, autoDelete: false}, (fanoutExchange)->
@@ -50,12 +54,13 @@ connectToBroker = (switches, callback)->
                 log.info("received amqp command: #{message.data.toString()}")
                 message = JSON.parse(message.data.toString())
                 if message.operation == "list_switches"
-                  results = _.map switches, (wemoSwitch)->
-                    name: wemoSwitch.device.friendlyName
-                    status: wemoSwitch.getBinaryState()
-                  log.info "Switch Status: #{JSON.stringify results}"
+                  mysensors_db.getNewestReadingsForType mysensors_constants.S_LIGHT, 'wemo', (err, readings)->
+                  # results = _.map switches, (wemoSwitch)->
+                  #   name: wemoSwitch.device.friendlyName
+                  #   status: wemoSwitch.getBinaryState()
+                  # log.info "Switch Status: #{JSON.stringify results}"
 
-                  connection.publish deliveryInfo.replyTo, results
+                    connection.publish deliveryInfo.replyTo, readings
 
                 else if message.operation == "toggle_on"
                   mySwitch = _.find switches, (mySwitch)->
@@ -83,35 +88,29 @@ setupUpnpControlPoint = (switches, deviceListener, callback)->
   cp.on "device", (device)->
     if device.deviceType == wemo.WemoControllee.deviceType || device.deviceType == "urn:Belkin:device:lightswitch:1"
       log.info "Discovered switch "+device.friendlyName
-      wemoSwitch = new WemoControlleePlus(device)
-      wemoSwitch.retrieveBinaryState (err, binaryState)->
-        if not err
-          wemoSwitch.storeBinaryState binaryState
-          switches.push wemoSwitch
+      mysensors_db.createNodeBySketchnameIfMissing device.friendlyName, "wemo", (err, nodeId)->
+        mysensors_db.saveSensor nodeId, 0, mysensors_constants.S_LIGHT, (err)->
+          wemoSwitch = new WemoControlleePlus(device)
+          wemoSwitch.retrieveBinaryState (err, binaryState)->
+            if not err
+              mysensors_db.saveValue nodeId, 0, mysensors_constants.S_LIGHT, binaryState
+              wemoSwitch.storeBinaryState binaryState
+              switches.push wemoSwitch
 
-      wemoSwitch.on "BinaryState", (value)->
-        wemoSwitch.storeBinaryState value
-        deviceListener(device, value)
-
+          wemoSwitch.on "BinaryState", (value)->
+            mysensors_db.saveValue nodeId, 0, mysensors_constants.S_LIGHT, value
+            wemoSwitch.storeBinaryState value
+            deviceListener(device, value)
     else
       console.log("Ignoring discovered device "+device.friendlyName)
   cp.search()
   setInterval ->
-    # console.log "Searching for any new devices"
     cp.search()
-    #wait 5 seconds then continue startup
-    # setTimeout (->
-      # log.info("upnp control point discovery finished")
-      # log.info "\tcurrently watching #{switches.length} switches"
-      # _.each switches, (wemoSwitch)-> log.info wemoSwitch.device.friendlyName
-      # callback null, switches), 5000
   , 60000
 
   #wait 5 seconds then continue startup
   setTimeout (->
     log.info("upnp control point discovery finished")
-    log.info "\tcurrently watching #{switches.length} switches"
-    _.each switches, (wemoSwitch)-> log.info wemoSwitch.device.friendlyName
     callback null, switches), 5000
 
 async.waterfall [injectParams, connectToBroker,setupUpnpControlPoint], (err,config)->

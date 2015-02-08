@@ -4,9 +4,11 @@ log = require "winston"
 coffee = require 'coffee-script'
 rabbitmq = require "./rabbitmq"
 async = require 'async'
+later = require 'later'
 
 amqpConnection = null
 bindings = null
+ruleCallbacks = null
 executeActiveRules = (amqpConnectionIn, bindingsIn, callback)->
   amqpConnection = amqpConnectionIn
   bindings = bindingsIn
@@ -25,13 +27,18 @@ executeActiveRules = (amqpConnectionIn, bindingsIn, callback)->
             amqpConnection: amqpConnection
             bindings: bindings
             _: _
+            log: log
+            later: later
         else
           log.info "Skipping rule #{rule.name}"
         async.parallel ruleList, (err,results)->
-          callback null, null
+          ruleCallbacks = results
+          callback null, results
 
 reloadRules = (callback)->
-
+  if ruleCallbacks? and _.isArray(ruleCallbacks)
+    for ruleCallback in ruleCallbacks
+      if _.isFunction ruleCallback then ruleCallback()
   bindings.handlers[key] = [] for key,value of bindings.handlers
   executeActiveRules amqpConnection, bindings, callback
 

@@ -12,7 +12,7 @@ large_client_header_buffers 2 1k;
 		server_name  www.drewandtrish.com;
 		#add_header Strict-Transport-Security max-age=2592000;
 		ssl on;
-		ssl_certificate /etc/pki/ssl-unified.crt;
+		ssl_certificate /etc/pki/ssl-bundle.crt;
 		ssl_certificate_key /etc/pki/www.drewandtrish.com.key;
 
 		ssl_protocols TLSv1 TLSv1.1 TLSv1.2;

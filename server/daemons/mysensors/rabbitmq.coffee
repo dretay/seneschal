@@ -12,6 +12,8 @@ connectToBroker = (callback)->
   rabbitmqPassword = parser.param 'rabbitmq.password'
   rabbitmqHost = parser.param 'rabbitmq.host'
   connection = amqp.createConnection url: "amqp://#{rabbitmqUsername}:#{rabbitmqPassword}@#{rabbitmqHost}:5672"
+  connection.addListener 'error', (exception)->
+    log.error "AMQP connection error: #{exception.message}"
   connection.addListener 'ready', ->
     log.info "successfully connected to amqp broker"
     setupSubscriptions amqpConnection: connection, callback
@@ -19,7 +21,7 @@ connectToBroker = (callback)->
 
 
 setupSubscriptions = (config, callback)->
-  config.amqpConnection.exchange "mysensors.status", {type: "direct", durable: true, autoDelete: false}, (statusExchange)->
+  config.amqpConnection.exchange "mysensors.status", {type: "topic", durable: true, autoDelete: false}, (statusExchange)->
     config.amqpConnection.queue 'mysensors.cmd', (q)->
       config.amqpConnection.exchange "mysensors.cmd", {type: "direct", durable: true, autoDelete: false}, (directExchange)->
           q.bind directExchange, '', ->

@@ -3,6 +3,21 @@ log = require "winston"
 _ = require "underscore"
 moment = require "moment"
 
+createNodeBySketchnameIfMissing = (sketchname,type,callback)->
+  q = Knex 'nodes'
+  q.select 'id'
+  .where 'sketchname', '=', sketchname
+  .andWhere 'type', '=', type
+  .then (results)->
+    if results.length == 0
+      log.info "Node not found, creating node with sketchname #{sketchname}"
+      q.returning 'id'
+      q.insert
+        sketchname: sketchname
+        type: type
+      .then (results)-> callback null, results[0]
+    else
+      callback null, results[0].id
 createNodeIfMissing= (id,callback)->
   q = Knex 'nodes'
   q.count 'id'
@@ -61,20 +76,17 @@ saveValue = (sender, sensor, type, payload,callback)->
     record =
       node:sender
       sensorindex: sensor
+      real_value: parseFloat payload
 
-    #is it a number of some kind
-    if !_.isNaN parseFloat(payload)
-      record.real_value = parseFloat payload
-      log.info "payload is a number, cast it to #{record.real_value}"
 
     q = Knex 'readings'
     q.insert record
     .then ->
       log.info "Inserted #{payload} into node #{sender}'s sensor #{sensor}"
-      callback null, record
+      if callback? then callback null, record
     ,(err)->
       log.error "Failed to insert #{payload} into node #{sender}'s sensor #{sensor}: #{err}"
-      callback err
+      if callback? then callback err
 
 saveBatteryLevel = (sender, payload, db,callback)->
   # var cn = "BatteryLevel-" + sender.toString();
@@ -147,19 +159,21 @@ checkRebootRequest = (destination, db, gw,callback)->
 
 sendNextAvailableSensorId = (callback)->
   q = Knex 'nodes'
-  q.returning 'id'
-  .insert
-    protocol: null
-    sketchname: null
-    sketchversion: null
-
-  .then (ids)->
-    id  = ids[0]
-    log.info "Created new sensor with id #{id}"
-    callback null, id
-  , (err)->
-    log.error "Failed to create new sensor: #{err}"
-    callback err
+  .first Knex.raw('max(id) as maxid')
+  .then (result)->
+    nextId = parseInt(result.maxid,10) + 1
+    log.info "mysensors_db::sendNextAvailableSensorId inserting new node with id #{nextId}"
+    q = Knex 'nodes'
+    .insert
+      id: nextId
+      protocol: null
+      sketchname: null
+      sketchversion: null
+    .then ->
+      callback null, nextId
+    , (err)->
+      log.error "Failed to create new sensor: #{err}"
+      callback err
 
 getAllSensors = (callback)->
   q = Knex 'sensors'
@@ -172,10 +186,13 @@ getAllSensors = (callback)->
     log.error "Failed to get list of available sensors: #{err}"
     callback err
 
-getNewestReadings = (types, callback)->
+getNewestReadingsForType = (sensor_types, node_types, callback)-> _getNewestReadings sensor_types,node_types,callback
+getNewestReadings = (sensor_types, callback)-> _getNewestReadings sensor_types, null, callback
+
+_getNewestReadings = (sensor_types, node_types, callback)->
 
   q = Knex()
-  q.select 'nodes.id', 'nodes.sketchname', 'sensortypes.shortname', 'readings.real_value', 'readings.created', 'readings.sensorindex'
+  q.select 'nodes.id', 'nodes.sketchname', 'sensortypes.shortname', 'readings.real_value', 'readings.created', 'readings.sensorindex', 'sensors.extra'
   .from "readings"
   .innerJoin 'nodes','readings.node','nodes.id'
   .innerJoin 'sensors', ->
@@ -183,13 +200,28 @@ getNewestReadings = (types, callback)->
     .andOn 'readings.node', '=', 'sensors.node'
 
   .innerJoin 'sensortypes','sensors.sensortype','sensortypes.id'
-  .whereIn 'sensors.sensortype', types
-  .whereRaw "readings.created between TIMESTAMPTZ '#{moment.utc().subtract(7, 'days').format()}' and '#{moment.utc().format()}'"
+  if sensor_types?
+    q.whereIn 'sensors.sensortype', sensor_types
+  if node_types?
+    q.whereIn 'nodes.type', node_types
+  q.whereRaw "readings.created between TIMESTAMPTZ '#{moment.utc().subtract(7, 'days').format()}' and '#{moment.utc().format()}'"
   .joinRaw "inner join (select node, sensorindex, MAX(created) as max_created from readings WHERE created between TIMESTAMPTZ '#{moment.utc().subtract(7, 'days').format()}' and '#{moment.utc().format()}' group by node,sensorindex ) latest on readings.node = latest.node and readings.sensorindex = latest.sensorindex and readings.created = latest.max_created"
   q.then (readings)->
     callback null,readings
   ,(err)->
     log.error "Failed to get latest sensor readings: #{err}"
+    callback err
+getNewestReadingBySensorindex = (node, sensorindex, callback)->
+  q = Knex()
+  q.first 'readings.real_value'
+  .from 'readings'
+  .where 'node', '=', node
+  .andWhere 'sensorindex', '=', sensorindex
+  .orderBy 'created', 'desc'
+  .then (reading)->
+    callback null, reading
+  , (err)->
+    log.error "Failed to get newest sensor reading: #{err}"
     callback err
 
 getBinnedReadings = (sensorsToQuery, binUnit, timeFrame, callback)->
@@ -211,6 +243,7 @@ getBinnedReadings = (sensorsToQuery, binUnit, timeFrame, callback)->
     log.error "Failed to get binned  sensor readings: #{err}"
     callback err
 
+exports.createNodeBySketchnameIfMissing = createNodeBySketchnameIfMissing
 exports.saveProtocol = saveProtocol;
 exports.saveSensor = saveSensor;
 exports.saveValue = saveValue;
@@ -221,5 +254,7 @@ exports.saveRebootRequest = saveRebootRequest;
 exports.checkRebootRequest = checkRebootRequest;
 exports.sendNextAvailableSensorId = sendNextAvailableSensorId;
 exports.getAllSensors = getAllSensors;
+exports.getNewestReadingBySensorindex = getNewestReadingBySensorindex;
+exports.getNewestReadingsForType = getNewestReadingsForType;
 exports.getNewestReadings = getNewestReadings;
 exports.getBinnedReadings = getBinnedReadings;
