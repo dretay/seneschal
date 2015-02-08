@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS sensortypes;
 DROP TABLE IF EXISTS nodes;
 DROP TABLE IF EXISTS rules;
 
+CREATE TYPE node_type AS ENUM ('eyezon_alarm', 'wemo_switch', 'mysensors', 'nest_thermostat', 'nest_smoke', 'actiontec_router', 'foscam_camera','timecapsule_router');
 CREATE TABLE sensortypes (
      id            SERIAL PRIMARY KEY,
      shortname     text NOT NULL,
@@ -36,13 +37,16 @@ insert into sensortypes(id,shortname,longname) values(22,'S_AIR_QUALITY','Air qu
 insert into sensortypes(id,shortname,longname) values(23,'S_CUSTOM','Custom');
 insert into sensortypes(id,shortname,longname) values(24,'S_DUST','Dust level');
 insert into sensortypes(id,shortname,longname) values(25,'S_SCENE_CONTROLLER','Scene controller');
+insert into sensortypes(id,shortname,longname) values(26,'S_CAMERA','Camera');
+
 
 CREATE TABLE nodes (
      id            SERIAL PRIMARY KEY,
      protocol      TEXT,
      sketchName    TEXT,
      sketchVersion TEXT,
-     created       timestamp with time zone DEFAULT current_timestamp
+     created       timestamp with time zone DEFAULT current_timestamp,
+     extra         JSON
 );
 
 CREATE TABLE sensors (
@@ -51,8 +55,10 @@ CREATE TABLE sensors (
      sensortype    INT NOT NULL REFERENCES sensortypes (id),
      sensorindex   INT NOT NULL,
      created       timestamp with time zone DEFAULT current_timestamp,
+     type          node_type NOT NULL DEFAULT 'mysensors',
      CONSTRAINT node_sensors_fk FOREIGN KEY (node) REFERENCES nodes(id) ON DELETE CASCADE,
      UNIQUE (node,sensorindex)
+
 );
 
 

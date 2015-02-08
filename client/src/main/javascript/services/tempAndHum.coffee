@@ -40,98 +40,24 @@ define [
 
             return oldData
           else
-            mysensors= [
-              {
-                floor: "secondFloor"
-                name: "Computer Room"
-                data:{}
-                location:
-                  left: 15
-                  top: 78
-                  padding_top: "0.5em"
-              }
-              {
-                floor: "secondFloor"
-                name: "Drew's Office"
-                data:{}
-                location:
-                  left: 13
-                  top: 44
-                  padding_top: "0.5em"
-              }
-              {
-                floor: "secondFloor"
-                name: "Master Bedroom"
-                data:{}
-                location:
-                  left: 59
-                  top: 18
-                  padding_top: "0.5em"
-              }
-              {
-                floor: "mainFloor"
-                name: "Living Room"
-                data:{}
-                location:
-                  left: 16
-                  top: 56
-                  padding_top: "0.5em"
-              }
-              {
-                floor: "mainFloor"
-                name: "Garage Door"
-                data:{}
-                location:
-                  left: 71
-                  top: 46
-                  padding_top: "0.5em"
-              }
-              {
-                floor: "mainFloor"
-                name: "Family Room"
-                data:{}
-                location:
-                  left: 82
-                  top: 27
-                  padding_top: "0.5em"
-              }
-              {
-                floor: "basement"
-                name: "Gym"
-                data:{}
-                location:
-                  left: 61
-                  top: 25
-                  padding_top: "0.5em"
-              }
-              {
-                floor: "basement"
-                name: "Theatre"
-                data:{}
-                location:
-                  left: 14
-                  top: 73
-                  padding_top: "0.5em"
-              }
-              {
-                floor: "basement"
-                name: "Guest Bedroom"
-                data:{}
-                location:
-                  left: 15
-                  top: 27
-                  padding_top: "0.5em"
-              }
-            ]
+            mysensors= {}
 
-            for sensor in mysensors
-              for reading in readings
-                if reading.sketchname.toLowerCase() == sensor.name.toLowerCase()
-                  sensor.id = reading.id
-                  sensor.data[reading.shortname] =
-                    real_value: reading.real_value
-                    created: reading.created
-                    sensorindex: reading.sensorindex
-            return mysensors
+            for reading in readings
+              # conflate multiple sensor readings into a single node entry
+              unless mysensors[reading.sketchname]?
+                mysensors[reading.sketchname] =
+                  name: reading.sketchname
+                  data: {}
+
+              if reading.extra?
+                mysensors[reading.sketchname].floor = reading.extra.floor
+                mysensors[reading.sketchname].location = reading.extra.location
+
+              mysensors[reading.sketchname].data[reading.shortname]=
+                real_value: reading.real_value
+                created: reading.created
+                sensorindex: reading.sensorindex
+            _.values mysensors
+
 
   ]

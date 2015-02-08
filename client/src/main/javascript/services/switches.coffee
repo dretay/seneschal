@@ -31,135 +31,20 @@ define [
                 top: record.location.top
                 rotation: if record.location.rotation? then record.location.rotation else 0
           else
-            #todo: this needs to be in something like redis or the service... i shouldn't be storing it...
 
-            lights = [
-#              {
-#                name: "Christmas Tree"
-#                status: false
-#                floor: "mainFloor"
-#                type: "christmastree"
-#                location:
-#                  left: 22
-#                  top: 80
-#              }
-              {
-                name: "Family Room Fan"
-                status: false
-                floor: "mainFloor"
-                type: "fan"
-                location:
-                  left: 74
-                  top: 28
-              }
-              {
-                name: "Front Porch"
-                status: false
-                floor: "mainFloor"
-                type: "light"
-                location:
-                  left: 29
-                  top: 80
-              }
-              {
-                name: "Front Porch"
-                status: false
-                floor: "mainFloor"
-                type: "floodLight"
-                location:
-                  left: 69
-                  top: 78
-                  rotation: 43
-              }
-              {
-                name: "Living Room"
-                status: false
-                floor: "mainFloor"
-                type: "light"
-                location:
-                  left: 7
-                  top: 53
-              }
-              {
-                name: "Living Room"
-                status: false
-                floor: "mainFloor"
-                type: "light"
-                location:
-                  left: 7
-                  top: 83
-              }
-              {
-                name: "Back Yard"
-                status: false
-                floor: "mainFloor"
-                type: "floodLight"
-                location:
-                  left: 58
-                  top: 2
-                  rotation: 200
-              }
-              {
-                name: "Family Room Lights"
-                status: false
-                floor: "mainFloor"
-                type: "light"
-                location:
-                  left: 68
-                  top: 28
-              }
-              {
-                name: "3d Printer"
-                status: false
-                floor: "secondFloor"
-                type: "threedprinter"
-                location:
-                  left: 20
-                  top: 34
-              }
-              {
-                name: "Drews Office"
-                status: false
-                floor: "secondFloor"
-                type: "light"
-                location:
-                  left: 7
-                  top: 43.5
-              }
-              {
-                name: "Trishs Office"
-                status: false
-                floor: "secondFloor"
-                type: "light"
-                location:
-                  left: 60
-                  top: 59
-              }
-              {
-                name: "Master Bedroom"
-                status: false
-                floor: "secondFloor"
-                type: "light"
-                location:
-                  left: 92
-                  top: 10
-              }
-              {
-                name: "Master Bedroom"
-                status: false
-                floor: "secondFloor"
-                type: "light"
-                location:
-                  left: 92
-                  top: 34
-              }
-            ]
+            lights = []
 
-            for result in rawData
-              switchInstances = _.where(lights, {name: result.name})
-              unless _.isArray switchInstances then switchInstances = [switchInstances]
-              for switchInstance in switchInstances
-                switchInstance.status = result.status
+            for device in rawData
+              if device.extra?
+                unless _.isArray device.extra then device.extra = [device.extra]
+                for extra in device.extra
+                  lights.push
+                    name: device.sketchname
+                    status: !!device.real_value
+                    floor: extra.floor
+                    type: extra.type
+                    location: extra.location
+
 
 
             return lights
