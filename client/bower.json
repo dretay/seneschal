@@ -2,20 +2,24 @@
   "name": "Seneschal Home Automation Server",
   "version": "0.0.1",
   "dependencies": {
-    "angular": "~1.2.25",
+    "angular": "1.2.x",
     "angularjs-nvd3-directives": "0.0.7",
     "angularAMD": "0.2.x",
-    "angular-animate": "1.2.24",
+    "angular-animate": "1.2.x",
     "angular-bootstrap": "0.11.0",
+    "angular-bootstrap-contextmenu": "0.9.1",
     "angular-bootstrap-switch": "0.3.0",
+    "angular-dragdrop": "1.0.11",
     "angular-motion": "0.3.0",
-    "angular-resource": "1.2.24",
-    "angular-route": "1.2.24",
-    "angular-sanitize": "~1.2.24",
-    "angular-touch": "1.2.24",
+    "angular-off-canvas": "git@github.com:dretay/angular-off-canvas.git#master",
+    "angular-resource": "1.2.x",
+    "angular-route": "1.2.x",
+    "angular-sanitize": "1.2.x",
+    "angular-touch": "1.2.x",
     "angular-ui-ace": "0.1.1",
     "bootstrap": "3.1.0",
     "chroma-js": "0.5.x",
+    "csshake": "*",
     "font-awesome": "4.2.0",
     "jquery": "*",
     "moment": "*",
@@ -27,13 +31,13 @@
     "smoothie": "1.27.0",
     "sockjs": "0.3.4",
     "stomp-websocket": "git://github.com/jmesnil/stomp-websocket.git#2.3.2",
-    "underscore-amd": "1.4.4"
+    "underscore-amd": "1.4.4",
+    "angular-ui-select": "0.8.x"
   },
   "devDependencies": {
-    "angular-mocks": "1.2.15"
+    "angular-mocks": "1.2.x"
   },
   "resolutions": {
-    "d3": "~3.4.1",
-    "angular": "~1.x"
+    "d3": "~3.4.1"
   }
 }

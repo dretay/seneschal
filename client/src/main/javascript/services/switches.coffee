@@ -39,6 +39,8 @@ define [
                 unless _.isArray device.extra then device.extra = [device.extra]
                 for extra in device.extra
                   lights.push
+                    sensor_id: device.sensorindex
+                    node_id: device.id
                     name: device.sketchname
                     status: !!device.real_value
                     floor: extra.floor
@@ -53,10 +55,12 @@ define [
         inbound: "wemo.lights"
         outbound: "/exchange/wemo.cmd"
         outboundTransform: (query, oldEntity)->
-          unless oldEntity.status
-            operation: 'toggle_on'
-            switchName: oldEntity.name
+          if query? then return query
           else
-            operation: 'toggle_off'
-            switchName: oldEntity.name
+            unless oldEntity.status
+              operation: 'toggle_on'
+              switchName: oldEntity.name
+            else
+              operation: 'toggle_off'
+              switchName: oldEntity.name
   ]

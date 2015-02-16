@@ -18,13 +18,17 @@ requirejs.config({
       angularAMD: 'vendor/managed/angularAMD/angularAMD',
       angularAnimate: 'vendor/managed/angular-animate/angular-animate',
       angularBootstrapSwitch: 'vendor/managed/angular-bootstrap-switch/angular-bootstrap-switch',
+      angularContextMenu: "vendor/managed/angular-bootstrap-contextmenu/contextMenu",
+      angularDragDrop: 'vendor/managed/angular-dragdrop/angular-dragdrop',
       angularNvd3Directives: 'vendor/managed/angularjs-nvd3-directives/angularjs-nvd3-directives',
+      angularOffCanvas: 'vendor/managed/angular-off-canvas/off-canvas',
       angularResource: 'vendor/managed/angular-resource/angular-resource',
       angularRoute: 'vendor/managed/angular-route/angular-route',
       angularSanitize: 'vendor/managed/angular-sanitize/angular-sanitize',
       angularTouch: 'vendor/managed/angular-touch/angular-touch',
       angularUi: 'vendor/managed/angular-bootstrap/ui-bootstrap-tpls',
       angularUiAce: 'vendor/managed/angular-ui-ace/ui-ace',
+      angularUiSelect: 'vendor/managed/angular-ui-select/select',
       bootstrapSwitch: 'vendor/managed/bootstrap-switch/bootstrap-switch',
       chroma: 'vendor/managed/chroma-js/chroma',
       d3: 'vendor/managed/d3/d3',
@@ -32,6 +36,7 @@ requirejs.config({
       jquery: 'vendor/managed/jquery/jquery',
       jqueryMigrate: 'vendor/unmanaged/jquery-migrate-1.2.1.min',
       jquerySvg: 'vendor/unmanaged/jquery.svg',
+      jqueryUI: 'vendor/managed/jquery-ui/jquery-ui',
       moment: 'vendor/managed/moment/moment',
       ngBiscuit: 'vendor/managed/ngWig/ng-biscuit',
       ngTable: 'vendor/managed/ng-table/ng-table',
@@ -57,6 +62,15 @@ requirejs.config({
       'angularBootstrapSwitch':{
         deps: ['angular', 'bootstrapSwitch']
       },
+      'angularContextMenu':{
+        deps: ['angular']
+      },
+      'angularDragDrop':{
+        deps: ['jqueryUI']
+      },
+      'angularOffCanvas':{
+        deps: ['angular']
+      },
       'angularResource': {
         deps: ['angular']
       },
@@ -75,11 +89,17 @@ requirejs.config({
       'angularUiAce':{
         deps: ['angular','ace']
       },
+      'angularUiSelect':{
+        deps: ['angular']
+      },
       'bootstrapSwitch':{
         deps: ['jquery']
       },
       'jquerySvg': {
         deps: ['jquery', 'jqueryMigrate']
+      },
+      'jqueryUI':{
+        deps: ['jquery']
       },
       'moment': {
         exports: 'moment'

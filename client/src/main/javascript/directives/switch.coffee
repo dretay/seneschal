@@ -14,7 +14,8 @@ define [
     template: templates['appliance']
     scope:
       appliance: "="
-    controller: ($scope, $injector, $timeout)->
+    controller: ($scope, $injector, $interval)->
+
       $scope.pending = false
 
       $scope._getTooltip = ->

@@ -1,5 +1,9 @@
 <div
-        ng-style="{{getOuterStyle()}}"
+        ng-right-click="editExtra()"
+        on-long-press="itemOnLongPress()"
+        data-drag="dragEnabled"
+        jqyoui-draggable="{onStop: 'onApplianceDragStop'}"
+        ng-style="getOuterStyle()"
         ng-class="getApplianceClass()">
     <div
         ng-class="getOuterClass()"

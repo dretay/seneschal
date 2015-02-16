@@ -6,27 +6,27 @@
 
             <div class="lightOverlay">
                 <div ng:repeat="switch in switches|itemsOnFloor:activeFloor.name">
-                    <switch appliance="switch"></switch>
+                    <switch class="appliance" appliance="switch"></switch>
                 </div>
-
+<!--
                 <div ng:repeat="zone in alarmZones|itemsOnFloor:activeFloor.name">
-                    <alarm-zone appliance="zone"></alarm-zone>
+                    <alarm-zone class="appliance" appliance="zone"></alarm-zone>
                 </div>
                 <div ng:repeat="camera in cameras|itemsOnFloor:activeFloor.name">
-                    <camera appliance="camera"></camera>
+                    <camera class="appliance" appliance="camera"></camera>
                 </div>
 
                 <div ng:repeat="thermostat in nest.thermostats|itemsOnFloor:activeFloor.name"
                      ng-if="_.has(nest,'thermostats')">
-                    <thermostat appliance="thermostat"></thermostat>
+                    <thermostat class="appliance" appliance="thermostat"></thermostat>
                 </div>
 
                 <div ng:repeat="garageDoor in garageDoors|itemsOnFloor:activeFloor.name">
                     <alarm-zone appliance="garageDoor"></alarm-zone>
                 </div>
                 <div ng:repeat="sensor in tempAndHum|itemsOnFloor:activeFloor.name">
-                  <sensor appliance="sensor"></sensor>
-                </div>
+                  <sensor  class="appliance" appliance="sensor"></sensor>
+                </div> -->
             </div>
 
         </div>
@@ -39,6 +39,6 @@
           <i class="fa fa-circle-o fa-stack-2x" style="color: rgb(31, 31, 31);"></i>
           <alarm-keypad></alarm-keypad>
         </div>
-        <div class="pull-left alarmFooterText alarmFooterTextRight"><alarm-zone-status></alarm-zone-status></div>
+        <div class="pull-left alarmFooterText alarmFooterTextRight"><alarm-zone-status></alarm-zone-status><a href ng-click="toggle()">Toggle the nav</a></div>
       </div>
   </div>
