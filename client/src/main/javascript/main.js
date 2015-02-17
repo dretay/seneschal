@@ -21,7 +21,6 @@ requirejs.config({
       angularContextMenu: "vendor/managed/angular-bootstrap-contextmenu/contextMenu",
       angularDragDrop: 'vendor/managed/angular-dragdrop/angular-dragdrop',
       angularNvd3Directives: 'vendor/managed/angularjs-nvd3-directives/angularjs-nvd3-directives',
-      angularOffCanvas: 'vendor/managed/angular-off-canvas/off-canvas',
       angularResource: 'vendor/managed/angular-resource/angular-resource',
       angularRoute: 'vendor/managed/angular-route/angular-route',
       angularSanitize: 'vendor/managed/angular-sanitize/angular-sanitize',
@@ -67,9 +66,6 @@ requirejs.config({
       },
       'angularDragDrop':{
         deps: ['jqueryUI']
-      },
-      'angularOffCanvas':{
-        deps: ['angular']
       },
       'angularResource': {
         deps: ['angular']

@@ -34,15 +34,20 @@ define [
         node_id: $scope.appliance.node_id
         sensor_id: $scope.appliance.sensor_id
         metadata:
-          location:
+          location: _.extend $scope.appliance.location,
             left: (ui.position.left / $('body').width()) * 100
             top: ((ui.position.top - 13)/ ($('body').height())) * 100 # todo - where are those 13px coming from!??
+
 
 
     $scope.getName=-> $scope.appliance.name
     $scope.getApplianceClass= ->
       if isMobile then "applianceMobile" else "appliance"
     outerClassLookupTable=
+      lamp: ($scope)->
+        "applianceLoading": -> $scope.pending
+        "lamp-on": -> $scope.appliance.status == true
+        "lamp-off": -> $scope.appliance.status == false
       light: ($scope)->
         "applianceLoading": -> $scope.pending
         "lightbulb-on": -> $scope.appliance.status == true
@@ -151,7 +156,7 @@ define [
 
 
     $scope.floors = [ 'basement', 'mainFloor', 'secondFloor']
-    $scope.types = ['light','floodLight','christmastree','fan', 'dehumidifier','monitor','keypad','doorZone']
+    $scope.types = ['lamp','light','floodLight','christmastree','fan', 'dehumidifier','monitor','keypad','doorZone']
 
     $scope.editExtra = ->
       $modal.open

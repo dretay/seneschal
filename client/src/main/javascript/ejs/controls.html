@@ -8,7 +8,6 @@
                 <div ng:repeat="switch in switches|itemsOnFloor:activeFloor.name">
                     <switch class="appliance" appliance="switch"></switch>
                 </div>
-<!--
                 <div ng:repeat="zone in alarmZones|itemsOnFloor:activeFloor.name">
                     <alarm-zone class="appliance" appliance="zone"></alarm-zone>
                 </div>
@@ -16,7 +15,7 @@
                     <camera class="appliance" appliance="camera"></camera>
                 </div>
 
-                <div ng:repeat="thermostat in nest.thermostats|itemsOnFloor:activeFloor.name"
+<!--                <div ng:repeat="thermostat in nest.thermostats|itemsOnFloor:activeFloor.name"
                      ng-if="_.has(nest,'thermostats')">
                     <thermostat class="appliance" appliance="thermostat"></thermostat>
                 </div>

@@ -5,7 +5,6 @@ define [
     'angularContextMenu'
     'angularDragDrop'
     'angularNvd3Directives'
-    'angularOffCanvas'
     'angularResource'
     'angularRoute'
     'angularSanitize'
@@ -34,10 +33,9 @@ define [
     'r/resources'
     's/services'
   ],
-(angularAMD,angularAnimate,angularBootstrapSwitch,angularContextMenu,angularDragDrop, angularNvd3Directives, angularOffCanvas, angularResource,angularRoute,angularSanitize,angularTouch,angularUi,angularUiAce,angularUiSelect,controllers,controls,daemons,login,main,router,rules,stats,system,directives,templates,filters,authInterceptor,interceptors,ngBiscuit,ngTable,providers,webStomp,resources,services) ->
+(angularAMD,angularAnimate,angularBootstrapSwitch,angularContextMenu,angularDragDrop, angularNvd3Directives, angularResource,angularRoute,angularSanitize,angularTouch,angularUi,angularUiAce,angularUiSelect,controllers,controls,daemons,login,main,router,rules,stats,system,directives,templates,filters,authInterceptor,interceptors,ngBiscuit,ngTable,providers,webStomp,resources,services) ->
   'use strict'
   app = angular.module 'app', [
-    'cn.offCanvas'
     'controllers'
     'directives'
     'filters'
@@ -61,12 +59,6 @@ define [
     'ui.select'
   ]
   app.config ($provide, $routeProvider, $httpProvider, webStompProvider)->
-
-    $provide.decorator 'ngSmoothieDirective', ($delegate)->
-      directive = $delegate[0]
-      directive.restrict = "AC"
-      return $delegate
-
 
     #ace path overrides
     path = "/javascript/vendor/managed/ace-builds"

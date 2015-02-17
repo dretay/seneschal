@@ -36,10 +36,10 @@ define [
                 type: "doorZone"
                 location:
                   left: 33
-                  top: 77
+                  top: 63
                 dimensions:
-                  width: "5.5%"
-                  height: "1.5%"
+                  width: "5em"
+                  height: "0.5em"
               }
               {
                 name: "Interior Garage Door"
@@ -48,11 +48,11 @@ define [
                 floor: "mainFloor"
                 type: "doorZone"
                 location:
-                  left: 46.5
-                  top: 38.5
+                  left: 47
+                  top: 31
                 dimensions:
-                  width: "1%"
-                  height: "6.5%"
+                  width: "0.5em"
+                  height: "3.5em"
                 labelStyle:
                   "padding-top": "0.75%"
               }
@@ -64,10 +64,10 @@ define [
                 type: "doorZone"
                 location:
                   left: 48.5
-                  top: 9
+                  top: 7.2
                 dimensions:
-                  width: "11%"
-                  height: "2%"
+                  width: "5em"
+                  height: "0.5em"
               }
               {
                 name: "Basement Door"
@@ -77,10 +77,10 @@ define [
                 type: "doorZone"
                 location:
                   left: 34
-                  top: 6
+                  top: 4.7
                 dimensions:
-                  width: "6%"
-                  height: "2%"
+                  width: "6em"
+                  height: "0.5em"
               }
             ]
 

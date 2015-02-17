@@ -20,14 +20,13 @@ define [
     'd/sensor'
     'f/itemsOnFloor'
     'f/oddLengthString'
-    's/controlsOffCanvas'
   ],
 (controllers, _, $) ->
   'use strict'
 
   controllers.controller 'controls', ['$scope', '$timeout', '$routeParams', 'switches', 'alarmZones',
-                                      'cameras', 'nest', 'garageDoors', 'tempAndHum', 'webStomp', '$modal', '$log', 'controlsOffCanvas'
-    ($scope, $timeout, $routeParams, switches, alarmZones, cameras, nest, garageDoors, tempAndHum, webStomp, $modal, $log, controlsOffCanvas) ->
+                                      'cameras', 'nest', 'garageDoors', 'tempAndHum', 'webStomp', '$modal', '$log'
+    ($scope, $timeout, $routeParams, switches, alarmZones, cameras, nest, garageDoors, tempAndHum, webStomp, $modal, $log) ->
 
       $log.debug "Controls::controller populating scope"
       $scope.activeFloor = $routeParams.floor
@@ -39,7 +38,6 @@ define [
       $scope.tempAndHum = tempAndHum.query(null,{scope:$scope})
       $scope.loading = true
       $scope._ = _
-      $scope.toggle = controlsOffCanvas.toggle
 
       $scope.isActiveFloor = (floor)->
         if floor == $scope.activeFloor then "active" else ""

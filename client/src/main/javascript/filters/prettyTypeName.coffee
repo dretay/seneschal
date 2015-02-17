@@ -9,6 +9,7 @@ define [
       (key) ->
         switch key
           when 'light' then "Light Bulb"
+          when 'lamp' then "Lamp"
           when 'floodLight' then "Flood Light"
           when 'christmastree' then "Christmas Tree"
           when 'fan' then "Fan"

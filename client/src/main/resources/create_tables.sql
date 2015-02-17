@@ -46,7 +46,6 @@ CREATE TABLE nodes (
      sketchName    TEXT,
      sketchVersion TEXT,
      created       timestamp with time zone DEFAULT current_timestamp,
-     extra         JSON
 );
 
 CREATE TABLE sensors (
@@ -56,6 +55,8 @@ CREATE TABLE sensors (
      sensorindex   INT NOT NULL,
      created       timestamp with time zone DEFAULT current_timestamp,
      type          node_type NOT NULL DEFAULT 'mysensors',
+     extra         JSON DEFAULT '{"floor":"mainFloor","type":"light","location":{"left":50,"top":50}}',
+
      CONSTRAINT node_sensors_fk FOREIGN KEY (node) REFERENCES nodes(id) ON DELETE CASCADE,
      UNIQUE (node,sensorindex)
 
