@@ -53,13 +53,15 @@ connectToBroker = (switches, callback)->
               q.subscribe (message, headers, deliveryInfo, messageObject)->
                 log.info("received amqp command: #{message.data.toString()}")
                 message = JSON.parse(message.data.toString())
+
+                if message.operation == "updateSensorMetadata"
+                  {node_id,sensor_id,metadata} = message
+                  mysensors_db.updateSensorMetadata node_id,sensor_id, metadata
+
+
+
                 if message.operation == "list_switches"
                   mysensors_db.getNewestReadingsForType mysensors_constants.S_LIGHT, 'wemo', (err, readings)->
-                  # results = _.map switches, (wemoSwitch)->
-                  #   name: wemoSwitch.device.friendlyName
-                  #   status: wemoSwitch.getBinaryState()
-                  # log.info "Switch Status: #{JSON.stringify results}"
-
                     connection.publish deliveryInfo.replyTo, readings
 
                 else if message.operation == "toggle_on"

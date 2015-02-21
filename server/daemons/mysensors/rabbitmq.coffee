@@ -28,6 +28,11 @@ setupSubscriptions = (config, callback)->
             q.subscribe (message, headers, deliveryInfo, messageObject)->
               message = JSON.parse message.data.toString()
               if message.cmd? then log.info "Received AMQP command: #{message.cmd}"
+
+              if message.operation == "updateSensorMetadata"
+                {node_id,sensor_id,metadata} = message
+                mysensors_db.updateSensorMetadata node_id,sensor_id, metadata
+
               if message.cmd == "getAllSensors"
                 mysensors_db.getAllSensors (err, sensors)->
                   config.amqpConnection.publish deliveryInfo.replyTo,sensors

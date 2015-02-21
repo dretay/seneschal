@@ -3,6 +3,27 @@ log = require "winston"
 _ = require "underscore"
 moment = require "moment"
 
+updateSensorMetadata = (node_id,sensor_id,metadata, callback)->
+  sensor_id = [sensor_id] if not _.isArray sensor_id
+  Knex 'sensors'
+  .first 'extra'
+  .where 'node', '=', node_id
+  .andWhere 'sensorindex', '=', sensor_id[0]
+  .then (result)->
+    {floor,type,location} = metadata
+    extra = if _.isEmpty result.extra then location: {} else result.extra
+    if location? then extra.location = location
+    if floor? then extra.floor = floor
+    if type? then extra.type = type
+    Knex 'sensors'
+    .update 'extra', extra
+    .where 'node', '=', node_id
+    .whereIn 'sensorindex', sensor_id
+    .then ->
+      log.info "Updated extra for node #{node_id} sensor #{sensor_id}"
+      if callback? then callback null
+
+
 createNodeBySketchnameIfMissing = (sketchname,type,callback)->
   q = Knex 'nodes'
   q.select 'id'
@@ -243,6 +264,7 @@ getBinnedReadings = (sensorsToQuery, binUnit, timeFrame, callback)->
     log.error "Failed to get binned  sensor readings: #{err}"
     callback err
 
+exports.updateSensorMetadata = updateSensorMetadata
 exports.createNodeBySketchnameIfMissing = createNodeBySketchnameIfMissing
 exports.saveProtocol = saveProtocol;
 exports.saveSensor = saveSensor;
