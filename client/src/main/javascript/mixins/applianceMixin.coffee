@@ -7,6 +7,7 @@ define [
     'f/prettyFloorName'
     'f/prettyTypeName'
     'f/capitalize'
+    'jqueryPxEm'
   ],
 (_,templates)->
   ($scope, $modal, $timeout) ->
@@ -36,7 +37,7 @@ define [
         metadata:
           location: _.extend $scope.appliance.location,
             left: (ui.position.left / $('body').width()) * 100
-            top: ((ui.position.top - 13)/ ($('body').height())) * 100 # todo - where are those 13px coming from!??
+            top: (ui.position.top / ($('body').height())) * 94.5 # todo - where are those 13px coming from!??
 
 
 
@@ -102,6 +103,7 @@ define [
           for value, test of outerClassMap
             if _.isFunction(test) && test()
               if $scope.dragEnabled then return "shake shake-constant #{value}" else return value
+        else if $scope.dragEnabled then return "shake shake-constant"
 
       return ""
 
@@ -123,7 +125,10 @@ define [
           style["height"] = "#{$scope.appliance.dimensions.height}"
         unless _.isUndefined(_.deep($scope.appliance, 'dimensions.padding'))
           style["padding"] = "#{$scope.appliance.dimensions.padding}"
-      return style
+      if $scope._getOuterStyle?
+        return _.extend $scope._getOuterStyle(), style
+      else
+        return style
 
     #used to render the appliance itself and apply any class-based decorators
     $scope.getInnerClass = ->

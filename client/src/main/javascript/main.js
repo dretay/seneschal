@@ -32,6 +32,7 @@ requirejs.config({
       chroma: 'vendor/managed/chroma-js/chroma',
       d3: 'vendor/managed/d3/d3',
       domReady: 'vendor/managed/requirejs-domready/domReady',
+      jqueryPxEm: 'vendor/unmanaged/pxem.jQuery',
       jquery: 'vendor/managed/jquery/jquery',
       jqueryMigrate: 'vendor/unmanaged/jquery-migrate-1.2.1.min',
       jquerySvg: 'vendor/unmanaged/jquery.svg',
@@ -65,7 +66,7 @@ requirejs.config({
         deps: ['angular']
       },
       'angularDragDrop':{
-        deps: ['jqueryUI']
+        deps: ['angular', 'jqueryUI']
       },
       'angularResource': {
         deps: ['angular']
@@ -89,6 +90,9 @@ requirejs.config({
         deps: ['angular']
       },
       'bootstrapSwitch':{
+        deps: ['jquery']
+      },
+      'jqueryPxEm': {
         deps: ['jquery']
       },
       'jquerySvg': {

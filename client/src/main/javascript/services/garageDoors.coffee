@@ -21,7 +21,7 @@ define [
         inboundTransform: (rawData, oldData)->
           #subscription update
           if not _.isArray rawData
-            sensor = _.findWhere(oldData, {nodeindex: rawData.node, sensorindex: rawData.sensorindex})
+            sensor = _.findWhere(oldData, {node_id: rawData.node, sensor_id: rawData.sensorindex})
             sensor.open = (rawData.real_value == 1)
 
             return oldData
@@ -33,23 +33,25 @@ define [
                 for extra in device.extra
                   doors.push
                     name: device.sketchname
-                    sensorindex: device.sensorindex
+                    sensor_id: device.sensorindex
                     floor: extra.floor
                     type: extra.type
                     location: extra.location
                     dimensions: extra.dimensions
                     timestamp: moment(device.created)
                     open: !!device.real_value
-                    nodeindex: device.id
+                    node_id: device.id
             return doors
       update:
         outbound_rpc: "/exchange/mysensors.cmd"
-        outboundTransform: (params,record)->
-          cmd: 'toggleSensor'
-          node_id: record.nodeindex
-          sensor_id: record.sensorindex
-          message_type: MySensorsTypes.C_SET
-          sub_type: MySensorsTypes.V_LOCK_STATUS
-          payload: ""
+        outboundTransform: (query={},record)->
+          if not _.isEmpty(query) then return query
+          else
+            cmd: 'toggleSensor'
+            node_id: record.node_id
+            sensor_id: record.sensor_id
+            message_type: MySensorsTypes.C_SET
+            sub_type: MySensorsTypes.V_LOCK_STATUS
+            payload: ""
 
   ]

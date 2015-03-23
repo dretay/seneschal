@@ -61,6 +61,8 @@ exports.config =
       outRoot: "managed"
       mainOverrides:
         "ace-builds":["src-noconflict/ace.js", "src-noconflict/mode-coffee.js","src-noconflict/worker-coffee.js", "src-noconflict/theme-twilight.js"]
+        "font-awesome":["fonts/fontawesome-webfont.woff","fonts/fontawesome-webfont.svg","fonts/FontAwesome.otf","fonts/fontawesome-webfont.eot","fonts/fontawesome-webfont.ttf","css/font-awesome.css"]
+
         "angular-motion":["dist/angular-motion.css"]
         "requirejs-domready":["domReady.js"]
         "stomp-websocket":["lib/stomp.js"]

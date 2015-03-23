@@ -13,11 +13,6 @@ define [
 
   services.factory 'tempAndHum', ['webStompResource', (Resource)->
     new Resource
-      update:
-        update:
-          outbound: "/exchange/mysensors.cmd"
-          outboundTransform: (rawData)->
-            cmd: "toggleSensor"
       get:
         subscription: [
           "/exchange/mysensors.status/C_SET:#{MySensorsTypes.V_TEMP}",
@@ -27,15 +22,12 @@ define [
         outboundTransform: (rawData)->
           cmd: "getCurrentReadings"
           types: [MySensorsTypes.S_TEMP, MySensorsTypes.S_HUM]
-#          cmd: "querySensor"
-#          node: 1
-#          start: 1412035388
         inboundTransform: (readings, oldData)->
 
           #subscription update
           if not _.isArray readings
-            oldReading = _.findWhere(oldData, {id:readings.node})
-            oldSensor = _.findWhere(oldReading.data, {sensorindex:readings.sensorindex})
+            oldReading = _.findWhere(oldData, {node_id:readings.node})
+            oldSensor = _.findWhere(oldReading.data, {sensor_id:readings.sensorindex})
             oldSensor.real_value = readings.real_value
 
             return oldData
@@ -47,7 +39,11 @@ define [
               unless mysensors[reading.sketchname]?
                 mysensors[reading.sketchname] =
                   name: reading.sketchname
+                  node_id: reading.id
+                  sensor_id: [reading.sensorindex]
                   data: {}
+              else
+                mysensors[reading.sketchname].sensor_id.push reading.sensorindex
 
               if reading.extra?
                 mysensors[reading.sketchname].floor = reading.extra.floor
@@ -56,8 +52,11 @@ define [
               mysensors[reading.sketchname].data[reading.shortname]=
                 real_value: reading.real_value
                 created: reading.created
-                sensorindex: reading.sensorindex
+                sensor_id: reading.sensorindex
             _.values mysensors
-
+      update:
+        outbound_rpc: "/exchange/mysensors.cmd"
+        outboundTransform: (query={},record)->
+          if not _.isEmpty(query) then return query
 
   ]

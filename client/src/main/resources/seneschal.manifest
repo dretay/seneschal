@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# Offline cache v106
+# Offline cache v118
 
 javascript/main-built.js
 javascript/mixins/mixins.js
@@ -8,7 +8,6 @@ javascript/vendor/managed/angular-mocks/angular-mocks.js
 javascript/vendor/managed/bootstrap/bootstrap.js
 javascript/vendor/managed/requirejs/require.js
 javascript/vendor/managed/requirejs-domready/domReady.js
-javascript/vendor/managed/underscore-amd/underscore.js
 javascript/vendor/managed/ace-builds/theme-twilight.js
 javascript/vendor/managed/ace-builds/mode-coffee.js
 javascript/vendor/managed/ace-builds/worker-coffee.js
@@ -38,6 +37,8 @@ stylesheets/img/garagedoor-closed.svg
 stylesheets/img/garagedoor-open.svg
 stylesheets/img/garagedoor-recent-close.svg
 stylesheets/img/grey-linen.png
+stylesheets/img/lamp-off.svg
+stylesheets/img/lamp-on.svg
 stylesheets/img/lightbulb-off.svg
 stylesheets/img/lightbulb-on.svg
 stylesheets/img/loading.svg

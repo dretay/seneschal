@@ -1,0 +1,71 @@
+##########
+# manual #
+##########
+
+add "wireless-power off" to wlan definition
+su - postgres
+psql < ~seneschal/daily_backup_March_22_2015
+
+rabbitmqctl add_user drew rag8fap5gigh1gey
+rabbitmqctl set_user_tags drew administrator
+rabbitmqctl set_permissions -p / drew ".*" ".*" ".*"
+rabbitmqctl add_user backendclient laL1Am5woiB3cUg7
+rabbitmqctl set_permissions -p / backendclient ".*" ".*" ".*"
+rabbitmqctl add_user webclient laL1Am5woiB3cUg7
+rabbitmqctl set_permissions -p / webclient ".*" ".*" ".*"
+
+
+##########
+#  auto  #
+##########
+apt-get install wget ca-certificates
+echo "deb http://apt.postgresql.org/pub/repos/apt/ wheezy-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+echo "deb http://www.rabbitmq.com/debian/ testing main" >> /etc/apt/sources.list
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+wget --quiet -O - https://www.rabbitmq.com/rabbitmq-signing-key-public.asc | apt-key add -
+apt-get update
+apt-get upgrade
+apt-get install libreadline-dev libncurses5-dev libpcre3-dev libssl-dev perl make luajit build-essential redis-server  postgresql-9.3 postgresql-server-dev-9.3 git nodejs supervisor unzip python-kombu
+adduser seneschal
+##add user to dialout?
+adduser seneschal-webserver
+su - seneschal
+mkdir src
+cd ~/src
+wget http://openresty.org/download/ngx_openresty-1.7.10.1.tar.gz
+tar xfz ngx_openresty-1.7.10.1.tar.gz
+cd ngx_openresty-1.7.10.1
+PATH=/sbin/:/usr/sbin:$PATH ./configure --with-pcre-jit --with-ipv6
+make -j2
+sudo make install
+cd ~/src
+wget http://keplerproject.github.io/luarocks/releases/luarocks-2.2.1.tar.gz
+tar xfz luarocks-2.2.1.tar.gz
+p
+./configure --prefix=/usr/local/openresty/luajit --with-lua=/usr/local/openresty/luajit/ --lua-suffix=jit-2.1.0-alpha --with-lua-include=/usr/local/openresty/luajit/include/luajit-2.1
+make
+make install
+#
+# ln -s /home/seneschal/src/seneschal/server/nginx/conf.d /usr/local/openresty/nginx/
+# ln -s /home/seneschal/src/seneschal/server/nginx/lua /usr/local/openresty/nginx/
+# add "include /usr/local/openresty/nginx/conf.d/*;" to nginx.conf
+# cp /home/seneschal/server/nginx/libb64.so.0d /usr/lib
+#
+/home/seneschal/bin/ngx_openresty-1.7.10.1/luajit/bin/luarocks install luafilesystem
+cd ~/src
+GIT_SSL_NO_VERIFY=1 git clone https://github.com/dretay/seneschal.git
+npm install -g coffee-script
+cd ~/src/seneschal/server/daemons/foscam
+npm install
+cd ~/src/seneschal/server/daemons/mysensors
+npm install
+cd ~/src/seneschal/server/daemons/nest
+npm install
+cd ~/src/seneschal/server/daemons/rules
+npm install
+cd ~/src/seneschal/server/daemons/wemo-node
+npm install
+
+##todo - setup supervisord stuff
+##todo - alarm ip should go in config
+#todo - https://www.drewandtrish.com/createUser?username=?&password=?&secret=?

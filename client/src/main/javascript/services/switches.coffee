@@ -54,8 +54,8 @@ define [
       update:
         inbound: "wemo.lights"
         outbound: "/exchange/wemo.cmd"
-        outboundTransform: (query, oldEntity)->
-          if query? then return query
+        outboundTransform: (query={}, oldEntity)->
+          if not _.isEmpty(query) then return query
           else
             unless oldEntity.status
               operation: 'toggle_on'

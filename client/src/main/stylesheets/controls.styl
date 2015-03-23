@@ -1,0 +1,57 @@
+.floorplan_wrapper
+  //position: relative
+  //top: 50%
+  //transform: translateY(-55%);
+  //height: 80%
+  width: 90%;
+  display: inline-block;
+  position: relative;
+.floorplan_wrapper:after
+  padding-top: 56.25%;
+  /* 16:9 ratio */
+  display: block;
+  content: '';
+
+.floorplan
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  /* fill parent */
+  background-color: deepskyblue;
+  /* let's see it! */
+  color: white;
+  img
+    width 100%
+    height 100%
+
+.alarmStatus
+  position absolute
+  left 90%
+  bottom 10px
+  background white
+.alarmStatus-red
+    color red
+.alarmStatus-green
+    color green
+.alarmStatus-grey
+    color grey
+.alarmBorder
+  padding 10px
+.alarmBorder-red
+    border 10px solid red
+.alarmBorder-green
+    border 10px solid green
+.alarmBorder-grey
+    border 10px dashed grey
+
+
+
+.lightFloorRow
+  padding-bottom  10px
+  .selected
+    text-decoration underline
+
+.alarmDisplayLine
+  font-family digital-7, Serif

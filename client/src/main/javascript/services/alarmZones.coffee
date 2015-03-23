@@ -36,7 +36,7 @@ define [
                 type: "doorZone"
                 location:
                   left: 33
-                  top: 63
+                  top: 35
                 dimensions:
                   width: "5em"
                   height: "0.5em"
@@ -49,7 +49,7 @@ define [
                 type: "doorZone"
                 location:
                   left: 47
-                  top: 31
+                  top: 16.7
                 dimensions:
                   width: "0.5em"
                   height: "3.5em"
@@ -64,10 +64,10 @@ define [
                 type: "doorZone"
                 location:
                   left: 48.5
-                  top: 7.2
+                  top: 3
                 dimensions:
                   width: "5em"
-                  height: "0.5em"
+                  height: "1em"
               }
               {
                 name: "Basement Door"
@@ -77,10 +77,10 @@ define [
                 type: "doorZone"
                 location:
                   left: 34
-                  top: 4.7
+                  top: 1.7
                 dimensions:
                   width: "6em"
-                  height: "0.5em"
+                  height: "1em"
               }
             ]
 

@@ -11,7 +11,7 @@ define [
   directives.directive 'sensor', ->
     restrict: 'E'
     replace: false
-    template: templates['sensor']
+    template: templates['appliance']
     scope:
       appliance: "="
     controller: ($scope, $injector, $timeout, $compile, $modal)->
@@ -24,10 +24,15 @@ define [
 #      $scope.innerClassMap =
 #        "label label-primary": ->true
 
+      $scope._getOuterStyle = ->
+        "width": "5em"
       $scope._getInnerStyle = ->
         "border-radius": "5px"
         "margin-top": "5em"
         "color": "white"
+
+      $scope._getTooltip = ->
+        $scope.appliance.name
 
 
       #mix in common appliance functions

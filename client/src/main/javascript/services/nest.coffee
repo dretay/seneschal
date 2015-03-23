@@ -25,7 +25,7 @@ define [
                 floor: "mainFloor"
                 location:
                   left: 27
-                  top: 32
+                  top: 13
               }
             ]
             smoke_co_alarms: [

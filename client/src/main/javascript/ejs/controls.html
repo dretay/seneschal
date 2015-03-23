@@ -15,7 +15,7 @@
                     <camera class="appliance" appliance="camera"></camera>
                 </div>
 
-<!--                <div ng:repeat="thermostat in nest.thermostats|itemsOnFloor:activeFloor.name"
+               <div ng:repeat="thermostat in nest.thermostats|itemsOnFloor:activeFloor.name"
                      ng-if="_.has(nest,'thermostats')">
                     <thermostat class="appliance" appliance="thermostat"></thermostat>
                 </div>
@@ -25,7 +25,7 @@
                 </div>
                 <div ng:repeat="sensor in tempAndHum|itemsOnFloor:activeFloor.name">
                   <sensor  class="appliance" appliance="sensor"></sensor>
-                </div> -->
+                </div>
             </div>
 
         </div>
@@ -38,6 +38,6 @@
           <i class="fa fa-circle-o fa-stack-2x" style="color: rgb(31, 31, 31);"></i>
           <alarm-keypad></alarm-keypad>
         </div>
-        <div class="pull-left alarmFooterText alarmFooterTextRight"><alarm-zone-status></alarm-zone-status><a href ng-click="toggle()">Toggle the nav</a></div>
+        <div class="pull-left alarmFooterText alarmFooterTextRight"><alarm-zone-status></alarm-zone-status></div>
       </div>
   </div>
